@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -11,8 +12,9 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
+                test: /\.jsx?$/,
+                include: [path.resolve(__dirname, 'src')],
+                exclude: [path.resolve(__dirname, 'node_modules')],
                 loaders: ['babel-loader', 'eslint-loader']
             },
             {
@@ -45,12 +47,12 @@ module.exports = {
         extensions: ['*', '.js', '.jsx', '.scss', '.css']
     },
     output: {
-        path: __dirname + '/dist',
+        path: path.join(__dirname, 'dist'),
         publicPath: '/',
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: './dist',
+        contentBase: path.join(__dirname, 'dist'),
         hot: true,
         historyApiFallback: true
     },
