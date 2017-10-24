@@ -1,68 +1,121 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const pck = require('./package.json');
 
-module.exports = {
-    entry: {
-        main: './src/index.js'
-    },
-    resolve: {
-        extensions: ['', '.js', '.jsx']
-    },
-    output: {
-        path: __dirname + '/dist',
-        publicPath: '/',
-        filename: 'bundle.js'
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: 'react-hot-loader/webpack'
+const config = {
+  entry: {
+    main: './src/index.js',
+    vendor: Object.keys(pck.dependencies || {}),
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+    modules: [
+      path.resolve(__dirname, 'src'),
+      'node_modules',
+    ],
+  },
+  output: {
+    path: path.resolve(__dirname, 'public'),
+    publicPath: '/',
+    filename: '[name].js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+              modules: true,
+              importLoaders: 1,
             },
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                loader: "babel-loader"
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [path.resolve(__dirname, 'styles')],
             },
-            {
-                test: /\.scss$/,
-                exclude: /node_modules/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
+          }
+        ],
+      }
+    ],
+  },
+  node: {
+    console: false,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: 'production',
+      },
+      NODE_ENV: 'production',
+    }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: './dist/index.html',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        screw_ie8: true, // React doesn't support IE8
+        warnings: false,
+      },
+      mangle: {
+        screw_ie8: true,
+      },
+      output: {
+        comments: false,
+        screw_ie8: true,
+      },
+    }),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor'],
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].css',
+      allChunks: true,
+    })
+  ],
+}
 
-                    // Could also be write as follow:
-                    // use: 'css-loader?modules&importLoader=2&sourceMap&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader'
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            query: {
-                                modules: true,
-                                sourceMap: true,
-                                importLoaders: 2,
-                                localIdentName: '[name]__[local]___[hash:base64:5]'
-                            }
-                        },
-                        'sass-loader'
-                    ]
-                })
-            }
-        ]
-    },
+config.module.rules
+  .filter(rule => String(rule.test).includes('css'))
+  .forEach((rule) => {
+    const first = rule.use[0]
+    const rest = rule.use.slice(1)
+    rule.use = ExtractTextPlugin.extract({
+      fallback: first,
+      use: rest,
+    })
+  })
 
-    plugins: [
-        new webpack.ProvidePlugin({
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-        }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': '"production"'
-            }
-        })
-    ]
-};
+
+module.exports = config;
