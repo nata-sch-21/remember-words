@@ -10,21 +10,21 @@ module.exports = {
     './src/index.js',
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js?$/,
         include: [path.resolve(__dirname, 'src')],
         exclude: [path.resolve(__dirname, 'node_modules')],
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
       },
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'react-hot-loader/webpack',
+        exclude: [path.resolve(__dirname, 'node_modules')],
+        use: 'react-hot-loader/webpack',
       },
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
+        exclude: [path.resolve(__dirname, 'node_modules')],
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -44,7 +44,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.scss', '.css'],
+    extensions: ['.js', '.jsx', '.scss', '.css'],
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -55,22 +55,29 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     hot: true,
     historyApiFallback: true,
+    watchOptions: {
+      ignored: /node_modules/,
+    },
   },
   plugins: [
+    new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"development"',
       },
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('style.css'),
 
     new HtmlWebpackPlugin({
       template: './dist/index.html',
       inject: true,
     }),
-    new webpack.ProvidePlugin({
-      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
-    }),
+
+    // new HtmlWebpackPlugin({
+    //   template: project.paths.public('index.html'),
+    //   hash: false,
+    //   filename: 'index.html',
+    //   inject: 'body',
+    // })
   ],
 };

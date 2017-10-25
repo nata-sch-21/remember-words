@@ -7,12 +7,16 @@
   ],
   "env": {
     "node": true,
-    "browser": true
+    "browser": true,
+    "es6": true
   },
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     }
+  },
+  "rules": {
+    "no-console": 0
   },
   "extends": [
     "eslint:recommended",

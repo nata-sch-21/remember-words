@@ -6,11 +6,11 @@ const pck = require('./package.json');
 
 const config = {
   entry: {
-    main: './src/index.js',
+    bundle: './src/index.js',
     vendor: Object.keys(pck.dependencies || {}),
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['.js', '.css'],
     modules: [
       path.resolve(__dirname, 'src'),
       'node_modules',
@@ -24,31 +24,33 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
+        test: /\.js?$/,
+        include: [path.resolve(__dirname, 'src')],
+        exclude: [path.resolve(__dirname, 'node_modules')],
+        use: ['babel-loader'],
       },
       {
         test: /\.scss$/,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              localIdentName: '[name]__[local]___[hash:base64:5]',
-              modules: true,
-              importLoaders: 1,
+        exclude: [path.resolve(__dirname, 'node_modules')],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+                modules: true,
+                importLoaders: 1,
+              },
             },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              includePaths: [path.resolve(__dirname, 'styles')],
-            },
-          }
-        ],
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: [path.resolve(__dirname, 'styles')],
+              },
+            }
+          ],
+        }),
       }
     ],
   },
@@ -58,6 +60,7 @@ const config = {
     net: 'empty',
     tls: 'empty'
   },
+  devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -66,6 +69,7 @@ const config = {
       NODE_ENV: 'production',
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
       template: './dist/index.html',
@@ -80,9 +84,18 @@ const config = {
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true,
+        minimize: true
       },
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor'],
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].css',
+      allChunks: true,
+    }),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
       compress: {
         screw_ie8: true, // React doesn't support IE8
         warnings: false,
@@ -95,27 +108,7 @@ const config = {
         screw_ie8: true,
       },
     }),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor'],
-    }),
-    new ExtractTextPlugin({
-      filename: '[name].css',
-      allChunks: true,
-    })
   ],
 }
-
-config.module.rules
-  .filter(rule => String(rule.test).includes('css'))
-  .forEach((rule) => {
-    const first = rule.use[0]
-    const rest = rule.use.slice(1)
-    rule.use = ExtractTextPlugin.extract({
-      fallback: first,
-      use: rest,
-    })
-  })
-
 
 module.exports = config;

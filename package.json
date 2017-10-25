@@ -4,10 +4,11 @@
   "description": "remember-words",
   "main": "index.js",
   "scripts": {
-    "build": "webpack -p --progress --colors --config ./webpack.prod.config.js",
+    "build": "webpack --progress --colors --config webpack.prod.config.js",
     "start": "webpack-dev-server --progress --colors --hot --config ./webpack.config.js",
-    "test": "mocha --compilers js:babel-core/register --require ./test/setup.js 'src/**/spec.js'",
-    "lint": "eslint .",
+    "test": "mocha --compilers js:babel-core/register --require ./bin/test.js 'src/**/spec.js'",
+    "lint": "eslint 'src/**' 'bin/**'",
+    "lint:report": "eslint 'src/**' -f html --color -o ./public/lint.html",
     "lint:fix": "npm run lint -- --fix"
   },
   "keywords": [],
@@ -43,14 +44,15 @@
     "sass-loader": "^6.0.6",
     "sinon": "4.0.0",
     "sinon-chai": "2.14.0",
-    "style-loader": "^0.13.0",
-    "webpack-dev-server": "^2.9.1"
+    "style-loader": "^0.13.2",
+    "webpack-dev-server": "^2.9.1",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "webpack": "^3.6.0",
+    "html-webpack-plugin": "^2.30.1"
   },
   "dependencies": {
     "classnames": "2.2.5",
-    "extract-text-webpack-plugin": "^3.0.1",
     "fs": "0.0.1-security",
-    "html-webpack-plugin": "^2.30.1",
     "js-cookie": "2.1.0",
     "normalizr": "2.0.0",
     "prop-types": "15.5.10",
@@ -61,7 +63,6 @@
     "react-router-dom": "^4.2.2",
     "redux": "3.6.0",
     "redux-thunk": "2.2.0",
-    "webpack": "^3.6.0",
     "whatwg-fetch": "2.0.3"
   },
   "repository": {

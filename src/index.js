@@ -9,13 +9,15 @@ require('../styles/index.scss');
 
 const store = configureStore();
 
+const appContainer = document.getElementById('app');
+
 ReactDOM.render(
-    <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </Provider>,
-    document.getElementById('app')
+  <Provider store={store}>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  </Provider>,
+  appContainer
 );
 
 if (module.hot) {
