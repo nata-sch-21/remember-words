@@ -41,6 +41,7 @@ const config = {
                 localIdentName: '[name]__[local]___[hash:base64:5]',
                 modules: true,
                 importLoaders: 1,
+                minimize: true,
               },
             },
             {
@@ -60,7 +61,6 @@ const config = {
     net: 'empty',
     tls: 'empty'
   },
-  devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -91,8 +91,8 @@ const config = {
       names: ['vendor'],
     }),
     new ExtractTextPlugin({
-      filename: '[name].css',
-      allChunks: true,
+      filename: 'styles.css',
+      allChunks: false,
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,

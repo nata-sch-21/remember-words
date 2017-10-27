@@ -20,21 +20,26 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: [path.resolve(__dirname, 'node_modules')],
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              query: {
-                modules: true,
-                sourceMap: true,
-                importLoaders: 2,
-                localIdentName: '[name]__[local]___[hash:base64:5]',
-              },
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+              modules: true,
+              importLoaders: 1,
+              sourceMap: true
             },
-            'sass-loader',
-          ],
-        }),
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [path.resolve(__dirname, 'styles')],
+            },
+          }
+        ],
       },
     ],
   },
@@ -52,7 +57,7 @@ module.exports = {
     hotOnly: true,
     historyApiFallback: true,
     watchOptions: {
-      ignored: /node_modules/,
+      ignored: [path.resolve(__dirname, 'node_modules')],
     },
   },
   plugins: [
@@ -69,12 +74,5 @@ module.exports = {
       template: './dist/index.html',
       inject: true,
     }),
-
-    // new HtmlWebpackPlugin({
-    //   template: project.paths.public('index.html'),
-    //   hash: false,
-    //   filename: 'index.html',
-    //   inject: 'body',
-    // })
   ],
 };
