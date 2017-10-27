@@ -1,25 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import configureStore from './stores/configureStore';
-import App from './components/App';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { AppContainer } from 'react-hot-loader'
+import configureStore from './stores/configureStore'
+import Router from './routes'
 
-require('../styles/index.scss');
+import '../styles/index.scss';
 
 const store = configureStore();
 
-const appContainer = document.getElementById('app');
+const render = (NextRouter) => {
+  try {
+    ReactDOM.render(
+      <AppContainer>
+        <Provider store={store}>
+          <NextRouter />
+        </Provider>
+      </AppContainer>,
+      document.getElementById('app')
+    )
+  } catch (err) {
+    console.error(err)
+  }
+}
 
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App/>
-    </BrowserRouter>
-  </Provider>,
-  appContainer
-);
 
 if (module.hot) {
-  module.hot.accept();
+  module.hot.accept('./routes', () => {
+    System.import('./routes').then(({ default: NextRouter }) => render(NextRouter));
+  })
 }
+
+render(Router);

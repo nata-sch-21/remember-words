@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
+    'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
     './src/index.js',
   ],
   module: {
@@ -16,11 +16,6 @@ module.exports = {
         include: [path.resolve(__dirname, 'src')],
         exclude: [path.resolve(__dirname, 'node_modules')],
         use: ['babel-loader'],
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: [path.resolve(__dirname, 'node_modules')],
-        use: 'react-hot-loader/webpack',
       },
       {
         test: /\.scss$/,
@@ -53,13 +48,15 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    hot: true,
+    //do not reload if fatal hot: true -> reload
+    hotOnly: true,
     historyApiFallback: true,
     watchOptions: {
       ignored: /node_modules/,
     },
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
       'process.env': {

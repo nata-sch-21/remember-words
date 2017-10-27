@@ -1,6 +1,7 @@
 import React from 'react';
 
-class Home extends React.Component {
+//export for tests
+export class Home extends React.Component {
   render() {
     return (
             <div>
@@ -10,4 +11,5 @@ class Home extends React.Component {
   }
 }
 
+//connect redux
 export default Home;
