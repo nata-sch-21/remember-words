@@ -6,12 +6,15 @@
   "scripts": {
     "build": "webpack --progress --colors --config webpack.prod.config.js",
     "start": "webpack-dev-server --progress --colors --config ./webpack.config.js",
+    "server": "node server.js",
     "test": "mocha --compilers js:babel-core/register --require ./bin/test.js 'src/**/spec.js'",
     "lint": "eslint 'src/**' 'bin/**'",
     "lint:report": "eslint 'src/**' -f html --color -o ./public/lint.html",
     "lint:fix": "npm run lint -- --fix"
   },
-  "keywords": ["client"],
+  "keywords": [
+    "client"
+  ],
   "author": "Nanallia Shostak",
   "license": "ISC",
   "devDependencies": {
@@ -46,6 +49,7 @@
   },
   "dependencies": {
     "classnames": "2.2.5",
+    "express": "^4.16.2",
     "fs": "0.0.1-security",
     "js-cookie": "2.1.0",
     "normalizr": "2.0.0",

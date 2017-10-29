@@ -4,6 +4,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pck = require('./package.json');
 
+const dependencies = pck.dependencies;
+delete dependencies.express;
+console.log(dependencies)
+
 const config = {
   entry: {
     bundle: './src/index.js',
@@ -18,7 +22,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'public'),
-    publicPath: '/',
+    publicPath: '/public',
     filename: '[name].js',
   },
   module: {
@@ -88,11 +92,12 @@ const config = {
       },
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor'],
+      name: 'vendor',
+      filename: 'vendor.js',
     }),
     new ExtractTextPlugin({
       filename: 'styles.css',
-      allChunks: false,
+      // allChunks: false,
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
