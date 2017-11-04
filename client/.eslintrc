@@ -1,25 +1,20 @@
 {
   "parser": "babel-eslint",
-  "plugins": [
-    "react",
-    "jsx-a11y",
-    "import"
-  ],
   "env": {
-    "node": true,
-    "browser": true,
-    "es6": true
+//    "node": true,
+//    "es6": true,
+    "browser": true
   },
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+
     }
   },
   "rules": {
-    "no-console": 0
+    "no-console": 0,
+    "import/no-named-as-default": 0
   },
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
+    "airbnb"
   ]
 }

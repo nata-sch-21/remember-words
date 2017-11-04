@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { AppContainer } from 'react-hot-loader'
-import configureStore from './stores/configureStore'
-import Router from './routes'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { AppContainer } from 'react-hot-loader';
+import configureStore from './stores/configureStore';
+import Router from './routes';
 
 import '../styles/index.scss';
 
@@ -17,18 +17,18 @@ const render = (NextRouter) => {
           <NextRouter />
         </Provider>
       </AppContainer>,
-      document.getElementById('app')
-    )
+      document.getElementById('app'),
+    );
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
-}
+};
 
 
 if (module.hot) {
   module.hot.accept('./routes', () => {
     System.import('./routes').then(({ default: NextRouter }) => render(NextRouter));
-  })
+  });
 }
 
 render(Router);

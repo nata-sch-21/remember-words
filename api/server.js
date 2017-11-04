@@ -1,10 +1,11 @@
-const express        = require('express');
-const MongoClient    = require('mongodb').MongoClient;
-const bodyParser     = require('body-parser');
-const app            = express();
+const config = require('./config');
+
+const express = require('express');
+
+const app = express();
 
 
-const port = 8000;
+const port = config.server_port;
 app.listen(port, () => {
-  console.log('We are live on ' + port);
+  console.log(`We are live on ${port}`);
 });
