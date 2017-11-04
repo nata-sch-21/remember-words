@@ -4,6 +4,7 @@
   "description": "api",
   "main": "server.js",
   "scripts": {
+    "db:init": "node ./db_migrations/initDb.js",
     "test": "mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm run test -- --watch",
     "start": "nodemon server.js",
@@ -39,6 +40,6 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "nedb": "^1.8.0"
+    "nedb-promise": "^2.0.1"
   }
 }

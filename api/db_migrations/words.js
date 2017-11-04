@@ -1,8 +1,8 @@
+const DataStore = require('nedb-promise');
+
 const config = require('../config');
 
-const DataStore = require('nedb');
-
-const words = new DataStore({ filename: config.db.words, autoload: true });
+const words = new DataStore({ filename: config.db.files.words, autoload: true });
 
 const tools = require('../utils/tools.js');
 
@@ -49,6 +49,8 @@ const initialWords = [
   },
 ];
 
-words.insert(initialWords, (err, docs) => {
-  console.log(docs);
-});
+const migrate = async () => {
+  await words.insert(initialWords);
+};
+
+module.exports = migrate;

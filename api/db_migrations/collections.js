@@ -1,8 +1,8 @@
+const DataStore = require('nedb-promise');
+
 const config = require('../config');
 
-const DataStore = require('nedb');
-
-const collections = new DataStore({ filename: config.db.collections, autoload: true });
+const collections = DataStore({ filename: config.db.files.collections, autoload: true });
 
 const initialCollections = [
   {
@@ -21,6 +21,8 @@ const initialCollections = [
   },
 ];
 
-collections.insert(initialCollections, (err, docs) => {
-  console.log(docs);
-});
+const migrate = async () => {
+  await collections.insert(initialCollections);
+};
+
+module.exports = migrate;
