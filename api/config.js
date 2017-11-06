@@ -1,17 +1,21 @@
 const path = require('path');
 
 const config = {
-  server_port: '8000',
+  serverPort: '8000',
   db: {
-    path: 'db',
+    path: path.resolve('db'),
     files: {
+      dictionaries: path.resolve(__dirname, 'db/collections.db'),
       words: path.resolve(__dirname, 'db/words.db'),
+      // results: path.resolve(__dirname, 'db/results.db'),
+    },
+    migrations: {
+      dictionaries: path.resolve(__dirname, 'db/dictionaries.db'),
       results: path.resolve(__dirname, 'db/results.db'),
-      collections: path.resolve(__dirname, 'db/collections.db'),
     },
   },
-  uploads_path: path.resolve(__dirname, 'uploads'),
-  default_language: 'en',
+  uploadsPath: path.resolve(__dirname, 'uploads'),
+  defaultLanguage: 'en',
 };
 
 module.exports = config;

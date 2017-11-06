@@ -1,11 +1,9 @@
 const config = require('./config');
 
-const express = require('express');
+const app = require('./app');
 
-const app = express();
+const port = process.env.PORT || config.serverPort;
 
-
-const port = config.server_port;
 app.listen(port, () => {
-  console.log(`We are live on ${port}`);
+  console.log(`Listen port: ${port}`);
 });
