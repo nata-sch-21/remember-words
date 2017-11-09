@@ -1,16 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 // export for tests
-export class Home extends React.Component {
-  render() {
-    return (
-      <div>
-                Home
-      </div>
-    );
-  }
-}
+export const Home = () => (
+  <div>
+    <div>Home</div>
+    <Link to="/dictionaries">Start</Link>
+  </div>
+);
 
 const mapStateToProps = (state) => {
   const newState = state.toString();

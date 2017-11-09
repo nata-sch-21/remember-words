@@ -4,13 +4,13 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pck = require('./package.json');
 
-const dependencies = pck.dependencies;
+const dependencies = { pck };
 delete dependencies.express;
-console.log(dependencies)
+delete dependencies['react-hot-loader'];
 
 const config = {
   entry: {
-    bundle: './src/index.js',
+    bundle: './src/index.jsx',
     vendor: Object.keys(pck.dependencies || {}),
   },
   resolve: {
@@ -28,7 +28,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js?$/,
+        test: /\.(js|jsx)$/,
         include: [path.resolve(__dirname, 'src')],
         exclude: [path.resolve(__dirname, 'node_modules')],
         use: ['babel-loader'],
@@ -53,17 +53,17 @@ const config = {
               options: {
                 includePaths: [path.resolve(__dirname, 'styles')],
               },
-            }
+            },
           ],
         }),
-      }
+      },
     ],
   },
   node: {
     console: false,
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
+    tls: 'empty',
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -88,7 +88,7 @@ const config = {
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true,
-        minimize: true
+        minimize: true,
       },
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -114,6 +114,6 @@ const config = {
       },
     }),
   ],
-}
+};
 
 module.exports = config;

@@ -7,12 +7,12 @@ module.exports = {
   entry: [
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:8080',
-    './src/index.js',
+    './src/index.jsx',
   ],
   module: {
     rules: [
       {
-        test: /\.js?$/,
+        test: /\.(js|jsx)$/,
         include: [path.resolve(__dirname, 'src')],
         exclude: [path.resolve(__dirname, 'node_modules')],
         use: ['babel-loader'],
@@ -30,7 +30,7 @@ module.exports = {
               localIdentName: '[name]__[local]___[hash:base64:5]',
               modules: true,
               importLoaders: 1,
-              sourceMap: true
+              sourceMap: true,
             },
           },
           {
@@ -38,7 +38,7 @@ module.exports = {
             options: {
               includePaths: [path.resolve(__dirname, 'styles')],
             },
-          }
+          },
         ],
       },
     ],
@@ -51,10 +51,11 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js',
   },
+
+  devtool: 'source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    //do not reload if fatal hot: true -> reload
-    hotOnly: true,
+    hotOnly: true, // do not reload if fatal hot: true -> reload
     historyApiFallback: true,
     watchOptions: {
       ignored: [path.resolve(__dirname, 'node_modules')],
