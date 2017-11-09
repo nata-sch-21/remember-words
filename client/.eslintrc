@@ -1,10 +1,12 @@
 {
   "parser": "babel-eslint",
+  "plugins": ["jest"],
   "env": {
 //    "node": true,
 //    "es6": true,
     "browser": true,
-    "jest": true
+    "jest": true,
+    "jest/globals": true
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -27,6 +29,7 @@
     "mount": true
   },
   "extends": [
-    "airbnb"
+    "airbnb",
+    "plugin:jest/recommended"
   ]
 }
