@@ -7,7 +7,7 @@
     "build": "webpack --progress --colors --config webpack.prod.config.js",
     "start": "webpack-dev-server --progress --colors --config ./webpack.config.js",
     "server": "node server.js",
-    "lint": "eslint 'src/**' 'test/**'",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",

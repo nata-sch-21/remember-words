@@ -1,9 +1,128 @@
-ul, li {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+%extend_1 {
+  height: 100%;
+  background: $back;
+  color: $text;
+  font: 12px/1 'Open Sans', sans-serif;
 }
 
-div {
-  border: $border
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  @extend %extend_1;
+}
+body {
+  @extend %extend_1;
+}
+.wrapper {
+  margin: 20px auto;
+}
+[class*="col-"] {
+  margin-bottom: 20px;
+  min-height: 30px;
+  background: $white;
+  box-shadow: 0 3px 2px $black_10;
+  text-align: center;
+  padding: 20px;
+}
+
+@media all and(max-width: 500px) {
+  .no-mobile {
+    display: none;
+  }
+}
+@media all and(min-width: 500px) {
+  .wrapper {
+    padding: 0 20px;
+    background-color: $wrapback;
+    padding-top: 20px;
+    border-radius: 5px;
+  }
+  .row {
+    display: flex;
+  }
+  [class*="col-"] {
+    margin-right: 20px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  @for $flex from 1 through 12 {
+    .col-#{$flex} {
+      flex: $flex;
+    }
+  }
+  .full-width {
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+  .space-off {
+    margin-bottom: 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+@media all and(min-width: 1000px) {
+  .wrapper {
+    max-width: 1000px;
+  }
+}
+h2 {
+  font: 600 20px/1 'Open Sans', sans-serif;
+  color: $h2;
+  margin: 20px 0;
+}
+h3 {
+  font: 600 15px/1 'Open Sans', sans-serif;
+  color: $h3;
+  margin: 20px 0;
+}
+p {
+  font: 12px/1 'Open Sans', sans-serif;
+  color: $text;
+}
+a {
+  color: $text;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.no-back {
+  background-color: $back;
+}
+.yellow {
+  background: $yellow;
+}
+.blue {
+  background: $blue;
+  color: $white;
+}
+.red {
+  background-color: $red;
+  color: $white;
+}
+.green {
+  background: $green;
+  color: $white;
+
+  a {
+    color: $white;
+  }
+}
+.rounded {
+  border-radius: $radius;
+}
+.hidden-col {
+  visibility: hidden;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
 }

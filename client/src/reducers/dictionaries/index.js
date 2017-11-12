@@ -1,8 +1,8 @@
 // import constants
 
-const initialState = {
-  some: false,
-};
+// const initialState = {
+//   some: false,
+// };
 
 export default function someReducer(state, action) {
   switch (action.type) {
