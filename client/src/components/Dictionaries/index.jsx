@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import config from '../../../config';
+import Loader from '../Loader';
+import DictionaryItem from './DictionaryItem';
 
 class Dictionaries extends React.Component {
   renderDictionaryItems() {
-    const lang = config.defaultLanguage;
     return (
       <div className="block">
-        {this.props.dictionaries.map(item => <div className="col-12" key={item._id}>{item.translations[lang]}</div>)}
+        {this.props.dictionaries.map(item => <DictionaryItem key={item._id} dictionary={item} />)}
       </div>
     );
   }
@@ -16,7 +16,7 @@ class Dictionaries extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        {this.props.dictionaries.length === 0 ? <div className="loader">Loader ...</div> : this.renderDictionaryItems()}
+        {this.props.dictionaries.length === 0 ? <Loader /> : this.renderDictionaryItems()}
       </div>
     );
   }
