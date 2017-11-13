@@ -16,6 +16,11 @@ class Dictionaries extends React.Component {
   render() {
     return (
       <div className="wrapper">
+        <div className="row">
+          <div className="col-12">
+            <h2>Dictionaries</h2>
+          </div>
+        </div>
         {this.props.dictionaries.length === 0 ? <Loader /> : this.renderDictionaryItems()}
       </div>
     );
