@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Home } from '../index';
+import Home from '../index';
 
 describe('rendering', () => {
   // wrapper has API jQuery
@@ -8,6 +8,10 @@ describe('rendering', () => {
 
   it('should render without throwing any error', () => {
     expect(wrapper.length).toEqual(1);
+  });
+
+  it('should have class .wrapper', () => {
+    expect(wrapper.hasClass('wrapper')).toEqual(true);
   });
 
   it('should render Link to the dictionaries page', () => {

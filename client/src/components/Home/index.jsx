@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-// export for tests
-export const Home = () => (
+const Home = () => (
   <div className="wrapper no-back">
     <div className="row">
       <div className="col-6">
@@ -20,12 +18,4 @@ export const Home = () => (
   </div>
 );
 
-const mapStateToProps = (state) => {
-  const newState = state.toString();
-  return {
-    newData: newState,
-  };
-};
-
-// connect redux
-export default connect(mapStateToProps)(Home);
+export default Home;
