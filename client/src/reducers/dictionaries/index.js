@@ -4,7 +4,7 @@ import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
 export const initialState = {
   dictionaries: [],
   response: {
-    status: null,
+    status: '',
     message: '',
   },
   isFetching: false,

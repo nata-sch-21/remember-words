@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loader from '../Loader';
 import DictionaryItem from './DictionaryItem';
+import { requestGetDictionaries } from '../../actions/dictionaries';
 
 class Dictionaries extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(requestGetDictionaries());
+  }
+
   renderDictionaryItems() {
     return (
       <div className="block">
@@ -13,29 +19,47 @@ class Dictionaries extends React.Component {
     );
   }
 
+  renderHeader() {
+    return (
+      <div className="row">
+        <div className="col-12">
+          <h2>Dictionaries</h2>
+        </div>
+      </div>
+    );
+  }
+
   render() {
+    if (!this.props.response.status) {
+      return this.renderHeader();
+    }
+
     return (
       <div className="wrapper">
-        <div className="row">
-          <div className="col-12">
-            <h2>Dictionaries</h2>
-          </div>
-        </div>
-        {this.props.dictionaries.length === 0 ? <Loader /> : this.renderDictionaryItems()}
+        {this.renderHeader()}
+        {this.props.isFetching === true ? <Loader /> : this.renderDictionaryItems()}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const currentState = state.dictionaries;
   return {
     dictionaries: currentState.dictionaries || [],
+    isFetching: currentState.isFetching || false,
+    response: currentState.response || null,
   };
 };
 
 Dictionaries.propTypes = {
   dictionaries: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  response: PropTypes.shape({
+    status: PropTypes.string,
+    message: PropTypes.string,
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export { Dictionaries };
