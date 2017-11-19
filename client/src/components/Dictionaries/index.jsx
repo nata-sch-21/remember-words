@@ -27,9 +27,12 @@ class Dictionaries extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  dictionaries: state.dictionaries || [],
-});
+const mapStateToProps = state => {
+  const currentState = state.dictionaries;
+  return {
+    dictionaries: currentState.dictionaries || [],
+  };
+};
 
 Dictionaries.propTypes = {
   dictionaries: PropTypes.arrayOf(PropTypes.object).isRequired,
