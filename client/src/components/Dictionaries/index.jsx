@@ -5,7 +5,7 @@ import Loader from '../Loader';
 import DictionaryItem from './DictionaryItem';
 
 class Dictionaries extends React.Component {
-  renderDictionaryItems() {
+  renderItems() {
     return (
       <div className="block">
         {this.props.dictionaries.map(item => <DictionaryItem key={item._id} dictionary={item} />)}
@@ -21,7 +21,7 @@ class Dictionaries extends React.Component {
             <h2>Dictionaries</h2>
           </div>
         </div>
-        {this.props.dictionaries.length === 0 ? <Loader /> : this.renderDictionaryItems()}
+        {this.props.dictionaries.length === 0 ? <Loader /> : this.renderItems()}
       </div>
     );
   }

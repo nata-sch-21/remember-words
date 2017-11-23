@@ -9,7 +9,7 @@ describe('rendering', () => {
     expect(wrapper.length).toEqual(1);
   });
 
-  it('should have class .loader', () => {
-    expect(wrapper.hasClass('loader')).toEqual(true);
+  it('should have header h2', () => {
+    expect(wrapper.find('h2')).toHaveLength(1);
   });
 });
