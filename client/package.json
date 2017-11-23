@@ -50,6 +50,7 @@
     "webpack-dev-server": "^2.9.1"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "babel-runtime": "^6.26.0",
     "classnames": "2.2.5",
     "express": "^4.16.2",
@@ -65,8 +66,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "redux": "3.6.0",
-    "redux-thunk": "2.2.0",
-    "whatwg-fetch": "2.0.3"
+    "redux-thunk": "2.2.0"
   },
   "repository": {
     "type": "git",

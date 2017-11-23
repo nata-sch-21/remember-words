@@ -29,7 +29,7 @@ class Dictionaries extends React.Component {
     );
   }
 
-  render() {
+  renderContent() {
     if (!this.props.response.status) {
       return this.renderHeader();
     }
@@ -38,6 +38,14 @@ class Dictionaries extends React.Component {
       <div className="wrapper">
         {this.renderHeader()}
         {this.props.isFetching === true ? <Loader /> : this.renderDictionaryItems()}
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div className="wrapper">
+        {this.renderContent()}
       </div>
     );
   }
