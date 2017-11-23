@@ -1,9 +1,11 @@
 import React from 'react';
-
+import { dictionaries } from '../../../../test/testData';
+import { STATUS_ERROR, STATUS_OK } from '../../../constants/app';
 import { Dictionaries } from '../index';
+import { initialState } from '../../../reducers/dictionaries';
 
 const createTestProps = props => ({
-  fetchDictionaries: jest.fn(),
+  dispatch: jest.fn(),
   ...props,
 });
 
@@ -14,45 +16,44 @@ describe('rendering', () => {
 
   describe('initial state', () => {
     beforeEach(() => {
-      const props = createTestProps({ dictionaries: {}, isFetching: false });
+      const props = createTestProps({ ...initialState });
       wrapper = createWrapper(props);
     });
     it('should render without throwing any error', () => {
       expect(wrapper).toHaveLength(1);
     });
 
-    it('should render Loader if prop dictionaries hasn\'t loaded yet', () => {
-      expect(wrapper.find('Loader')).toHaveLength(1);
+    it('should render only header', () => {
+
     });
   });
 
-  describe('there are some dictionaries', () => {
-    const dictionaries = [
-      {
-        _id: '1',
-        translations: {
-          en: 'Fruits',
-          ru: 'Фрукты',
-        },
-      },
-      {
-        _id: '2',
-        translations: {
-          en: 'Animals',
-          ru: 'Животные',
-        },
-      },
-    ];
+  describe('fetching dictionaries', () => {
+    it('should render Loader');
+  });
 
+  describe('failed load dictionaries', () => {
+    it('should render error for user');
+  });
+
+  describe('successfully loaded dictionaries', () => {
     beforeEach(() => {
-      const props = createTestProps({ dictionaries: { data: dictionaries, response: {}}, isFetching: false });
+      const props = createTestProps({
+        dictionaries,
+        isFetching: false,
+        response: {
+          status: STATUS_OK,
+          message: '',
+        },
+      });
       wrapper = createWrapper(props);
     });
-    it('should render .block if prop dictionaries has items', () => {
+
+    it('should render .block', () => {
       expect(wrapper.find('.block')).toHaveLength(1);
     });
 
-    it('should render number of DictionaryItem if prop dictionaries has items with the same length', () => {
+    it('should render number of DictionaryItem that we pass in', () => {
       expect(wrapper.find('DictionaryItem')).toHaveLength(dictionaries.length);
     });
   });

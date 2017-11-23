@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Loader = () => (
-  <div className="row">
+  <div className="row loader">
     <div className="col-12">
-      <h2 className="loader">Loading...</h2>
+      <h2>Loading...</h2>
     </div>
   </div>
 );
