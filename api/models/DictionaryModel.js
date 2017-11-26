@@ -1,4 +1,4 @@
-const DB = require('../database/DB')().dictionaries;
+const DB = require('../database/DB').dictionaries;
 
 class Dictionary {
   static async getAllDictionaries() {

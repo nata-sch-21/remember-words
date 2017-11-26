@@ -25,7 +25,7 @@ const getFruits = dictionaryId => [
       en: 'apple',
       ru: 'яблоко',
     },
-    collection_id: dictionaryId,
+    dictionary_id: dictionaryId,
   },
   {
     image_name: 'image2.jpg',
@@ -34,7 +34,7 @@ const getFruits = dictionaryId => [
       en: 'pear',
       ru: 'груша',
     },
-    collection_id: dictionaryId,
+    dictionary_id: dictionaryId,
   },
 ];
 
@@ -47,7 +47,7 @@ const getAnimals = dictionaryId => [
       en: 'cat',
       ru: 'кот',
     },
-    collection_id: dictionaryId,
+    dictionary_id: dictionaryId,
   },
   {
     image_name: 'image4.jpg',
@@ -56,7 +56,7 @@ const getAnimals = dictionaryId => [
       en: 'wolf',
       ru: 'волк',
     },
-    collection_id: dictionaryId,
+    dictionary_id: dictionaryId,
   },
 ];
 
