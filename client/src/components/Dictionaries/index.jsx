@@ -4,8 +4,21 @@ import { connect } from 'react-redux';
 import Loader from '../Loader';
 import DictionaryItem from './DictionaryItem';
 import { requestGetDictionaries } from '../../actions/dictionaries';
+import { STATUS_ERROR } from '../../constants/app';
 
 class Dictionaries extends React.Component {
+  constructor() {
+    super();
+
+    this.header = (
+      <div className="row">
+        <div className="col-12">
+          <h2>Dictionaries</h2>
+        </div>
+      </div>
+    );
+  }
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(requestGetDictionaries());
@@ -19,33 +32,19 @@ class Dictionaries extends React.Component {
     );
   }
 
-  renderHeader() {
-    return (
-      <div className="row">
-        <div className="col-12">
-          <h2>Dictionaries</h2>
-        </div>
-      </div>
-    );
-  }
+  render() {
+    if (!this.props.response.status && this.props.isFetching === false) {
+      return <div className="wrapper">{this.header}</div>;
+    }
 
-  renderContent() {
-    if (!this.props.response.status) {
-      return this.renderHeader();
+    if (this.props.response.status === STATUS_ERROR) {
+      return <div className="wrapper"><h2 className="red">{this.props.response.message}</h2></div>;
     }
 
     return (
       <div className="wrapper">
-        {this.renderHeader()}
+        {this.header}
         {this.props.isFetching === true ? <Loader /> : this.renderDictionaryItems()}
-      </div>
-    );
-  }
-
-  render() {
-    return (
-      <div className="wrapper">
-        {this.renderContent()}
       </div>
     );
   }

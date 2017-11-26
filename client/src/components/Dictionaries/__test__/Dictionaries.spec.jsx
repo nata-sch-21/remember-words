@@ -24,28 +24,55 @@ describe('rendering', () => {
     });
 
     it('should render only header', () => {
-
+      expect(wrapper.find('.row h2').text()).toEqual('Dictionaries');
     });
   });
 
   describe('fetching dictionaries', () => {
-    it('should render Loader');
+    const props = createTestProps({
+      ...initialState,
+      isFetching: true,
+    });
+
+    beforeEach(() => {
+      wrapper = createWrapper(props);
+    });
+
+    it('should render Loader', () => {
+      expect(wrapper.find('Loader')).toHaveLength(1);
+    });
   });
 
   describe('failed load dictionaries', () => {
-    it('should render error for user');
+    const props = createTestProps({
+      ...initialState,
+      response: {
+        status: STATUS_ERROR,
+        message: 'Error message',
+      },
+    });
+
+    beforeEach(() => {
+      wrapper = createWrapper(props);
+    });
+
+    it('should render h2 tag with error message', () => {
+      expect(wrapper.find('h2').hasClass('red')).toEqual(true);
+      expect(wrapper.find('h2').text()).toEqual(props.response.message);
+    });
   });
 
   describe('successfully loaded dictionaries', () => {
+    const props = createTestProps({
+      dictionaries,
+      isFetching: false,
+      response: {
+        status: STATUS_OK,
+        message: '',
+      },
+    });
+
     beforeEach(() => {
-      const props = createTestProps({
-        dictionaries,
-        isFetching: false,
-        response: {
-          status: STATUS_OK,
-          message: '',
-        },
-      });
       wrapper = createWrapper(props);
     });
 
