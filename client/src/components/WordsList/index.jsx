@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import SelectLanguages from '../../components/SelectLanguages';
 // import { requestGetDictionaries } from '../../actions/dictionaries';
 import { STATUS_ERROR } from '../../constants/app';
 import config from '../../../config';
@@ -15,7 +16,9 @@ class WordsList extends React.Component {
     return (
       <div className="row">
         <div className="col-12">
-          <h2>{this.props.currentDictionary[config.defaultLanguage]}</h2>
+          {/**<h2>{this.props.currentDictionary[config.defaultLanguage]}</h2>**/}
+          <h3>header</h3>
+
         </div>
       </div>
     );
@@ -30,17 +33,18 @@ class WordsList extends React.Component {
   // }
 
   render() {
-    if (!this.props.response.status && this.props.isFetching === false) {
-      return <div className="wrapper">{this.renderHeader()}</div>;
-    }
-
-    if (this.props.response.status === STATUS_ERROR) {
-      return <div className="wrapper"><h2 className="red">{this.props.response.message}</h2></div>;
-    }
+    // if (!this.props.response.status && this.props.isFetching === false) {
+    //   return <div className="wrapper">{this.renderHeader()}</div>;
+    // }
+    //
+    // if (this.props.response.status === STATUS_ERROR) {
+    //   return <div className="wrapper"><h2 className="red">{this.props.response.message}</h2></div>;
+    // }
 
     return (
       <div className="wrapper">
-          <div className="row"></div>
+        {this.renderHeader()}
+          <SelectLanguages />
       </div>
     );
   }
