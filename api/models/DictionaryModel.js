@@ -5,6 +5,11 @@ class Dictionary {
     const data = await DB.cfind({}).exec();
     return data;
   }
+
+  static async getDictionaryById(id) {
+    const data = await DB.cfind({ _id: id }).exec();
+    return data;
+  }
 }
 
 module.exports = Dictionary;

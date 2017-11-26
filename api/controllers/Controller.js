@@ -23,12 +23,17 @@ class Controller {
         tools.errorResponse(res, 'Parameter id is required');
       }
 
+      const dictionary = await Dictionary.getDictionaryById(req.params.id);
+      if (!dictionary) {
+        tools.errorResponse(res, 'The dictionary wasn\'t found');
+      }
+
       const data = await Word.getWordsByDictionaryId(req.params.id);
 
       if (!data || data.length === 0) {
         tools.errorResponse(res, 'The words weren\'t found');
       }
-      tools.successResponse(res, data);
+      tools.successResponse(res, { words: data, dictionary });
     } catch (e) {
       console.log(`Error get words: ${e}`);
       tools.errorResponse(res, 'Server error');

@@ -60,10 +60,11 @@ body {
     justify-content: flex-start;
   }
   [class*="col-"], .block-item {
-    margin-right: 20px;
-    &:last-child {
-      margin-right: 0;
-    }
+    margin-right: 17.9px;
+    //margin-left: 11px;
+    //&:last-child {
+    //  margin-right: 0;
+    //}
   }
   @for $flex from 1 through 12 {
     .col-#{$flex} {
