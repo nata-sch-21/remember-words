@@ -1,19 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../Header';
 
 const Home = () => (
-  <div className="wrapper no-back">
-    <div className="row">
-      <div className="col-6">
-        <h2>
-          Let&apos;s remember the words
-        </h2>
-      </div>
-    </div>
-    <div className="row">
-      <div className="col-6 green">
-        <Link to="/dictionaries">Start</Link>
-      </div>
+  <div className="grid-1">
+    <Header header="Let's remember the words" />
+    <div className="col block green">
+      <Link to="/start">Start</Link>
     </div>
   </div>
 );

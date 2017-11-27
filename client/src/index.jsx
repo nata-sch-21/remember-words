@@ -14,7 +14,9 @@ const render = (NextRouter) => {
     ReactDOM.render(
       <AppContainer>
         <Provider store={store}>
-          <NextRouter />
+          <div className="wrapper">
+            <NextRouter />
+          </div>
         </Provider>
       </AppContainer>,
       document.getElementById('app'),

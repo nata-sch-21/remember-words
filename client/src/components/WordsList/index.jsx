@@ -5,6 +5,7 @@ import SelectLanguages from '../../components/SelectLanguages';
 // import { requestGetDictionaries } from '../../actions/dictionaries';
 import { STATUS_ERROR } from '../../constants/app';
 import config from '../../../config';
+import Header from '../Header';
 
 class WordsList extends React.Component {
   componentDidMount() {
@@ -42,9 +43,25 @@ class WordsList extends React.Component {
     // }
 
     return (
-      <div className="wrapper">
-        {this.renderHeader()}
-          <SelectLanguages />
+      <div className="grid-1">
+        <Header header="dictionary name" />
+        <div className="col block">
+          <div className="pure-block">
+            sdlrg
+          </div>
+          <div className="grid-2">
+            <div className="col">
+              <div className="block yellow">
+                prev
+              </div>
+            </div>
+            <div className="col">
+              <div className="block green">
+                next
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

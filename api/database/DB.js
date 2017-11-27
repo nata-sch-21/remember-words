@@ -5,7 +5,7 @@ const config = require('../config');
 const db = {};
 const dbFiles = Object.keys(config.db.files) || [];
 dbFiles.forEach((fileName) => {
-  db[fileName] = DataStore({ filename: config.db.files[fileName], autoload: true });
+  db[fileName] = DataStore({ filename: config.db.files[fileName] });
 });
 
 module.exports = db;

@@ -1,16 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import config from '../../../config';
+import Header from '../Header';
 
 class SelectLanguages extends React.Component {
   render() {
     return (
-      <div className="row">
-        <div className="col-1 full-width">
+      <div className="grid-1">
+        <Header header="Select languages" />
+        <div className="col-6 block">
           <h3>From:</h3>
+          <div>
+            <select name="from_language" id="from_language">
+              <option value="">1serferreer</option>
+              <option value="">1</option>
+              <option value="">1</option>
+              <option value="">1</option>
+            </select>
+          </div>
         </div>
-        <div className="col-1 full-width">
+        <div className="col-6 block">
           <h3>To:</h3>
+          <select name="from_language" id="from_language">
+            <option value="">1serferreer</option>
+            <option value="">1</option>
+            <option value="">1</option>
+            <option value="">1</option>
+          </select>
         </div>
       </div>
     );

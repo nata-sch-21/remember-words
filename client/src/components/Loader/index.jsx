@@ -1,8 +1,8 @@
 import React from 'react';
 
 const Loader = () => (
-  <div className="row loader">
-    <div className="col-12">
+  <div className="col">
+    <div className="loader text-center">
       <h2>Loading...</h2>
     </div>
   </div>

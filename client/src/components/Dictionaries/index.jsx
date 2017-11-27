@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loader from '../Loader';
+import Header from '../Header';
 import DictionaryItem from './DictionaryItem';
 import { requestGetDictionaries } from '../../actions/dictionaries';
 import { STATUS_ERROR } from '../../constants/app';
@@ -11,11 +12,11 @@ class Dictionaries extends React.Component {
     super();
 
     this.header = (
-      <div className="row">
+      <header className="row">
         <div className="col-12">
           <h2>Dictionaries</h2>
         </div>
-      </div>
+      </header>
     );
   }
 
@@ -24,27 +25,45 @@ class Dictionaries extends React.Component {
     dispatch(requestGetDictionaries());
   }
 
-  renderDictionaryItems() {
+  renderError() {
     return (
-      <div className="block">
-        {this.props.dictionaries.map(item => <DictionaryItem key={item._id} dictionary={item} />)}
+      <div className="col block red">
+        <h3 className="red">{this.props.response.message}</h3>
       </div>
     );
   }
 
-  render() {
+  renderDictionaryItems() {
+    return (
+      <div className="col block">
+        <div className="grid-5">
+          {this.props.dictionaries.map(item => <DictionaryItem key={item._id} dictionary={item} />)}
+        </div>
+      </div>
+    );
+  }
+
+  renderContent() {
     if (!this.props.response.status && this.props.isFetching === false) {
-      return <div className="wrapper">{this.header}</div>;
+      return null;
     }
 
     if (this.props.response.status === STATUS_ERROR) {
-      return <div className="wrapper"><h2 className="red">{this.props.response.message}</h2></div>;
+      return this.renderError();
     }
 
+    if (this.props.isFetching === true) {
+      return <Loader />;
+    }
+
+    return this.renderDictionaryItems();
+  }
+
+  render() {
     return (
-      <div className="wrapper">
-        {this.header}
-        {this.props.isFetching === true ? <Loader /> : this.renderDictionaryItems()}
+      <div className="grid-1">
+        <Header header="Dictionaries" />
+        {this.renderContent()}
       </div>
     );
   }

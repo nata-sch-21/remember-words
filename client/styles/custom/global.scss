@@ -1,34 +1,37 @@
-@mixin flexbox() {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-%extend_1 {
+html {
   height: 100%;
   background: $back;
   color: $text;
   font: 12px/1 'Open Sans', sans-serif;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html {
-  @extend %extend_1;
-}
 body {
-  @extend %extend_1;
+  height: 100%;
+  background: $back;
+  color: $text;
+  font: 12px/1 'Open Sans', sans-serif;
 }
+
 .wrapper {
   margin: 20px auto;
+  padding-bottom: 20px;
 }
-[class*="col-"], .block-item {
+
+.margin-bottom_20 {
   margin-bottom: 20px;
+}
+
+.margin-bottom_10 {
+  margin-bottom: 10px;
+}
+
+.block {
   min-height: 30px;
   background: $white;
   box-shadow: 0 3px 2px $black_10;
@@ -36,71 +39,50 @@ body {
   padding: 20px;
 }
 
-@media all and(max-width: 500px) {
-  .no-mobile {
-    display: none;
-  }
+.pure-block {
+  min-height: 30px;
+  text-align: center;
+  padding: 20px;
 }
+
+.inner-block {
+  margin: 10px;
+}
+
 @media all and(min-width: 500px) {
   .wrapper {
     padding: 0 20px;
     background-color: $wrapback;
     padding-top: 20px;
     border-radius: 5px;
-  }
-  .row {
-    @include flexbox();
-  }
-  .block {
-    @include flexbox();
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    -webkit-flex-flow: row wrap;
-    justify-content: flex-start;
-  }
-  [class*="col-"], .block-item {
-    margin-right: 20px;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  @for $flex from 1 through 12 {
-    .col-#{$flex} {
-      flex: $flex;
-    }
-  }
-  .full-width {
-    margin-bottom: 20px;
-    margin-right: 0;
-  }
-  .space-off {
-    margin-bottom: 0;
-    &:last-child {
-      margin-bottom: 0;
-    }
+    padding-bottom: 20px;
   }
 }
+
 @media all and(min-width: 1000px) {
   .wrapper {
     max-width: 1000px;
+    padding-bottom: 20px;
   }
 }
+
 h2 {
   font: 600 20px/1 'Open Sans', sans-serif;
   color: $h2;
   margin: 20px 0;
 }
+
 h3 {
   font: 600 15px/1 'Open Sans', sans-serif;
   color: $h3;
   margin: 20px 0;
 }
+
 p {
   font: 12px/1 'Open Sans', sans-serif;
   color: $text;
 }
+
 a {
   color: $text;
   text-decoration: none;
@@ -110,19 +92,23 @@ a {
 }
 
 .no-back {
-  background-color: $back;
+  background-color: $wrapback;
 }
+
 .yellow {
   background: $yellow;
 }
+
 .blue {
   background: $blue;
   color: $white;
 }
+
 .red {
   background-color: $red;
   color: $white;
 }
+
 .green {
   background: $green;
   color: $white;
@@ -131,122 +117,20 @@ a {
     color: $white;
   }
 }
+
 .rounded {
   border-radius: $radius;
 }
-.hidden-col {
-  visibility: hidden;
-}
+
 .text-left {
   text-align: left;
 }
+
 .text-right {
   text-align: right;
 }
 
-//input
-
-$main-color: #F44336;
-$secondary-color: white;
-$main-color: #333;
-$secondary-color: #2196f3;
-$width: 550px; // Change Me
-
-.centered {
-  width: $width;
-  height: $width/5;
-  margin: auto;
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 0; right: 0;
+.text-center {
+  text-align: center;
 }
-
-.group {
-  width: 100%;
-  height: $width/5;
-  overflow: hidden;
-  position: relative;
-}
-
-label {
-  position: absolute;
-  top: $width/15;
-  color: rgba(white, .5);
-  font: 400 $width/15 Roboto;
-  cursor: text;
-  transition: .25s ease;
-}
-
-input {
-  display: block;
-  width: 100%;
-  padding-top: $width/15;
-  border: none;
-  border-radius: 0; // For iOS
-  // border-bottom: solid $width/150 rgba(white, .5);
-  color: white;
-  background: $main-color;
-  font-size: $width/15;
-  transition: .3s ease;
-  &:valid {
-    // border-bottom-color: rgba(white, .5);
-    ~label {
-      top: 0;
-      font: 700 $width/25 Roboto;
-      color: rgba(white, .5);
-    }
-  }
-  &:focus {
-    outline: none;
-    // border-bottom-color: $secondary-color;
-    ~label {
-      top: 0;
-      font: 700 $width/25 Roboto;
-      color: $secondary-color;
-    }
-
-
-    ~ .bar:before {
-      transform: translateX(0);
-    }
-  }
-
-  // Stop Chrome's hideous pale yellow background on auto-fill
-
-  &:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px $main-color inset;
-    -webkit-text-fill-color: white !important;
-    // border-bottom-color: rgba(white, .5);
-  }
-}
-
-.bar {
-  // background: $secondary-color;
-  background: rgba(white, .5);
-  content: '';
-  width: $width;
-  // height: $width/100;
-  height: $width/150;
-  // transform: translateX(-100%);
-  transition: .3s ease;
-  // margin-top: -2px;
-  //
-  position: relative;
-  &:before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 150%;
-    background: $secondary-color;
-    transform: translateX(-100%);
-
-  }
-}
-
-::selection {background: rgba($secondary-color, .3);}
-
-
-// select
-
-
 

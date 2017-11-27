@@ -14,8 +14,8 @@ describe('rendering', () => {
     expect(wrapper.hasClass('wrapper')).toEqual(true);
   });
 
-  it('should render Link to the dictionaries page', () => {
-    expect(wrapper.find('Link').prop('to')).toEqual('/dictionaries');
+  it('should render Link to the start page', () => {
+    expect(wrapper.find('Link').prop('to')).toEqual('/start');
   });
 });
 

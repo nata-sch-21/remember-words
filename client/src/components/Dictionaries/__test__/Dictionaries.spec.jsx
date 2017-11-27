@@ -56,9 +56,12 @@ describe('rendering', () => {
       wrapper = createWrapper(props);
     });
 
-    it('should render h2 tag with error message', () => {
-      expect(wrapper.find('h2').hasClass('red')).toEqual(true);
-      expect(wrapper.find('h2').text()).toEqual(props.response.message);
+    it('should render .block with h2 tag with error message', () => {
+      expect(wrapper.find('.block h2').text()).toEqual(props.response.message);
+    });
+
+    it('should render .block h2 tag with .red class', () => {
+      expect(wrapper.find('.block h2').hasClass('red')).toEqual(true);
     });
   });
 
