@@ -1,6 +1,6 @@
 const tools = require('../utils/tools.js');
 
-const DB = require('../database/DB')();
+const DB = require('../database/DB');
 
 const initialDictionaries = [
   {
