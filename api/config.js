@@ -1,7 +1,12 @@
 const path = require('path');
 
+const host = 'localhost';
+const serverPort = '8000';
+const protocol = 'http://';
+
 const config = {
-  serverPort: '8000',
+  host,
+  serverPort,
   db: {
     path: path.resolve('db'),
     files: {
@@ -14,7 +19,7 @@ const config = {
       results: path.resolve(__dirname, 'db/results.db'),
     },
   },
-  uploadsPath: path.resolve(__dirname, 'uploads'),
+  uploadsPath: `${protocol}${host}:${serverPort}/static/uploads/`,
   defaultLanguage: 'en',
 };
 

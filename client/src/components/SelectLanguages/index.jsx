@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import config from '../../../config';
 import Header from '../Header';
@@ -27,6 +28,9 @@ class SelectLanguages extends React.Component {
             <option value="">1</option>
             <option value="">1</option>
           </select>
+        </div>
+        <div className="col block green">
+          <Link to="/dictionaries">Go to dictionaries</Link>
         </div>
       </div>
     );

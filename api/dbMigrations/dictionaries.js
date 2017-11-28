@@ -15,6 +15,30 @@ const initialDictionaries = [
       ru: 'Животные',
     },
   },
+  {
+    translations: {
+      en: 'Fiches',
+      ru: 'Рыбы',
+    },
+  },
+  {
+    translations: {
+      en: 'Body',
+      ru: 'Тело',
+    },
+  },
+  {
+    translations: {
+      en: 'Food',
+      ru: 'Еда',
+    },
+  },
+  {
+    translations: {
+      en: 'Plants',
+      ru: 'Растения',
+    },
+  },
 ];
 
 const getFruits = dictionaryId => [
@@ -63,7 +87,8 @@ const getAnimals = dictionaryId => [
 
 async function migrate() {
   const { dictionaries, words } = DB;
-
+  await dictionaries.loadDatabase();
+  await words.loadDatabase();
   await dictionaries.insert(initialDictionaries);
   const data = await dictionaries.cfind({}).exec();
   const wordsData = [...getFruits(data[0]._id), ...getAnimals(data[1]._id)];

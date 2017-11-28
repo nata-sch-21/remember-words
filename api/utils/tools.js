@@ -1,6 +1,6 @@
 const config = require('../config');
 
-const getImagePath = imageName => config.uploadsPath + imageName;
+const getImagePath = imageName => `${config.uploadsPath}${imageName}`;
 
 
 const successResponse = (res, data, message = '') => {

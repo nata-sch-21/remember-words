@@ -6,6 +6,8 @@ import SelectLanguages from '../../components/SelectLanguages';
 import { STATUS_ERROR } from '../../constants/app';
 import config from '../../../config';
 import Header from '../Header';
+import CurrentWord from './CurrentWord';
+import { words } from '../../../test/testData';
 
 class WordsList extends React.Component {
   componentDidMount() {
@@ -13,41 +15,17 @@ class WordsList extends React.Component {
     // dispatch(requestGetDictionaries());
   }
 
-  renderHeader() {
-    return (
-      <div className="row">
-        <div className="col-12">
-          {/**<h2>{this.props.currentDictionary[config.defaultLanguage]}</h2>**/}
-          <h3>header</h3>
-
-        </div>
-      </div>
-    );
+  getCurrentWord() {
+    return <CurrentWord word={words[0]} />;
   }
 
-  // renderDictionaryItems() {
-    // return (
-    //   <div className="block">
-    //      {this.props.dictionaries.map(item => <DictionaryItem key={item._id} dictionary={item} />)}
-    //   </div>
-    // );
-  // }
-
   render() {
-    // if (!this.props.response.status && this.props.isFetching === false) {
-    //   return <div className="wrapper">{this.renderHeader()}</div>;
-    // }
-    //
-    // if (this.props.response.status === STATUS_ERROR) {
-    //   return <div className="wrapper"><h2 className="red">{this.props.response.message}</h2></div>;
-    // }
-
     return (
       <div className="grid-1">
         <Header header="dictionary name" />
         <div className="col block">
           <div className="pure-block">
-            sdlrg
+            {this.getCurrentWord()}
           </div>
           <div className="grid-2">
             <div className="col">
@@ -70,10 +48,10 @@ class WordsList extends React.Component {
 const mapStateToProps = (state) => {
   const currentState = state.dictionaries;
   return {
-    words: currentState.words || [],
-    isFetching: currentState.isFetching || false,
-    response: currentState.response || {},
-    currentDictionary: currentState.currentDictionary || {},
+    // words: currentState.words || [],
+    // isFetching: currentState.isFetching || false,
+    // response: currentState.response || {},
+    // currentDictionary: currentState.currentDictionary || {},
   };
 };
 
