@@ -9,7 +9,7 @@ class SelectLanguages extends React.Component {
     return (
       <div className="grid-1">
         <Header header="Select languages" />
-        <div className="col-6 block">
+        <div className="col-6 block margin-bottom_20">
           <h3>From:</h3>
           <div>
             <select name="from_language" id="from_language">
@@ -20,7 +20,7 @@ class SelectLanguages extends React.Component {
             </select>
           </div>
         </div>
-        <div className="col-6 block">
+        <div className="col-6 block margin-bottom_20">
           <h3>To:</h3>
           <select name="from_language" id="from_language">
             <option value="">1serferreer</option>
@@ -29,7 +29,7 @@ class SelectLanguages extends React.Component {
             <option value="">1</option>
           </select>
         </div>
-        <div className="col block green">
+        <div className="col block green button-text">
           <Link to="/dictionaries">Go to dictionaries</Link>
         </div>
       </div>

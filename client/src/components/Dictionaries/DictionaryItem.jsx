@@ -9,7 +9,7 @@ const DictionaryItem = props => (
       <h3>
         {props.dictionary.translations[config.defaultLanguage]}
       </h3>
-      <div className="block green">
+      <div className="block green button-text">
         <Link to={`/dictionaries/${props.dictionary._id}`}>Go to dictionary</Link>
       </div>
     </div>

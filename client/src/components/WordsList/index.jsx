@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SelectLanguages from '../../components/SelectLanguages';
@@ -10,13 +11,51 @@ import CurrentWord from './CurrentWord';
 import { words } from '../../../test/testData';
 
 class WordsList extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currentWordIndex: 0, // null
+      prevWordIndex: null,
+      nextWordIndex: 1, // null
+    };
+
+    this.next = () => {
+      this.setState({
+        prevWordIndex: this.state.currentWordIndex,
+        currentWordIndex: this.state.nextWordIndex,
+        nextWordIndex: this.state.nextWordIndex + 1,
+      });
+    };
+
+    this.prev = () => {
+      this.setState({
+        prevWordIndex: this.state.prevWordIndex - 1,
+        currentWordIndex: this.state.prevWordIndex,
+        nextWordIndex: this.state.currentWordIndex,
+      });
+    };
+  }
+
   componentDidMount() {
     const { dispatch } = this.props;
     // dispatch(requestGetDictionaries());
   }
 
+  componentWillReceiveProps() {
+    if (this.state.currentWordIndex === null && this.state.nextWordIndex === null) {
+      this.setState({
+        currentWordIndex: 0,
+        nextWordIndex: 1,
+      });
+    }
+  }
+
   getCurrentWord() {
-    return <CurrentWord word={words[0]} />;
+    if (this.state.currentWordIndex === null) {
+      return null;
+    }
+
+    return <CurrentWord word={words[this.state.currentWordIndex]} />;
   }
 
   render() {
@@ -25,17 +64,20 @@ class WordsList extends React.Component {
         <Header header="dictionary name" />
         <div className="col block">
           <div className="pure-block">
+            <div className="red quit button-text">
+              <Link to="/">Quit</Link>
+            </div>
             {this.getCurrentWord()}
           </div>
           <div className="grid-2">
             <div className="col">
-              <div className="block yellow">
-                prev
+              <div className="block yellow button-text">
+                <span onClick={this.prev}>Previous</span>
               </div>
             </div>
             <div className="col">
-              <div className="block green">
-                next
+              <div className="block green button-text">
+                <span onClick={this.next}>Next</span>
               </div>
             </div>
           </div>

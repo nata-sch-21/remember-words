@@ -43,6 +43,7 @@ body {
   min-height: 30px;
   text-align: center;
   padding: 20px;
+  position: relative;
 }
 
 .inner-block {
@@ -78,6 +79,13 @@ h3 {
   margin: 20px 0;
 }
 
+h4 {
+  font: 600 20px/1 'Open Sans', sans-serif;
+  color: $h3;
+  margin: 0;
+  padding: 0;
+}
+
 p {
   font: 12px/1 'Open Sans', sans-serif;
   color: $text;
@@ -101,20 +109,38 @@ a {
 
 .blue {
   background: $blue;
-  color: $white;
 }
 
 .red {
   background-color: $red;
-  color: $white;
 }
 
 .green {
   background: $green;
-  color: $white;
+}
 
-  a {
+.quit {
+  display: inline-block;
+  padding: 10px 20px;
+  position: absolute;
+  right: 0;
+}
+
+.button-text {
+  color: $white;
+  padding: 0;
+  vertical-align: middle;
+  cursor: pointer;
+  a, span {
+    padding: 20px;
+    vertical-align: baseline;
     color: $white;
+    font-weight: 700;
+    display: block;
+  }
+
+  span:hover {
+    text-decoration: underline;
   }
 }
 
