@@ -10,11 +10,11 @@ describe('rendering', () => {
     expect(wrapper.length).toEqual(1);
   });
 
-  it('should have class .wrapper', () => {
-    expect(wrapper.hasClass('wrapper')).toEqual(true);
+  it('should render Header component', () => {
+    expect(wrapper.find('Header')).toHaveLength(1);
   });
 
-  it('should render Link to the start page', () => {
+  it('should render Link to the start (select languages) page', () => {
     expect(wrapper.find('Link').prop('to')).toEqual('/start');
   });
 });

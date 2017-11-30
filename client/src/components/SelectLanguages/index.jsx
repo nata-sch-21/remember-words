@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import config from '../../../config';
 import Header from '../Header';
@@ -37,6 +38,15 @@ class SelectLanguages extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  const currentState = state.dictionaries;
+  return {
+    // dictionaries: currentState.dictionaries || [],
+    // isFetching: currentState.isFetching || false,
+    // response: currentState.response || null,
+  };
+};
+
 SelectLanguages.propTypes = {
   // words: PropTypes.arrayOf(PropTypes.object).isRequired,
   // isFetching: PropTypes.bool.isRequired,
@@ -44,7 +54,8 @@ SelectLanguages.propTypes = {
   //   status: PropTypes.string,
   //   message: PropTypes.string,
   // }).isRequired,
-  // dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default SelectLanguages;
+export { SelectLanguages };
+export default connect(mapStateToProps)(SelectLanguages);

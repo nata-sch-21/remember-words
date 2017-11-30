@@ -9,7 +9,7 @@ describe('rendering', () => {
     expect(wrapper.length).toEqual(1);
   });
 
-  it('should have header h2', () => {
+  it('should render h2 tag', () => {
     expect(wrapper.find('h2')).toHaveLength(1);
   });
 });

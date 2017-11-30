@@ -4,6 +4,7 @@ import nock from 'nock';
 import config from '../../../../config';
 import { dictionaries } from '../../../../test/testData';
 import { FETCH_DICTIONARIES, FETCH_DICTIONARIES_ERROR, FETCH_DICTIONARIES_SUCCESS } from '../../../constants/dictionaries';
+import { initialState } from '../../../reducers/dictionaries';
 import { STATUS_ERROR, STATUS_OK } from '../../../constants/app';
 import { requestGetDictionaries } from '../';
 
@@ -14,7 +15,7 @@ describe('fetch dictionaries action creator', () => {
 
   beforeEach(() => {
     nock.cleanAll();
-    store = mockStore({});
+    store = mockStore({ ...initialState });
   });
 
   it('dispatches the correct actions on successful fetch request', async () => {

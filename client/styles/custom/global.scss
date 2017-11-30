@@ -132,6 +132,7 @@ a {
   vertical-align: middle;
   cursor: pointer;
   a, span {
+    text-shadow: #888 1px 1px;
     padding: 20px;
     vertical-align: baseline;
     color: $white;
