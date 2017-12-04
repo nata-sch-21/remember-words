@@ -6,6 +6,7 @@ import Header from '../Header';
 import DictionaryItem from './DictionaryItem';
 import { requestGetDictionaries } from '../../actions/dictionaries';
 import { STATUS_ERROR } from '../../constants/app';
+import config from '../../../config';
 
 class Dictionaries extends React.Component {
   constructor() {
@@ -37,7 +38,11 @@ class Dictionaries extends React.Component {
     return (
       <div className="col block">
         <div className="grid-5">
-          {this.props.dictionaries.map(item => <DictionaryItem key={item._id} dictionary={item} />)}
+          {this.props.dictionaries.map(item => (<DictionaryItem
+            key={item._id}
+            dictionary={item}
+            language={this.props.language}
+          />))}
         </div>
       </div>
     );
@@ -72,9 +77,10 @@ class Dictionaries extends React.Component {
 const mapStateToProps = (state) => {
   const currentState = state.dictionaries;
   return {
-    dictionaries: currentState.dictionaries || [],
-    isFetching: currentState.isFetching || false,
-    response: currentState.response || null,
+    dictionaries: currentState.dictionaries,
+    isFetching: currentState.isFetching,
+    response: currentState.response,
+    language: state.languages.languageFrom || config.defaultLanguage,
   };
 };
 
@@ -85,6 +91,7 @@ Dictionaries.propTypes = {
     status: PropTypes.string,
     message: PropTypes.string,
   }).isRequired,
+  language: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

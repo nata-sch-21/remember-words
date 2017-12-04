@@ -3,9 +3,11 @@ import { dictionaries } from '../../../../test/testData';
 import { STATUS_ERROR, STATUS_OK } from '../../../constants/app';
 import { Dictionaries } from '../index';
 import { initialState } from '../../../reducers/dictionaries';
+import config from '../../../../config';
 
 const createTestProps = props => ({
   dispatch: jest.fn(),
+  language: config.defaultLanguage,
   ...props,
 });
 

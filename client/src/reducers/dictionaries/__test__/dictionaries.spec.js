@@ -3,7 +3,6 @@ import { fetchDictionaries, errorFetchDictionaries, successFetchDictionaries } f
 import { dictionaries } from '../../../../test/testData';
 import { STATUS_ERROR, STATUS_OK } from '../../../constants/app';
 
-// check if state wasn't change
 describe('Reducer dictionaries', () => {
   it('it should return initial state', () => {
     const newState = dictionariesReducer(undefined, {});
@@ -11,12 +10,12 @@ describe('Reducer dictionaries', () => {
   });
 
   it('should react to an action with the type FETCH_DICTIONARIES and return isFetching true', () => {
-    const newState = dictionariesReducer(undefined, fetchDictionaries());
+    const newState = dictionariesReducer(deepFreeze(initialState), fetchDictionaries());
     expect(newState).toEqual({ ...initialState, isFetching: true });
   });
 
   it('should react to an action with the type FETCH_DICTIONARIES_SUCCESS and pass on the dictionaries we pass in', () => {
-    const newState = dictionariesReducer(undefined, successFetchDictionaries({
+    const newState = dictionariesReducer(deepFreeze(initialState), successFetchDictionaries({
       dictionaries,
     }));
     expect(newState).toEqual({
@@ -31,7 +30,7 @@ describe('Reducer dictionaries', () => {
 
   it('should react to an action with the type FETCH_DICTIONARIES_ERROR and pass on the error message we pass in', () => {
     const message = 'error message';
-    const newState = dictionariesReducer(undefined, errorFetchDictionaries({
+    const newState = dictionariesReducer(deepFreeze(initialState), errorFetchDictionaries({
       message,
     }));
     expect(newState).toEqual({

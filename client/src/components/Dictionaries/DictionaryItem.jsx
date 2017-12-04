@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import config from '../../../config';
 
 const DictionaryItem = props => (
   <div className="col">
     <div className="block">
       <h3>
-        {props.dictionary.translations[config.defaultLanguage]}
+        {props.dictionary.translations[props.language]}
       </h3>
       <div className="block green button-text">
         <Link to={`/dictionaries/${props.dictionary._id}`}>Go to dictionary</Link>
@@ -21,6 +20,7 @@ DictionaryItem.propTypes = {
     _id: PropTypes.string.isRequired,
     translations: PropTypes.objectOf(PropTypes.string).isRequired,
   }).isRequired,
+  language: PropTypes.string.isRequired,
 };
 
 export default DictionaryItem;
