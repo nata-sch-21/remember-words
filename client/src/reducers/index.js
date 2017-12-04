@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import dictionaries from './dictionaries';
-import selectLanguages from './selectLanguages';
+import languages from './languages';
 
 export default combineReducers({
   dictionaries,
-  selectLanguages,
+  languages,
 });

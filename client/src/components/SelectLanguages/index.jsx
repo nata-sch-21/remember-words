@@ -1,60 +1,125 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import config from '../../../config';
+import selectLanguages from '../../actions/languages';
 import Header from '../Header';
 
 class SelectLanguages extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      languageFrom: '',
+      languageTo: '',
+    };
+
+    this.handleOnChange = (e) => {
+      this.setState({
+        [e.target.id]: e.target.value,
+      });
+    };
+
+    this.goToDictionaries = () => {
+      if (this.state.languageTo && this.state.languageFrom) {
+        this.props.dispatch(selectLanguages({ ...this.state }));
+        this.props.history.push('/dictionaries');
+      }
+    };
+  }
+
+  componentWillMount() {
+    this.setState({
+      languageFrom: this.props.languageFrom,
+      languageTo: this.props.languageTo,
+    });
+  }
+
+  renderLinkToDictionaties() {
+    let classButton = 'inactive-button';
+    let textButton = 'Please select both languages';
+
+    if (this.state.languageTo && this.state.languageFrom) {
+      textButton = 'Go to dictionaries';
+      classButton = 'green';
+    }
+
+    return (
+      <div className={`col block ${classButton} button-text`} onClick={this.goToDictionaries}>
+        <span>{textButton}</span>
+      </div>
+    );
+  }
+
+  renderSelectLanguageFrom() {
+    return (
+      <select name="languageFrom" id="languageFrom" value={this.state.languageFrom} onChange={this.handleOnChange}>
+        <option value="">Select language</option>
+        {
+          config.availableLanguages.map((lang) => {
+            if (lang === this.state.languageTo) {
+              return null;
+            }
+            return (
+              <option key={lang} value={lang}>
+                {config.languageTitles[lang]}
+              </option>
+            );
+          })
+        }
+      </select>
+    );
+  }
+
+  renderSelectLanguageTo() {
+    return (
+      <select name="languageTo" id="languageTo" value={this.state.languageTo} onChange={this.handleOnChange}>
+        <option value="">Select language</option>
+        {
+          config.availableLanguages.map((lang) => {
+            if (lang === this.state.languageFrom) {
+              return null;
+            }
+            return (
+              <option key={lang} value={lang}>
+                {config.languageTitles[lang]}
+              </option>
+            );
+          })
+        }
+      </select>
+    );
+  }
+
   render() {
     return (
       <div className="grid-1">
         <Header header="Select languages" />
         <div className="col-6 block margin-bottom_20">
           <h3>From:</h3>
-          <div>
-            <select name="from_language" id="from_language">
-              <option value="">1serferreer</option>
-              <option value="">1</option>
-              <option value="">1</option>
-              <option value="">1</option>
-            </select>
-          </div>
+          {this.renderSelectLanguageFrom()}
         </div>
         <div className="col-6 block margin-bottom_20">
           <h3>To:</h3>
-          <select name="from_language" id="from_language">
-            <option value="">1serferreer</option>
-            <option value="">1</option>
-            <option value="">1</option>
-            <option value="">1</option>
-          </select>
+          {this.renderSelectLanguageTo()}
         </div>
-        <div className="col block green button-text">
-          <Link to="/dictionaries">Go to dictionaries</Link>
-        </div>
+        {this.renderLinkToDictionaties()}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const currentState = state.dictionaries;
-  return {
-    // dictionaries: currentState.dictionaries || [],
-    // isFetching: currentState.isFetching || false,
-    // response: currentState.response || null,
-  };
+  const currentState = state.languages;
+  return { ...currentState };
 };
 
 SelectLanguages.propTypes = {
-  // words: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // isFetching: PropTypes.bool.isRequired,
-  // response: PropTypes.shape({
-  //   status: PropTypes.string,
-  //   message: PropTypes.string,
-  // }).isRequired,
+  languageFrom: PropTypes.string.isRequired,
+  languageTo: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export { SelectLanguages };

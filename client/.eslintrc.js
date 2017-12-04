@@ -20,7 +20,8 @@ module.exports = {
   "globals": {
     "shallow": true,
     "render": true,
-    "mount": true
+    "mount": true,
+    "deepFreeze": true,
   },
   "extends": [
     "airbnb"

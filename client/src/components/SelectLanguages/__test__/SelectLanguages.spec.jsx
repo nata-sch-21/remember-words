@@ -1,11 +1,11 @@
 import React from 'react';
-import { dictionaries } from '../../../../test/testData';
-import { STATUS_ERROR, STATUS_OK } from '../../../constants/app';
-import { initialState } from '../../../reducers/selectLanguages';
+import { initialState } from '../../../reducers/languages';
 import { SelectLanguages } from '../index';
+import config from '../../../../config';
 
 const createTestProps = props => ({
   dispatch: jest.fn(),
+  history: { push: jest.fn() },
   ...props,
 });
 
@@ -19,69 +19,154 @@ describe('rendering', () => {
       const props = createTestProps({ ...initialState });
       wrapper = createWrapper(props);
     });
+
     it('should render without throwing any error', () => {
-      // expect(wrapper).toHaveLength(1);
+      expect(wrapper).toHaveLength(1);
     });
 
+    it('should render Header component with correct header', () => {
+      expect(wrapper.find('Header')).toHaveLength(1);
+    });
+
+    it('should render disabled button with correspond text', () => {
+      expect(wrapper.find('.button-text').hasClass('inactive-button')).toEqual(true);
+      expect(wrapper.find('.button-text').text()).toEqual('Please select both languages');
+    });
+
+    it('should render select#languageFrom with all available languages', () => {
+      expect(wrapper.find('#languageFrom option')).toHaveLength(config.availableLanguages.length + 1);
+    });
+
+    it('should render select#languageTo with all available languages', () => {
+      expect(wrapper.find('#languageTo option')).toHaveLength(config.availableLanguages.length + 1);
+    });
   });
 
-  // describe('fetching dictionaries', () => {
-  //   const props = createTestProps({
-  //     ...initialState,
-  //     isFetching: true,
-  //   });
-  //
-  //   beforeEach(() => {
-  //     wrapper = createWrapper(props);
-  //   });
-  //
-  //   it('should render Loader', () => {
-  //     expect(wrapper.find('Loader')).toHaveLength(1);
-  //   });
-  // });
-  //
-  // describe('failed load dictionaries', () => {
-  //   const props = createTestProps({
-  //     ...initialState,
-  //     response: {
-  //       status: STATUS_ERROR,
-  //       message: 'Error message',
-  //     },
-  //   });
-  //
-  //   beforeEach(() => {
-  //     wrapper = createWrapper(props);
-  //   });
-  //
-  //   it('should render .block with h2 tag with error message', () => {
-  //     expect(wrapper.find('.block h2').text()).toEqual(props.response.message);
-  //   });
-  //
-  //   it('should render .block h2 tag with .red class', () => {
-  //     expect(wrapper.find('.block h2').hasClass('red')).toEqual(true);
-  //   });
-  // });
-  //
-  // describe('successfully loaded dictionaries', () => {
-  //   const props = createTestProps({
-  //     dictionaries,
-  //     isFetching: false,
-  //     response: {
-  //       status: STATUS_OK,
-  //       message: '',
-  //     },
-  //   });
-  //
-  //   beforeEach(() => {
-  //     wrapper = createWrapper(props);
-  //   });
-  //
-  //   it('should render .block', () => {
-  //     expect(wrapper.find('.block')).toHaveLength(1);
-  //   });
-  //
-  //   it('should render number of DictionaryItem that we pass in', () => {
-  //     expect(wrapper.find('DictionaryItem')).toHaveLength(dictionaries.length);
-  //   });
-  // });
+  describe('selected both languages', () => {
+    beforeEach(() => {
+      const props = createTestProps({
+        languageFrom: config.availableLanguages[0], languageTo: config.availableLanguages[1],
+      });
+      wrapper = createWrapper(props);
+    });
+
+    it('should render available submit button', () => {
+      expect(wrapper.find('.button-text').hasClass('green')).toEqual(true);
+      expect(wrapper.find('.button-text').text()).toEqual('Go to dictionaries');
+    });
+
+    it('should render selected languages that we pass in', () => {
+      expect(wrapper.find('select#languageFrom').props().value).toEqual(config.availableLanguages[0]);
+      expect(wrapper.find('select#languageTo').props().value).toEqual(config.availableLanguages[1]);
+    });
+
+    it('should render options in select without language selected in other select', () => {
+      expect(wrapper.find('#languageFrom option').filterWhere(item => item.prop('value') === config.availableLanguages[1]).length).toEqual(0);
+      expect(wrapper.find('#languageTo option').filterWhere(item => item.prop('value') === config.availableLanguages[0]).length).toEqual(0);
+    });
+  });
+});
+
+describe('interaction', () => {
+  let wrapper;
+  let props;
+
+  beforeEach(() => {
+    props = createTestProps({ ...initialState });
+    wrapper = createWrapper(props);
+  });
+
+  describe('submit button', () => {
+    it('should be called history.push with /dictionaries', () => {
+      wrapper.setState({
+        languageFrom: config.availableLanguages[0], languageTo: config.availableLanguages[1],
+      });
+      wrapper.find('.button-text').simulate('click');
+      expect(props.history.push).toHaveBeenCalledWith('/dictionaries');
+    });
+
+    it('shouldn\'t be called history.push with one selected language or without both', () => {
+      wrapper.setState({
+        languageFrom: '', languageTo: config.availableLanguages[1],
+      });
+      wrapper.find('.button-text').simulate('click');
+      expect(props.history.push).not.toHaveBeenCalledWith('/dictionaries');
+
+      wrapper.setState({
+        languageFrom: config.availableLanguages[0], languageTo: '',
+      });
+      wrapper.find('.button-text').simulate('click');
+      expect(props.history.push).not.toHaveBeenCalledWith('/dictionaries');
+
+      wrapper.setState({
+        languageFrom: '', languageTo: '',
+      });
+      wrapper.find('.button-text').simulate('click');
+      expect(props.history.push).not.toHaveBeenCalledWith('/dictionaries');
+    });
+
+    it('should be called dispatch', () => {
+      wrapper.setState({
+        languageFrom: config.availableLanguages[0], languageTo: config.availableLanguages[1],
+      });
+      wrapper.find('.button-text').simulate('click');
+      expect(props.dispatch).toHaveBeenCalled();
+    });
+
+    it('shouldn\'t be called dispatch with one selected language or without both', () => {
+      wrapper.setState({
+        languageFrom: '', languageTo: config.availableLanguages[1],
+      });
+      wrapper.find('.button-text').simulate('click');
+      expect(props.dispatch).not.toHaveBeenCalledWith();
+
+      wrapper.setState({
+        languageFrom: config.availableLanguages[0], languageTo: '',
+      });
+      wrapper.find('.button-text').simulate('click');
+      expect(props.dispatch).not.toHaveBeenCalledWith();
+
+      wrapper.setState({
+        languageFrom: '', languageTo: '',
+      });
+      wrapper.find('.button-text').simulate('click');
+      expect(props.dispatch).not.toHaveBeenCalledWith();
+    });
+  });
+
+  describe('onChange languages', () => {
+    beforeEach(() => {
+      wrapper.setState({
+        languageFrom: '', languageTo: '',
+      });
+    });
+
+    describe('onChange languageFrom', () => {
+      beforeEach(() => {
+        wrapper.find('#languageFrom').simulate('change', { target: { value: config.availableLanguages[0], id: 'languageFrom' } });
+      });
+
+      it('in select#languageFrom there should be selected language we pass in', () => {
+        expect(wrapper.find('#languageFrom').props().value).toEqual(config.availableLanguages[0]);
+      });
+
+      it('select#languageTo shouldn\'t contain language which selected in select#languageFrom', () => {
+        expect(wrapper.find('#languageTo option').filterWhere(item => item.prop('value') === config.availableLanguages[0]).length).toEqual(0);
+      });
+    });
+
+    describe('onChange languageTo', () => {
+      beforeEach(() => {
+        wrapper.find('#languageTo').simulate('change', { target: { value: config.availableLanguages[1], id: 'languageTo' } });
+      });
+
+      it('in select#languageTo there should be selected language we pass in', () => {
+        expect(wrapper.find('#languageTo').props().value).toEqual(config.availableLanguages[1]);
+      });
+
+      it('select#languageTo shouldn\'t contain language which selected in select#languageFrom', () => {
+        expect(wrapper.find('#languageFrom option').filterWhere(item => item.prop('value') === config.availableLanguages[1]).length).toEqual(0);
+      });
+    });
+  });
 });

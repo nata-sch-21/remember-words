@@ -145,6 +145,12 @@ a {
   }
 }
 
+.inactive-button {
+  background-color: #999;
+  pointer-events: none;
+  cursor: default;
+}
+
 .rounded {
   border-radius: $radius;
 }

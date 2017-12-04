@@ -19,12 +19,3 @@ describe('rendering', () => {
   });
 });
 
-// contains everything related to callback functions and interactions
-describe('interaction', () => {
-
-});
-
-// contains tests related to react lifecycle functions
-describe('lifecycle', () => {
-
-});
