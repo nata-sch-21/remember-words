@@ -26,7 +26,7 @@ describe('fetch dictionaries action creator', () => {
 
     const expectedActions = [
       { type: FETCH_DICTIONARIES },
-      { type: FETCH_DICTIONARIES_SUCCESS, dictionaries },
+      { type: FETCH_DICTIONARIES_SUCCESS, payload: { dictionaries } },
     ];
 
     await store.dispatch(requestGetDictionaries());
@@ -41,7 +41,7 @@ describe('fetch dictionaries action creator', () => {
 
     const expectedActions = [
       { type: FETCH_DICTIONARIES },
-      { type: FETCH_DICTIONARIES_ERROR, ...errorResponse.response },
+      { type: FETCH_DICTIONARIES_ERROR, payload: { ...errorResponse.response } },
     ];
 
     await store.dispatch(requestGetDictionaries());
@@ -59,7 +59,7 @@ describe('fetch dictionaries action creator', () => {
 
     const expectedActions = [
       { type: FETCH_DICTIONARIES },
-      { type: FETCH_DICTIONARIES_ERROR, ...errorResponse },
+      { type: FETCH_DICTIONARIES_ERROR, payload: { ...errorResponse } },
     ];
 
     await store.dispatch(requestGetDictionaries());

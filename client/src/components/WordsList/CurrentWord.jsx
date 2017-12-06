@@ -8,7 +8,7 @@ class CurrentWord extends React.Component {
     return (
       <div className="grid-1 block">
         <h4 className="col">
-          {this.props.word.translations['en']}
+          {this.props.word.translations.en}
         </h4>
         <div className="col">
           <img src={this.props.word.image} alt="" />

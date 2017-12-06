@@ -9,6 +9,7 @@ Enzyme.configure({ adapter: new Adapter() });
 global.shallow = shallow;
 global.render = render;
 global.mount = mount;
+// Use it in reducers. It would be throw an error if state would be mutated
 global.deepFreeze = deepFreeze;
 
 // Fail tests on any warning

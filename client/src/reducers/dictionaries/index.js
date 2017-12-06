@@ -16,14 +16,14 @@ export default function dictionaries(state = initialState, action) {
       return { ...state, isFetching: true };
     case FETCH_DICTIONARIES_SUCCESS:
       return {
-        dictionaries: action.dictionaries,
+        dictionaries: action.payload.dictionaries,
         response: { ...state.response, status: STATUS_OK },
         isFetching: false,
       };
     case FETCH_DICTIONARIES_ERROR:
       return {
         ...state,
-        response: { status: STATUS_ERROR, message: action.message },
+        response: { status: STATUS_ERROR, message: action.payload.message },
         isFetching: false,
       };
     default:

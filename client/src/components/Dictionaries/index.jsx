@@ -9,18 +9,6 @@ import { STATUS_ERROR } from '../../constants/app';
 import config from '../../../config';
 
 class Dictionaries extends React.Component {
-  constructor() {
-    super();
-
-    this.header = (
-      <header className="row">
-        <div className="col-12">
-          <h2>Dictionaries</h2>
-        </div>
-      </header>
-    );
-  }
-
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(requestGetDictionaries());
@@ -29,7 +17,7 @@ class Dictionaries extends React.Component {
   renderError() {
     return (
       <div className="col block red">
-        <h3 className="red">{this.props.response.message}</h3>
+        <h3>{this.props.response.message}</h3>
       </div>
     );
   }

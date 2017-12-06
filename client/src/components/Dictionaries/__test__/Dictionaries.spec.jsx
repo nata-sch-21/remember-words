@@ -21,72 +21,82 @@ describe('rendering', () => {
       const props = createTestProps({ ...initialState });
       wrapper = createWrapper(props);
     });
+
     it('should render without throwing any error', () => {
       expect(wrapper).toHaveLength(1);
     });
 
-    it('should render only header', () => {
-      // expect(wrapper.find('.row h2').text()).toEqual('Dictionaries');
+    it('should render Header component', () => {
+      expect(wrapper.find('Header')).toHaveLength(1);
     });
   });
 
-  // describe('fetching dictionaries', () => {
-  //   const props = createTestProps({
-  //     ...initialState,
-  //     isFetching: true,
-  //   });
-  //
-  //   beforeEach(() => {
-  //     wrapper = createWrapper(props);
-  //   });
-  //
-  //   it('should render Loader', () => {
-  //     expect(wrapper.find('Loader')).toHaveLength(1);
-  //   });
-  // });
-  //
-  // describe('failed load dictionaries', () => {
-  //   const props = createTestProps({
-  //     ...initialState,
-  //     response: {
-  //       status: STATUS_ERROR,
-  //       message: 'Error message',
-  //     },
-  //   });
-  //
-  //   beforeEach(() => {
-  //     wrapper = createWrapper(props);
-  //   });
-  //
-  //   it('should render .block with h2 tag with error message', () => {
-  //     expect(wrapper.find('.block h2').text()).toEqual(props.response.message);
-  //   });
-  //
-  //   it('should render .block h2 tag with .red class', () => {
-  //     expect(wrapper.find('.block h2').hasClass('red')).toEqual(true);
-  //   });
-  // });
-  //
-  // describe('successfully loaded dictionaries', () => {
-  //   const props = createTestProps({
-  //     dictionaries,
-  //     isFetching: false,
-  //     response: {
-  //       status: STATUS_OK,
-  //       message: '',
-  //     },
-  //   });
-  //
-  //   beforeEach(() => {
-  //     wrapper = createWrapper(props);
-  //   });
-  //
-  //   it('should render .block', () => {
-  //     expect(wrapper.find('.block')).toHaveLength(1);
-  //   });
-  //
-  //   it('should render number of DictionaryItem that we pass in', () => {
-  //     expect(wrapper.find('DictionaryItem')).toHaveLength(dictionaries.length);
-  //   });
-  // });
+  describe('fetching dictionaries', () => {
+    const props = createTestProps({
+      ...initialState,
+      isFetching: true,
+    });
+
+    beforeEach(() => {
+      wrapper = createWrapper(props);
+    });
+
+    it('should render Loader', () => {
+      expect(wrapper.find('Loader')).toHaveLength(1);
+    });
+  });
+
+  describe('failed load dictionaries', () => {
+    const props = createTestProps({
+      ...initialState,
+      response: {
+        status: STATUS_ERROR,
+        message: 'Error message',
+      },
+    });
+
+    beforeEach(() => {
+      wrapper = createWrapper(props);
+    });
+
+    it('should render .red > h3 with error message', () => {
+      expect(wrapper.find('.red > h3').text()).toEqual(props.response.message);
+    });
+  });
+
+  describe('successfully loaded dictionaries', () => {
+    const props = createTestProps({
+      dictionaries,
+      isFetching: false,
+      response: {
+        status: STATUS_OK,
+        message: '',
+      },
+    });
+
+    beforeEach(() => {
+      wrapper = createWrapper(props);
+    });
+
+    it('should render .block', () => {
+      expect(wrapper.find('.block')).toHaveLength(1);
+    });
+
+    it('should render number of DictionaryItem that we pass in', () => {
+      expect(wrapper.find('DictionaryItem')).toHaveLength(dictionaries.length);
+    });
+  });
+});
+
+describe('lifecycle', () => {
+  let props;
+  beforeEach(() => {
+    // componentDidMount is called be default if props were put in
+    props = createTestProps({ ...initialState });
+    createWrapper(props);
+  });
+
+  it('dispatch should be called', () => {
+    expect(props.dispatch).toHaveBeenCalled();
+  });
 });
