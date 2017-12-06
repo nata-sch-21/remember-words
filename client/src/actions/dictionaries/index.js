@@ -3,7 +3,9 @@ import config from '../../../config';
 import { FETCH_DICTIONARIES, FETCH_DICTIONARIES_ERROR, FETCH_DICTIONARIES_SUCCESS } from '../../constants/dictionaries';
 import { STATUS_ERROR } from '../../constants/app';
 
-const successFetchDictionaries = data => ({ payload: { ...data }, type: FETCH_DICTIONARIES_SUCCESS });
+const successFetchDictionaries = data => ({
+  payload: { ...data }, type: FETCH_DICTIONARIES_SUCCESS,
+});
 
 const errorFetchDictionaries = data => ({ payload: { ...data }, type: FETCH_DICTIONARIES_ERROR });
 

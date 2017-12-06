@@ -5,5 +5,5 @@ module.exports = (app) => {
     .get(controller.allDictionaries);
 
   app.route('/dictionaries/:id')
-    .get(controller.wordsByDictionaryId);
+    .get(controller.dictionaryWithWordsById);
 };

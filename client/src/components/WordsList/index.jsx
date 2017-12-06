@@ -2,43 +2,88 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SelectLanguages from '../../components/SelectLanguages';
-// import { requestGetDictionaries } from '../../actions/dictionaries';
+import { requestGetDictionaryWithWords } from '../../actions/words';
 import { STATUS_ERROR } from '../../constants/app';
 import config from '../../../config';
 import Header from '../Header';
-import CurrentWord from './CurrentWord';
-import { words } from '../../../test/testData';
+import Loader from '../Loader';
+import CurrentWord from '../CurrentWord';
 
 class WordsList extends React.Component {
   constructor() {
     super();
     this.state = {
-      currentWordIndex: 0, // null
+      currentWordIndex: null,
       prevWordIndex: null,
-      nextWordIndex: 1, // null
+      nextWordIndex: null,
+
+      currentAnswer: '',
+      answers: [],
+    };
+
+    this.addAnswer = () => {
+      if (!this.state.currentAnswer) {
+        alert('Please put answer');
+        return false;
+      }
+      const { answers } = this.state;
+      answers[this.state.currentWordIndex] = this.state.currentAnswer;
+      this.setState({
+        answers,
+      });
+      return true;
+    };
+
+    this.onChangeAnswer = (e) => {
+      this.setState({
+        currentAnswer: e.target.value,
+      });
     };
 
     this.next = () => {
+      if (!this.addAnswer()) {
+        return;
+      }
+
       this.setState({
         prevWordIndex: this.state.currentWordIndex,
         currentWordIndex: this.state.nextWordIndex,
         nextWordIndex: this.state.nextWordIndex + 1,
+        currentAnswer: this.state.answers[this.state.nextWordIndex] || '',
       });
     };
 
     this.prev = () => {
+      if (!this.addAnswer()) {
+        return;
+      }
+
+      const { words } = this.props;
       this.setState({
-        prevWordIndex: this.state.prevWordIndex - 1,
+        prevWordIndex: words[this.state.prevWordIndex] ? this.state.prevWordIndex - 1 : null,
         currentWordIndex: this.state.prevWordIndex,
         nextWordIndex: this.state.currentWordIndex,
+        currentAnswer: this.state.answers[this.state.prevWordIndex] || '',
       });
+    };
+
+    this.goToFinishTest = () => {
+      if (!this.addAnswer()) {
+        return;
+      }
+      console.log('Go to finish');
+      // if (this.state.languageTo && this.state.languageFrom) {
+      //   this.props.dispatch(selectLanguages({ ...this.state }));
+      //   this.props.history.push('/dictionaries');
+      // }
     };
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    // dispatch(requestGetDictionaries());
+    const { dispatch, history } = this.props;
+    const path = history.location.pathname;
+    const paths = path.split('/');
+    dispatch(requestGetDictionaryWithWords(paths[2]));
   }
 
   componentWillReceiveProps() {
@@ -50,61 +95,141 @@ class WordsList extends React.Component {
     }
   }
 
-  getCurrentWord() {
+  renderCurrentWord() {
     if (this.state.currentWordIndex === null) {
       return null;
     }
 
-    return <CurrentWord word={words[this.state.currentWordIndex]} />;
+    const { words, languageFrom } = this.props;
+
+    return (
+      <CurrentWord
+        title={words[this.state.currentWordIndex].translations[languageFrom]}
+        image={words[this.state.currentWordIndex].image}
+        onChangeAnswer={this.onChangeAnswer}
+        currentAnswer={this.state.currentAnswer}
+      />
+    );
+  }
+
+  renderHeader() {
+    const { dictionary } = this.props;
+    if (!dictionary.translations) {
+      return null;
+    }
+
+    return <Header header={dictionary.translations[this.props.languageFrom]} />;
+  }
+
+  renderError() {
+    return (
+      <div className="col block red">
+        <h3>{this.props.response.message}</h3>
+      </div>
+    );
+  }
+
+  renderPreviousButton() {
+    let classButton = 'inactive-button';
+    const { words } = this.props;
+    if (words[this.state.prevWordIndex]) {
+      classButton = 'yellow';
+    }
+
+    return (
+      <div className="col">
+        <div className={`block button-text ${classButton}`}>
+          <span onClick={this.prev}>Previous</span>
+        </div>
+      </div>
+    );
+  }
+
+  renderNextButton() {
+    let textButton = 'Next';
+    let onClick = this.next;
+
+    if (this.state.nextWordIndex === this.props.words.length) {
+      textButton = 'Check results';
+      onClick = this.goToFinishTest;
+    }
+
+    return (
+      <div className="col">
+        <div className="block button-text green">
+          <span onClick={onClick}>{textButton}</span>
+        </div>
+      </div>
+    );
+  }
+
+  renderContent() {
+    if (!this.props.response.status && this.props.isFetching === false) {
+      return null;
+    }
+
+    if (this.props.response.status === STATUS_ERROR) {
+      return this.renderError();
+    }
+
+    if (this.props.isFetching === true) {
+      return <Loader />;
+    }
+
+    return (
+      <div className="col block">
+        <div className="pure-block">
+          <div className="red quit button-text">
+            <Link to="/">Quit</Link>
+          </div>
+          {this.renderCurrentWord()}
+        </div>
+        <div className="grid-2">
+          {this.renderPreviousButton()}
+          {this.renderNextButton()}
+        </div>
+      </div>
+    );
   }
 
   render() {
     return (
       <div className="grid-1">
-        <Header header="dictionary name" />
-        <div className="col block">
-          <div className="pure-block">
-            <div className="red quit button-text">
-              <Link to="/">Quit</Link>
-            </div>
-            {this.getCurrentWord()}
-          </div>
-          <div className="grid-2">
-            <div className="col">
-              <div className="block yellow button-text">
-                <span onClick={this.prev}>Previous</span>
-              </div>
-            </div>
-            <div className="col">
-              <div className="block green button-text">
-                <span onClick={this.next}>Next</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        {this.renderHeader()}
+        {this.renderContent()}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const currentState = state.dictionaries;
+  const currentState = state.words;
   return {
-    // words: currentState.words || [],
-    // isFetching: currentState.isFetching || false,
-    // response: currentState.response || {},
-    // currentDictionary: currentState.currentDictionary || {},
+    words: currentState.words,
+    isFetching: currentState.isFetching,
+    response: currentState.response,
+    dictionary: currentState.dictionary,
+    languageFrom: state.languages.languageFrom || config.defaultLanguage,
+    languageTo: state.languages.languageTo,
   };
 };
 
 WordsList.propTypes = {
-  // words: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // isFetching: PropTypes.bool.isRequired,
-  // response: PropTypes.shape({
-  //   status: PropTypes.string,
-  //   message: PropTypes.string,
-  // }).isRequired,
-  // dispatch: PropTypes.func.isRequired,
+  words: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dictionary: PropTypes.shape({
+    _id: PropTypes.string,
+    translations: PropTypes.arrayOf(PropTypes.array),
+  }).isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  response: PropTypes.shape({
+    status: PropTypes.string,
+    message: PropTypes.string,
+  }).isRequired,
+  languageFrom: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export { WordsList };

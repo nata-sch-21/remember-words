@@ -1,13 +1,13 @@
 export const dictionaries = [
   {
-    _id: '1',
+    _id: '2VJtLNEw55quOU5z',
     translations: {
       en: 'Fruits',
       ru: 'Фрукты',
     },
   },
   {
-    _id: '2',
+    _id: 'LefmBixVc9OQgohe',
     translations: {
       en: 'Animals',
       ru: 'Животные',

@@ -10,7 +10,10 @@ class Dictionary {
   static async getDictionaryById(id) {
     await DB.loadDatabase();
     const data = await DB.cfind({ _id: id }).exec();
-    return data;
+    if (data && data[0]) {
+      return data[0];
+    }
+    return null;
   }
 }
 

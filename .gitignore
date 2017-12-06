@@ -1,8 +1,7 @@
 node_modules/
 npm-debug.log
 .idea/
-public/
+client/public/
 .nosql
 .log
 db/
-uploads/

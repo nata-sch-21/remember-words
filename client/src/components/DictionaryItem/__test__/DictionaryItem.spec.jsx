@@ -1,6 +1,6 @@
 import React from 'react';
 import { dictionaries } from '../../../../test/testData';
-import DictionaryItem from '../DictionaryItem';
+import DictionaryItem from '../';
 import config from '../../../../config';
 
 const createTestProps = props => ({

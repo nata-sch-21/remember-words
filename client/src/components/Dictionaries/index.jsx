@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loader from '../Loader';
 import Header from '../Header';
-import DictionaryItem from './DictionaryItem';
+import DictionaryItem from '../DictionaryItem';
 import { requestGetDictionaries } from '../../actions/dictionaries';
 import { STATUS_ERROR } from '../../constants/app';
 import config from '../../../config';

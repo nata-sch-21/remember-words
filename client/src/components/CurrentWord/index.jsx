@@ -8,14 +8,14 @@ class CurrentWord extends React.Component {
     return (
       <div className="grid-1 block">
         <h4 className="col">
-          {this.props.word.translations.en}
+          {this.props.title}
         </h4>
         <div className="col">
-          <img src={this.props.word.image} alt="" />
+          <img src={this.props.image} alt="" />
         </div>
         <div className="col container">
           <div className="group">
-            <input type="text" required name="name" />
+            <input type="text" required name="name" onChange={this.props.onChangeAnswer} value={this.props.currentAnswer} />
             <span className="highlight" />
             <span className="bar" />
             <label htmlFor="name">Translation</label>

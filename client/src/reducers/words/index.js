@@ -1,8 +1,9 @@
-import { FETCH_DICTIONARIES, FETCH_DICTIONARIES_ERROR, FETCH_DICTIONARIES_SUCCESS } from '../../constants/dictionaries';
+import { FETCH_DICTIONARY_WITH_WORDS, FETCH_DICTIONARY_WITH_WORDS_ERROR, FETCH_DICTIONARY_WITH_WORDS_SUCCESS } from '../../constants/words';
 import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
 
 export const initialState = {
-  dictionaries: [],
+  dictionary: {},
+  words: [],
   response: {
     status: '',
     message: '',
@@ -10,17 +11,17 @@ export const initialState = {
   isFetching: false,
 };
 
-export default function dictionaries(state = initialState, action) {
+export default function words(state = initialState, action) {
   switch (action.type) {
-    case FETCH_DICTIONARIES:
+    case FETCH_DICTIONARY_WITH_WORDS:
       return { ...initialState, isFetching: true };
-    case FETCH_DICTIONARIES_SUCCESS:
+    case FETCH_DICTIONARY_WITH_WORDS_SUCCESS:
       return {
-        dictionaries: action.payload.dictionaries,
+        ...action.payload,
         response: { ...state.response, status: STATUS_OK },
         isFetching: false,
       };
-    case FETCH_DICTIONARIES_ERROR:
+    case FETCH_DICTIONARY_WITH_WORDS_ERROR:
       return {
         ...state,
         response: { status: STATUS_ERROR, message: action.payload.message },
