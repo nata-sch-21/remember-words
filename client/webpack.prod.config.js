@@ -6,7 +6,6 @@ const pck = require('./package.json');
 
 const dependencies = { pck };
 delete dependencies.express;
-delete dependencies['react-hot-loader'];
 
 const config = {
   entry: {
@@ -22,7 +21,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'public'),
-    publicPath: '/public',
+    publicPath: '/static',
     filename: '[name].js',
   },
   module: {

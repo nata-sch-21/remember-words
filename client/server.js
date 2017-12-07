@@ -4,7 +4,7 @@ const path = require('path');
 const port = 3000;
 const app = express();
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.resolve(__dirname, 'public/')));
 
 app.listen(port, (error) => {
   if (error) {
@@ -14,5 +14,5 @@ app.listen(port, (error) => {
 
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+  res.sendFile(path.resolve(__dirname, 'public/index.html'));
 });
