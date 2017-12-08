@@ -218,7 +218,7 @@ WordsList.propTypes = {
   words: PropTypes.arrayOf(PropTypes.object).isRequired,
   dictionary: PropTypes.shape({
     _id: PropTypes.string,
-    translations: PropTypes.arrayOf(PropTypes.array),
+    translations: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
   isFetching: PropTypes.bool.isRequired,
   response: PropTypes.shape({

@@ -170,3 +170,13 @@ a {
   text-align: center;
 }
 
+.audio-icon {
+  margin-left: 10px;
+  font-size: 22px;
+  font-style: normal;
+  cursor: pointer;
+
+  &:hover {
+    color: $blue;
+  }
+}
