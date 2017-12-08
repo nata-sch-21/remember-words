@@ -1,0 +1,13 @@
+.results {
+  p {
+    font: 600 18px/1 'Open Sans', sans-serif;
+    color: $h3;
+    padding: 0;
+    display: inline-block;
+    margin-right: 5px;
+
+    .value {
+      font: normal 18px/1 'Open Sans', sans-serif;
+    }
+  }
+}

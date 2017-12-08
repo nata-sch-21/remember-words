@@ -43,6 +43,29 @@ class Controller {
       tools.errorResponse(res, 'Server error');
     }
   }
+
+
+  static saveResult(req, res) {
+    try {
+      console.log(req.body);
+      // const dictionary = await Dictionary.getDictionaryById(req.params.id);
+      // if (!dictionary) {
+      //   tools.errorResponse(res, 'The dictionary wasn\'t found');
+      //   return;
+      // }
+      //
+      // const data = await Word.getWordsByDictionaryId(req.params.id);
+      //
+      // if (!data || data.length === 0) {
+      //   tools.errorResponse(res, 'The words weren\'t found');
+      //   return;
+      // }
+      tools.successResponse(res, null, 'Your result successfully saved');
+    } catch (e) {
+      console.log(`Error get words: ${e}`);
+      tools.errorResponse(res, 'Server error');
+    }
+  }
 }
 
 module.exports = Controller;

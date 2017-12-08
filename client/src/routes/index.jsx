@@ -5,6 +5,7 @@ import Home from '../components/Home';
 import SelectLanguages from '../components/SelectLanguages';
 import Dictionaries from '../components/Dictionaries';
 import WordsList from '../components/WordsList';
+import Results from '../components/Results';
 
 export const Router = () => (
   <BrowserRouter>
@@ -13,6 +14,7 @@ export const Router = () => (
       <Route exact path="/start" component={SelectLanguages} />
       <Route exact path="/dictionaries" component={Dictionaries} />
       <Route exact path="/dictionaries/:id" component={WordsList} />
+      <Route exact path="/results" component={Results} />
     </Switch>
   </BrowserRouter>
 );

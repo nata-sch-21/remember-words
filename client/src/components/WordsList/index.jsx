@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { requestGetDictionaryWithWords } from '../../actions/words';
+import { calculateCurrentResults } from '../../actions/results';
 import { STATUS_ERROR } from '../../constants/app';
 import config from '../../../config';
 import Header from '../Header';
@@ -27,7 +28,7 @@ class WordsList extends React.Component {
         return false;
       }
       const { answers } = this.state;
-      answers[this.state.currentWordIndex] = this.state.currentAnswer;
+      answers[this.state.currentWordIndex] = this.state.currentAnswer.trim();
       this.setState({
         answers,
       });
@@ -71,11 +72,15 @@ class WordsList extends React.Component {
       if (!this.addAnswer()) {
         return;
       }
-      console.log('Go to finish');
-      // if (this.state.languageTo && this.state.languageFrom) {
-      //   this.props.dispatch(selectLanguages({ ...this.state }));
-      //   this.props.history.push('/dictionaries');
-      // }
+
+      const { words, dispatch } = this.props;
+
+      if (words.length !== this.state.answers.length) {
+        alert('Please put all answers');
+        return;
+      }
+      dispatch(calculateCurrentResults(words, this.state.answers));
+      this.props.history.push('/results');
     };
   }
 
@@ -209,8 +214,8 @@ const mapStateToProps = (state) => {
     isFetching: currentState.isFetching,
     response: currentState.response,
     dictionary: currentState.dictionary,
+    // TODO temporary
     languageFrom: state.languages.languageFrom || config.defaultLanguage,
-    languageTo: state.languages.languageTo,
   };
 };
 

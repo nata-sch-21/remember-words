@@ -170,6 +170,15 @@ a {
   text-align: center;
 }
 
+.text-type-ok {
+  color: $green;
+}
+
+.text-type-error {
+  color: $red;
+  text-decoration: line-through;
+}
+
 .audio-icon {
   margin-left: 10px;
   font-size: 22px;

@@ -6,4 +6,7 @@ module.exports = (app) => {
 
   app.route('/dictionaries/:id')
     .get(controller.dictionaryWithWordsById);
+
+  app.route('/results')
+    .post(controller.saveResult);
 };
