@@ -46,17 +46,27 @@ class Controller {
     }
   }
 
-  static async bestResults(req, res) {
+  static async lastResults(req, res) {
     try {
-      const bestResults = await Result.get('coefficient', config.countGetBestResults);
-      if (!bestResults) {
+      const lastResults = await Result.get();
+      if (!lastResults) {
         tools.successResponse(res, 'There are no results yet');
         return;
       }
 
-      tools.successResponse(res, { bestResults });
+      lastResults.reverse();
+      const result = [];
+
+      lastResults.forEach((item) => {
+        if (result.length === config.countGetLastResults) {
+          return;
+        }
+        result.push(item);
+      });
+
+      tools.successResponse(res, { lastResults: result });
     } catch (e) {
-      console.log(`Error get words: ${e}`);
+      console.log(`Error get best results: ${e}`);
       tools.errorResponse(res, 'Server error');
     }
   }

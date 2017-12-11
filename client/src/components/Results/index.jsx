@@ -19,7 +19,14 @@ class Results extends React.Component {
   renderResultItems() {
     return (
       <div className="col block results text-left">
-        <div className="grid-1">
+        <div className="grid-1 pure-block">
+          <div className="col">
+            <div className="grid-3">
+              <div className="col head-table">Word</div>
+              <div className="col head-table">Translation</div>
+              <div className="col head-table">Answer</div>
+            </div>
+          </div>
           {this.props.result.map((item, key) => (<ResultsItem key={key} result={item} />))}
         </div>
       </div>
@@ -30,7 +37,7 @@ class Results extends React.Component {
     const { response, isFetching } = this.props.saving;
 
     let saveSpan = (<span onClick={this.saveResult}>Save result</span>);
-    let buttonState = 'blue';
+    let buttonState = 'yellow';
 
     if (isFetching) {
       saveSpan = (<span>Saving...</span>);
@@ -68,15 +75,10 @@ class Results extends React.Component {
         <Header header="Results" />
         {this.renderContent()}
         <div className="col block">
-          <div className="grid-3">
+          <div className="grid-2">
             <div className="col">
               <div className="block button-text red">
                 <Link to="/">Out</Link>
-              </div>
-            </div>
-            <div className="col">
-              <div className="block button-text yellow">
-                <span onClick={this.saveResult}>Best results</span>
               </div>
             </div>
             {this.renderSaveResultButton()}

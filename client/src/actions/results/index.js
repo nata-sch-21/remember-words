@@ -1,5 +1,5 @@
 import config from '../../../config';
-import { CALCULATE_CURRENT_RESULTS_ERROR, FETCH_SAVE_RESULTS_ERROR, FETCH_SAVE_RESULTS, CALCULATE_CURRENT_RESULTS_SUCCESS, FETCH_SAVE_RESULTS_SUCCESS, GET_BESTS_RESULTS } from '../../constants/results';
+import { CALCULATE_CURRENT_RESULTS_ERROR, FETCH_SAVE_RESULTS_ERROR, FETCH_SAVE_RESULTS, CALCULATE_CURRENT_RESULTS_SUCCESS, FETCH_SAVE_RESULTS_SUCCESS } from '../../constants/results';
 import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
 
 const successCalculateCurrentResults = data => ({
@@ -47,7 +47,7 @@ const saveResult = () => async (dispatch, getState) => {
       dispatch(successSaveResults(json.response));
     }
   } catch (error) {
-    dispatch(errorSaveResults({ message: 'Your result wasn\'t saved on server.' }));
+    dispatch(errorSaveResults({ message: 'Your result wasn\'t saved on server. Try again.' }));
   }
 };
 

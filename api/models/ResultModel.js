@@ -7,8 +7,9 @@ class Result {
     return true;
   }
 
-  static async get(sort, limit) {
-    const data = await DB.cfind({}).sort({ sort }).limit(limit);
+  static async get() {
+    await DB.loadDatabase();
+    const data = await DB.cfind({}).exec();
     return data;
   }
 }

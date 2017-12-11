@@ -189,3 +189,15 @@ a {
     color: $blue;
   }
 }
+
+
+.head-table {
+  border-bottom: 1px solid $blue;
+  margin-bottom: 10px;
+  font: 600 14px/1 'Open Sans', sans-serif;
+  color: $blue;
+}
+
+.cell-table {
+  font: 400 14px/1 'Open Sans', sans-serif;
+}

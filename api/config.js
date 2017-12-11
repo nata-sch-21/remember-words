@@ -21,7 +21,7 @@ const config = {
   },
   uploadsPath: `${protocol}${host}:${serverPort}/static/uploads/`,
   defaultLanguage: 'en',
-  countGetBestResults: 3,
+  countGetLastResults: 3,
 };
 
 module.exports = config;

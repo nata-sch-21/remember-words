@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 
 const ResultsItem = props => (
   <div className="col">
-    <p><span className="label">Word:</span> <span className="value"> {props.result.fromWord} - </span></p>
-    <p><span className="label">Translation:</span> <span className="value"> {props.result.toWord} - </span></p>
-    <p><span className="label">Answer:</span> <span className={`value text-type-${props.result.status}`}> {props.result.answer}</span></p>
+    <div className="grid-3">
+      <div className="col cell-table"> {props.result.fromWord}</div>
+      <div className="col cell-table">{props.result.toWord}</div>
+      <div className={`col cell-table text-type-${props.result.status}`}>{props.result.answer}</div>
+    </div>
   </div>
 );
 
