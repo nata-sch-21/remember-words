@@ -79,7 +79,11 @@ class WordsList extends React.Component {
         alert('Please put all answers');
         return;
       }
-      dispatch(calculateCurrentResults(words, this.state.answers));
+      dispatch(calculateCurrentResults(
+        words,
+        this.state.answers,
+        this.props.dictionary.translations[config.defaultLanguage],
+      ));
       this.props.history.push('/results');
     };
   }

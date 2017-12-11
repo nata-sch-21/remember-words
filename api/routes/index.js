@@ -8,5 +8,6 @@ module.exports = (app) => {
     .get(controller.dictionaryWithWordsById);
 
   app.route('/results')
+    .get(controller.bestResults)
     .post(controller.saveResult);
 };

@@ -12,7 +12,7 @@ const config = {
     files: {
       dictionaries: path.resolve(__dirname, 'db/collections.db'),
       words: path.resolve(__dirname, 'db/words.db'),
-      // results: path.resolve(__dirname, 'db/results.db'),
+      results: path.resolve(__dirname, 'db/results.db'),
     },
     migrations: {
       dictionaries: path.resolve(__dirname, 'db/dictionaries.db'),
@@ -21,6 +21,7 @@ const config = {
   },
   uploadsPath: `${protocol}${host}:${serverPort}/static/uploads/`,
   defaultLanguage: 'en',
+  countGetBestResults: 3,
 };
 
 module.exports = config;

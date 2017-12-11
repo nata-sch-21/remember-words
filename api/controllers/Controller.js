@@ -1,11 +1,13 @@
 const Dictionary = require('../models/DictionaryModel');
 const Word = require('../models/WordModel');
+const Result = require('../models/ResultModel');
 const tools = require('../utils/tools');
+const config = require('../config');
 
 class Controller {
   static async allDictionaries(req, res) {
     try {
-      const data = await Dictionary.getAllDictionaries();
+      const data = await Dictionary.get();
 
       if (!data || data.length === 0) {
         tools.errorResponse(res, 'The dictionaries weren\'t found');
@@ -25,7 +27,7 @@ class Controller {
         return;
       }
 
-      const dictionary = await Dictionary.getDictionaryById(req.params.id);
+      const dictionary = await Dictionary.getById(req.params.id);
       if (!dictionary) {
         tools.errorResponse(res, 'The dictionary wasn\'t found');
         return;
@@ -44,25 +46,41 @@ class Controller {
     }
   }
 
-
-  static saveResult(req, res) {
+  static async bestResults(req, res) {
     try {
-      console.log(req.body);
-      // const dictionary = await Dictionary.getDictionaryById(req.params.id);
-      // if (!dictionary) {
-      //   tools.errorResponse(res, 'The dictionary wasn\'t found');
-      //   return;
-      // }
-      //
-      // const data = await Word.getWordsByDictionaryId(req.params.id);
-      //
-      // if (!data || data.length === 0) {
-      //   tools.errorResponse(res, 'The words weren\'t found');
-      //   return;
-      // }
-      tools.successResponse(res, null, 'Your result successfully saved');
+      const bestResults = await Result.get('coefficient', config.countGetBestResults);
+      if (!bestResults) {
+        tools.successResponse(res, 'There are no results yet');
+        return;
+      }
+
+      tools.successResponse(res, { bestResults });
     } catch (e) {
       console.log(`Error get words: ${e}`);
+      tools.errorResponse(res, 'Server error');
+    }
+  }
+
+
+  static async saveResult(req, res) {
+    // todo ask Sergey
+    try {
+      req.body = JSON.parse(Object.keys(req.body)[0]);
+    } catch (err) {
+      req.body = req.body;
+    }
+
+    try {
+      if (!req.body.result) {
+        tools.errorResponse(res, 'Parameter result is required');
+        return;
+      }
+
+      await Result.post(req.body.result);
+
+      tools.successResponse(res, null, 'Your result successfully saved');
+    } catch (e) {
+      console.log(`Error save result: ${e}`);
       tools.errorResponse(res, 'Server error');
     }
   }

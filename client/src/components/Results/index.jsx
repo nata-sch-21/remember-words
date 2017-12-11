@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../Header';
 import ResultsItem from '../ResultsItem';
-import { STATUS_ERROR } from '../../constants/app';
+import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
 import { saveResult } from '../../actions/results';
 
 class Results extends React.Component {
@@ -12,7 +12,7 @@ class Results extends React.Component {
     super();
 
     this.saveResult = () => {
-      this.props.dispatch(saveResult(this.props.countCorrectAnswer));
+      this.props.dispatch(saveResult());
     };
   }
 
@@ -26,6 +26,29 @@ class Results extends React.Component {
     );
   }
 
+  renderSaveResultButton() {
+    const { response, isFetching } = this.props.saving;
+
+    let saveSpan = (<span onClick={this.saveResult}>Save result</span>);
+    let buttonState = 'blue';
+
+    if (isFetching) {
+      saveSpan = (<span>Saving...</span>);
+    } else if (!isFetching && response.status === STATUS_OK) {
+      saveSpan = (<span>{response.message}</span>);
+      buttonState = 'inactive-button';
+    } else if (!isFetching && response.status === STATUS_ERROR) {
+      saveSpan = (<span onClick={this.saveResult}>{response.message}</span>);
+    }
+
+    return (
+      <div className="col">
+        <div className={`block button-text ${buttonState}`}>
+          {saveSpan}
+        </div>
+      </div>
+    );
+  }
 
   renderContent() {
     if (!this.props.response.status) {
@@ -56,11 +79,7 @@ class Results extends React.Component {
                 <span onClick={this.saveResult}>Best results</span>
               </div>
             </div>
-            <div className="col">
-              <div className="block button-text blue">
-                <span onClick={this.saveResult}>Save result</span>
-              </div>
-            </div>
+            {this.renderSaveResultButton()}
           </div>
         </div>
       </div>
@@ -79,8 +98,14 @@ Results.propTypes = {
     status: PropTypes.string,
     message: PropTypes.string,
   }).isRequired,
+  saving: PropTypes.shape({
+    response: PropTypes.shape({
+      status: PropTypes.string,
+      message: PropTypes.string,
+    }),
+    isFetching: PropTypes.bool,
+  }).isRequired,
   dispatch: PropTypes.func.isRequired,
-  countCorrectAnswer: PropTypes.string.isRequired,
 };
 
 export { Results };

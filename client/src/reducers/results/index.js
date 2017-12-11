@@ -1,4 +1,4 @@
-import { SUCCESS_CALCULATE_CURRENT_RESULTS, ERROR_CALCULATE_CURRENT_RESULTS } from '../../constants/results';
+import { FETCH_SAVE_RESULTS_SUCCESS, CALCULATE_CURRENT_RESULTS_SUCCESS, FETCH_SAVE_RESULTS_ERROR, CALCULATE_CURRENT_RESULTS_ERROR, FETCH_SAVE_RESULTS } from '../../constants/results';
 import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
 
 export const initialState = {
@@ -7,7 +7,7 @@ export const initialState = {
     status: '',
     message: '',
   },
-  countCorrectAnswer: '',
+  answerData: null,
   saving: {
     response: {
       status: '',
@@ -19,18 +19,38 @@ export const initialState = {
 
 export default function results(state = initialState, action) {
   switch (action.type) {
-    case SUCCESS_CALCULATE_CURRENT_RESULTS:
-      console.log('ksdmcdkmkd')
+    case CALCULATE_CURRENT_RESULTS_SUCCESS:
       return {
         ...initialState,
         result: action.payload.result,
-        countCorrectAnswer: action.payload.countCorrectAnswer,
+        answerData: action.payload.answerData,
         response: { status: STATUS_OK, message: action.payload.message },
       };
-    case ERROR_CALCULATE_CURRENT_RESULTS:
+    case CALCULATE_CURRENT_RESULTS_ERROR:
       return {
         ...initialState,
         response: { status: STATUS_ERROR, message: action.payload.message },
+      };
+    case FETCH_SAVE_RESULTS:
+      return {
+        ...state,
+        saving: { ...initialState.saving.response, isFetching: true },
+      };
+    case FETCH_SAVE_RESULTS_SUCCESS:
+      return {
+        ...state,
+        saving: {
+          response: { status: STATUS_OK, message: action.payload.message },
+          isFetching: false,
+        },
+      };
+    case FETCH_SAVE_RESULTS_ERROR:
+      return {
+        ...state,
+        saving: {
+          response: { status: STATUS_ERROR, message: action.payload.message },
+          isFetching: false,
+        },
       };
     default:
       return state;

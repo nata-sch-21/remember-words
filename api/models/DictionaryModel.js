@@ -1,13 +1,13 @@
 const DB = require('../database/DB').dictionaries;
 
 class Dictionary {
-  static async getAllDictionaries() {
+  static async get() {
     await DB.loadDatabase();
     const data = await DB.cfind({}).exec();
     return data;
   }
 
-  static async getDictionaryById(id) {
+  static async getById(id) {
     await DB.loadDatabase();
     const data = await DB.cfind({ _id: id }).exec();
     if (data && data[0]) {
