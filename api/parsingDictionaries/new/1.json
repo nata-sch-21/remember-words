@@ -1,0 +1,26 @@
+{
+  "1": {
+    "translations": {
+      "en": "Fruits",
+      "ru": "Фрукты"
+    },
+    "words": {
+      "1": {
+        "image_name": "image1",
+        "image": "image1.jpg",
+        "translations": {
+          "en": "pear",
+          "ru": "груша"
+        }
+      },
+      "2": {
+        "image_name": "image2",
+        "image": "image1.jpg",
+        "translations": {
+          "en": "apple",
+          "ru": "яблоко"
+        }
+      }
+    }
+  }
+}

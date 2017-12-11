@@ -69,7 +69,7 @@ const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, g
       status: STATUS_ERROR,
     };
 
-    if (answer === word.translations[languageTo]) {
+    if (answer.toLowerCase() === word.translations[languageTo].toLowerCase()) {
       item.status = STATUS_OK;
       countCorrectAnswers += 1;
     }
