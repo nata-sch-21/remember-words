@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { requestLastResults } from '../../actions/home';
+import { requestBestResults } from '../../actions/home';
 import Loader from '../Loader';
 import Header from '../Header';
 import { STATUS_ERROR } from '../../constants/app';
@@ -10,7 +10,7 @@ import { STATUS_ERROR } from '../../constants/app';
 class Home extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(requestLastResults());
+    dispatch(requestBestResults());
   }
 
   renderError() {
@@ -21,8 +21,12 @@ class Home extends React.Component {
     );
   }
 
-  renderLastResultsItems() {
-    const { lastResults } = this.props;
+  renderBestResultsItems() {
+    const { bestResults } = this.props;
+
+    if (bestResults.length === 0) {
+      return <div className="col block cell-table">There is noe results yet</div>;
+    }
 
     return (
       <div className="col block">
@@ -31,7 +35,7 @@ class Home extends React.Component {
             <div className="col head-table" key="dictionaryName">Dictionary name</div>,
             <div className="col head-table" key="countWords">Correct answers / Number of words</div>,
           ]}
-          {lastResults.map(item =>
+          {bestResults.map(item =>
             [
               <div className="col cell-table" key={`${item._id}-dictionaryName`}>{item.dictionaryName}</div>,
               <div className="col cell-table" key={`${item._id}-countWords`}>{`${item.countCorrectAnswers}/${item.countWords}`}</div>,
@@ -54,7 +58,7 @@ class Home extends React.Component {
       return <Loader />;
     }
 
-    return this.renderLastResultsItems();
+    return this.renderBestResultsItems();
   }
 
   render() {
@@ -65,7 +69,7 @@ class Home extends React.Component {
           <Link to="/start">Start</Link>
         </div>
         <div className="col block">
-          <h3>Last results</h3>
+          <h3>Best results</h3>
           {this.renderContent()}
         </div>
       </div>
@@ -79,7 +83,7 @@ const mapStateToProps = (state) => {
 };
 
 Home.propTypes = {
-  lastResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bestResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   isFetching: PropTypes.bool.isRequired,
   response: PropTypes.shape({
     status: PropTypes.string,

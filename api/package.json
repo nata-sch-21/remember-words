@@ -4,7 +4,7 @@
   "description": "api",
   "main": "server.js",
   "scripts": {
-    "db:init": "node ./dbMigrations/migrate.js",
+    "db:parse": "node ./parse/index.js",
     "start": "nodemon server.js",
     "server": "node server.js",
     "lint": "eslint .",

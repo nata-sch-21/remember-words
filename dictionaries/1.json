@@ -1,0 +1,92 @@
+{
+  "1": {
+    "dictionary": {
+      "translations": {
+        "en": "Fruits",
+        "ru": "Фрукты"
+      }
+    },
+    "words": {
+      "1": {
+        "image_name": "pear",
+        "image": "pear.jpg",
+        "translations": {
+          "en": "pear",
+          "ru": "груша"
+        }
+      },
+      "2": {
+        "image_name": "apple",
+        "image": "apple.jpg",
+        "translations": {
+          "en": "apple",
+          "ru": "яблоко"
+        }
+      },
+      "3": {
+        "image_name": "apricot",
+        "image": "apricot.jpg",
+        "translations": {
+          "en": "apricot",
+          "ru": "абрикос"
+        }
+      },
+      "4": {
+        "image_name": "pineapple",
+        "image": "pineapple.jpg",
+        "translations": {
+          "en": "pineapple",
+          "ru": "ананас"
+        }
+      },
+      "5": {
+        "image_name": "banana",
+        "image": "banana.jpg",
+        "translations": {
+          "en": "banana",
+          "ru": "банан"
+        }
+      },
+      "6": {
+        "image_name": "grape",
+        "image": "grape.jpg",
+        "translations": {
+          "en": "grape",
+          "ru": "виноград"
+        }
+      },
+      "7": {
+        "image_name": "grapefruit",
+        "image": "grapefruit.jpg",
+        "translations": {
+          "en": "grapefruit",
+          "ru": "грейпфрут"
+        }
+      },
+      "8": {
+        "image_name": "melon",
+        "image": "melon.jpg",
+        "translations": {
+          "en": "melon",
+          "ru": "дыня"
+        }
+      },
+      "9": {
+        "image_name": "pomegranate",
+        "image": "pomegranate.jpg",
+        "translations": {
+          "en": "pomegranate",
+          "ru": "гранат"
+        }
+      },
+      "10": {
+        "image_name": "pomelo",
+        "image": "pomelo.jpg",
+        "translations": {
+          "en": "pomelo",
+          "ru": "помело"
+        }
+      }
+    }
+  }
+}

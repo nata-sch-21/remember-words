@@ -10,7 +10,7 @@ const config = {
   db: {
     path: path.resolve('db'),
     files: {
-      dictionaries: path.resolve(__dirname, 'db/collections.db'),
+      dictionaries: path.resolve(__dirname, 'db/dictionaries.db'),
       words: path.resolve(__dirname, 'db/words.db'),
       results: path.resolve(__dirname, 'db/results.db'),
     },
@@ -22,6 +22,8 @@ const config = {
   uploadsPath: `${protocol}${host}:${serverPort}/static/uploads/`,
   defaultLanguage: 'en',
   countGetLastResults: 3,
+  parseDirNew: path.resolve('parse/new'),
+  parseDirParsed: path.resolve('parse/parsed'),
 };
 
 module.exports = config;

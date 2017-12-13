@@ -1,8 +1,8 @@
-import { FETCH_LAST_RESULTS, FETCH_LAST_RESULTS_ERROR, FETCH_LAST_RESULTS_SUCCESS } from '../../constants/home';
+import { FETCH_BEST_RESULTS, FETCH_BEST_RESULTS_ERROR, FETCH_BEST_RESULTS_SUCCESS } from '../../constants/home';
 import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
 
 export const initialState = {
-  lastResults: [],
+  bestResults: [],
   response: {
     status: '',
     message: '',
@@ -12,15 +12,15 @@ export const initialState = {
 
 export default function home(state = initialState, action) {
   switch (action.type) {
-    case FETCH_LAST_RESULTS:
+    case FETCH_BEST_RESULTS:
       return { ...initialState, isFetching: true };
-    case FETCH_LAST_RESULTS_SUCCESS:
+    case FETCH_BEST_RESULTS_SUCCESS:
       return {
-        lastResults: action.payload.lastResults,
+        bestResults: action.payload.bestResults || [],
         response: { ...state.response, status: STATUS_OK },
         isFetching: false,
       };
-    case FETCH_LAST_RESULTS_ERROR:
+    case FETCH_BEST_RESULTS_ERROR:
       return {
         ...state,
         response: { status: STATUS_ERROR, message: action.payload.message },

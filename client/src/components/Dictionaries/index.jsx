@@ -25,7 +25,7 @@ class Dictionaries extends React.Component {
   renderDictionaryItems() {
     return (
       <div className="col block">
-        <div className="grid-5">
+        <div className="grid-4">
           {this.props.dictionaries.map(item => (<DictionaryItem
             key={item._id}
             dictionary={item}

@@ -201,3 +201,11 @@ a {
 .cell-table {
   font: 400 14px/1 'Open Sans', sans-serif;
 }
+
+.img-container {
+  padding: 5px;
+  max-height: 480px;
+  img {
+    height: 100%;
+  }
+}

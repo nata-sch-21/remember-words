@@ -7,7 +7,7 @@ const CurrentWord = props => (
       {props.title}
       {/* <i className="ion-android-volume-up audio-icon" /> */}
     </h4>
-    <div className="col">
+    <div className="col img-container">
       <img src={props.image} alt="" />
     </div>
     <div className="col container">

@@ -33,7 +33,11 @@ class Results extends React.Component {
     );
   }
 
-  renderSaveResultButton() {
+  renderButtons() {
+    if (!this.props.response.status || this.props.response.status === STATUS_ERROR) {
+      return null;
+    }
+
     const { response, isFetching } = this.props.saving;
 
     let saveSpan = (<span onClick={this.saveResult}>Save result</span>);
@@ -49,10 +53,27 @@ class Results extends React.Component {
     }
 
     return (
-      <div className="col">
-        <div className={`block button-text ${buttonState}`}>
-          {saveSpan}
+      <div className="col block">
+        <div className="grid-2">
+          <div className="col">
+            <div className="block button-text red">
+              <Link to="/">Out</Link>
+            </div>
+          </div>
+          <div className="col">
+            <div className={`block button-text ${buttonState}`}>
+              {saveSpan}
+            </div>
+          </div>
         </div>
+      </div>
+    );
+  }
+
+  renderError() {
+    return (
+      <div className="col block red">
+        <h3>{this.props.response.message}</h3>
       </div>
     );
   }
@@ -74,16 +95,7 @@ class Results extends React.Component {
       <div className="grid-1">
         <Header header="Results" />
         {this.renderContent()}
-        <div className="col block">
-          <div className="grid-2">
-            <div className="col">
-              <div className="block button-text red">
-                <Link to="/">Out</Link>
-              </div>
-            </div>
-            {this.renderSaveResultButton()}
-          </div>
-        </div>
+        {this.renderButtons()}
       </div>
     );
   }

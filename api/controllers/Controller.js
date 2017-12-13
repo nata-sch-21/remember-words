@@ -46,7 +46,7 @@ class Controller {
     }
   }
 
-  static async lastResults(req, res) {
+  static async bestResults(req, res) {
     try {
       const lastResults = await Result.get();
       if (!lastResults) {
@@ -54,6 +54,7 @@ class Controller {
         return;
       }
 
+      lastResults.sort(result => result.coefficient);
       lastResults.reverse();
       const result = [];
 
@@ -64,7 +65,7 @@ class Controller {
         result.push(item);
       });
 
-      tools.successResponse(res, { lastResults: result });
+      tools.successResponse(res, { bestResults: result });
     } catch (e) {
       console.log(`Error get best results: ${e}`);
       tools.errorResponse(res, 'Server error');
