@@ -1,10 +1,9 @@
 const config = require('../config');
 const fs = require('fs');
-const path = require('path');
 const Dictionary = require('../models/DictionaryModel');
 const Word = require('../models/WordModel');
 
-const { parseDirNew, parseDirParsed } = config;
+const { parseDirNew } = config;
 
 const addDataToDB = async (data) => {
   const keys = Object.keys(data);

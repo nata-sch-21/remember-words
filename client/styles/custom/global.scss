@@ -133,14 +133,20 @@ a {
   color: $white;
   padding: 0;
   vertical-align: middle;
-  cursor: pointer;
-  a, span {
+
+  a, span, p {
+    cursor: pointer;
     text-shadow: #888 1px 1px;
     padding: 20px;
     vertical-align: baseline;
     color: $white;
     font-weight: 700;
     display: block;
+  }
+
+  p {
+    cursor: default;
+    position: relative;
   }
 
   span:hover {
@@ -208,4 +214,13 @@ a {
   img {
     height: 100%;
   }
+}
+
+.icon-close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-style: normal;
+  cursor: pointer;
+  font-size: 18px;
 }

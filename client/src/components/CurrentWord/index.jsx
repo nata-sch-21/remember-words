@@ -12,7 +12,7 @@ const CurrentWord = props => (
     </div>
     <div className="col container">
       <div className="group">
-        <input type="text" required name="name" onChange={props.onChangeAnswer} value={props.currentAnswer} />
+        <input type="text" required name="name" onFocus={() => props.toggleErrorMessage()} onChange={props.onChangeAnswer} value={props.currentAnswer} />
         <span className="highlight" />
         <span className="bar" />
         <label htmlFor="name">Translation</label>
@@ -26,6 +26,7 @@ CurrentWord.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   onChangeAnswer: PropTypes.func.isRequired,
+  toggleErrorMessage: PropTypes.func.isRequired,
   currentAnswer: PropTypes.string.isRequired,
 };
 

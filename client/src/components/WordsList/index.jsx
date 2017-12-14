@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import { requestGetDictionaryWithWords } from '../../actions/words';
 import { calculateCurrentResults } from '../../actions/results';
 import { STATUS_ERROR } from '../../constants/app';
@@ -17,16 +18,17 @@ class WordsList extends React.Component {
       currentWordIndex: null,
       prevWordIndex: null,
       nextWordIndex: null,
-
+      errorMessage: '',
       currentAnswer: '',
       answers: [],
     };
 
     this.addAnswer = () => {
       if (!this.state.currentAnswer) {
-        alert('Please put answer');
+        this.toggleErrorMessage('Please put answer');
         return false;
       }
+
       const { answers } = this.state;
       answers[this.state.currentWordIndex] = this.state.currentAnswer.trim();
       this.setState({
@@ -76,7 +78,7 @@ class WordsList extends React.Component {
       const { words, dispatch } = this.props;
 
       if (words.length !== this.state.answers.length) {
-        alert('Please put all answers');
+        this.toggleErrorMessage('Please put all answers');
         return;
       }
       dispatch(calculateCurrentResults(
@@ -85,6 +87,12 @@ class WordsList extends React.Component {
         this.props.dictionary.translations[config.defaultLanguage],
       ));
       this.props.history.push('/results');
+    };
+
+    this.toggleErrorMessage = (message) => {
+      this.setState({
+        errorMessage: message,
+      });
     };
   }
 
@@ -117,6 +125,7 @@ class WordsList extends React.Component {
         image={words[this.state.currentWordIndex].image}
         onChangeAnswer={this.onChangeAnswer}
         currentAnswer={this.state.currentAnswer}
+        toggleErrorMessage={this.toggleErrorMessage}
       />
     );
   }
@@ -172,6 +181,23 @@ class WordsList extends React.Component {
     );
   }
 
+  renderErrorPopup() {
+    const { errorMessage } = this.state;
+
+    if (!errorMessage) {
+      return null;
+    }
+
+    return (
+      <div className="red block button-text">
+        <p>
+          <i className="icon-close" onClick={() => this.toggleErrorMessage('')}>x</i>
+          {errorMessage}
+        </p>
+      </div>
+    );
+  }
+
   renderContent() {
     if (!this.props.response.status && this.props.isFetching === false) {
       return null;
@@ -187,6 +213,7 @@ class WordsList extends React.Component {
 
     return (
       <div className="col block">
+        {this.renderErrorPopup()}
         <div className="pure-block">
           <div className="red quit button-text">
             <Link to="/">Quit</Link>
@@ -202,6 +229,10 @@ class WordsList extends React.Component {
   }
 
   render() {
+    if (!this.props.languageFrom) {
+      return <Redirect to="/start" push />;
+    }
+
     return (
       <div className="grid-1">
         {this.renderHeader()}
@@ -218,8 +249,7 @@ const mapStateToProps = (state) => {
     isFetching: currentState.isFetching,
     response: currentState.response,
     dictionary: currentState.dictionary,
-    // TODO temporary
-    languageFrom: state.languages.languageFrom || config.defaultLanguage,
+    languageFrom: state.languages.languageFrom,
   };
 };
 

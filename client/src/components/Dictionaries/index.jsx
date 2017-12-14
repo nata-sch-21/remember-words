@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import Loader from '../Loader';
 import Header from '../Header';
 import DictionaryItem from '../DictionaryItem';
 import { requestGetDictionaries } from '../../actions/dictionaries';
 import { STATUS_ERROR } from '../../constants/app';
-import config from '../../../config';
 
 class Dictionaries extends React.Component {
   componentDidMount() {
@@ -53,6 +53,10 @@ class Dictionaries extends React.Component {
   }
 
   render() {
+    if (!this.props.language) {
+      return <Redirect to="/start" push />;
+    }
+
     return (
       <div className="grid-1">
         <Header header="Dictionaries" />
@@ -68,7 +72,7 @@ const mapStateToProps = (state) => {
     dictionaries: currentState.dictionaries,
     isFetching: currentState.isFetching,
     response: currentState.response,
-    language: state.languages.languageFrom || config.defaultLanguage,
+    language: state.languages.languageFrom,
   };
 };
 

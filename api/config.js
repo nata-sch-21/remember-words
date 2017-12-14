@@ -23,7 +23,6 @@ const config = {
   defaultLanguage: 'en',
   countGetLastResults: 3,
   parseDirNew: path.resolve('parse/new'),
-  parseDirParsed: path.resolve('parse/parsed'),
 };
 
 module.exports = config;

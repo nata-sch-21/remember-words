@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import Header from '../Header';
 import ResultsItem from '../ResultsItem';
 import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
@@ -91,6 +92,10 @@ class Results extends React.Component {
   }
 
   render() {
+    if (!this.props.result.length) {
+      return <Redirect to="/start" push />;
+    }
+
     return (
       <div className="grid-1">
         <Header header="Results" />
