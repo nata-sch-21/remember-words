@@ -4,14 +4,15 @@
   "description": "remember-words",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress --colors --config webpack.prod.config.js",
+    "build": "webpack --progress --colors --p --config webpack.prod.config.js",
     "start": "webpack-dev-server --progress --colors --config ./webpack.config.js",
-    "server": "NODE_ENV=production node ./server.js",
+    "server": "node ./server.js",
     "lint": "eslint \"./src/**\" \"./test/**\" \"./server/**\"",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "qqreq": "node ./server.js"
   },
   "keywords": [
     "client"

@@ -52,6 +52,11 @@ const saveResult = () => async (dispatch, getState) => {
   }
 };
 
+const modRound = (value, precision) => {
+  const precisionNumber = Math.pow(10, precision);
+  return Math.round(value * precisionNumber) / precisionNumber;
+}
+
 const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, getState) => {
   const { languageTo, languageFrom } = getState().languages;
   const result = [];
@@ -94,7 +99,7 @@ const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, g
       countCorrectAnswers,
       countWords: words.length,
       dictionaryName,
-      coefficient: (countCorrectAnswers / words.length.toFixed(5)),
+      coefficient: modRound(countCorrectAnswers / words.length, 5),
     },
   }));
 };
@@ -107,4 +112,5 @@ export {
   fetchSaveResults,
   errorSaveResults,
   successSaveResults,
+  modRound,
 };

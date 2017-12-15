@@ -4,16 +4,18 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pck = require('./package.json');
 
-const dependencies = { pck };
+const { dependencies } = pck;
 delete dependencies.express;
+delete dependencies.axios;
+delete dependencies.fs;
 
 const config = {
   entry: {
     bundle: './src/index.jsx',
-    vendor: Object.keys(pck.dependencies || {}),
+    vendor: Object.keys(dependencies || {}),
   },
   resolve: {
-    extensions: ['.js', '.css'],
+    extensions: ['.jsx', '.js', '.css'],
     modules: [
       path.resolve(__dirname, 'src'),
       'node_modules',
@@ -79,9 +81,9 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: 'production',
+        NODE_ENV: JSON.stringify('production'),
       },
-      NODE_ENV: 'production',
+      NODE_ENV: JSON.stringify('production'),
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),

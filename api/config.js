@@ -21,7 +21,7 @@ const config = {
   },
   uploadsPath: `${protocol}${host}:${serverPort}/static/uploads/`,
   defaultLanguage: 'en',
-  countGetLastResults: 3,
+  countGetLastResults: 10,
   parseDirNew: path.resolve('parse/new'),
 };
 

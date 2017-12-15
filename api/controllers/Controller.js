@@ -54,7 +54,11 @@ class Controller {
         return;
       }
 
-      lastResults.sort(result => result.coefficient);
+      lastResults.sort((a, b) => {
+        if (a.coefficient > b.coefficient) return 1;
+        if (a.coefficient < b.coefficient) return -1;
+        return 0;
+      });
       lastResults.reverse();
       const result = [];
 
