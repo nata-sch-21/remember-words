@@ -24,7 +24,7 @@ export default function results(state = initialState, action) {
         ...initialState,
         result: action.payload.result,
         answerData: action.payload.answerData,
-        response: { status: STATUS_OK, message: action.payload.message },
+        response: { ...initialState.response, status: STATUS_OK },
       };
     case CALCULATE_CURRENT_RESULTS_ERROR:
       return {
@@ -34,7 +34,7 @@ export default function results(state = initialState, action) {
     case FETCH_SAVE_RESULTS:
       return {
         ...state,
-        saving: { ...initialState.saving.response, isFetching: true },
+        saving: { ...initialState.saving, isFetching: true },
       };
     case FETCH_SAVE_RESULTS_SUCCESS:
       return {

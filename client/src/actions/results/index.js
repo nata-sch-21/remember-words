@@ -28,6 +28,7 @@ const successSaveResults = data => ({
 
 const saveResult = () => async (dispatch, getState) => {
   const { answerData } = getState().results;
+
   dispatch(fetchSaveResults());
   const url = `${config.apiPath}results`;
   try {
@@ -42,7 +43,7 @@ const saveResult = () => async (dispatch, getState) => {
     });
     const json = await response.json();
     if (json.response.status === STATUS_ERROR) {
-      dispatch(errorSaveResults(json.response));
+      dispatch(errorSaveResults({ message: json.response.message }));
     } else {
       dispatch(successSaveResults(json.response));
     }
@@ -56,9 +57,14 @@ const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, g
   const result = [];
   let countCorrectAnswers = 0;
 
+  if (answers.length !== words.length) {
+    dispatch(errorCalculateCurrentResults({ message: 'Internal error. Not enough answers' }));
+    return;
+  }
+
   answers.forEach((answer, key) => {
     const word = words[key];
-    if (!word.translations[languageTo]) {
+    if (!word || !word.translations || !word.translations[languageTo]) {
       return;
     }
 
@@ -78,7 +84,7 @@ const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, g
   });
 
   if (result.length !== words.length) {
-    dispatch(errorCalculateCurrentResults({ status: STATUS_ERROR, message: 'Internal error. Some translations weren\'t found' }));
+    dispatch(errorCalculateCurrentResults({ message: 'Internal error. Some translations weren\'t found' }));
     return;
   }
 
@@ -98,4 +104,7 @@ export {
   successCalculateCurrentResults,
   errorCalculateCurrentResults,
   saveResult,
+  fetchSaveResults,
+  errorSaveResults,
+  successSaveResults,
 };

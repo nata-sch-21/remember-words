@@ -2,17 +2,16 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import nock from 'nock';
 import config from '../../../../config';
-import { dictionaries, words } from '../../../../test/testData';
-import { FETCH_DICTIONARY_WITH_WORDS, FETCH_DICTIONARY_WITH_WORDS_ERROR, FETCH_DICTIONARY_WITH_WORDS_SUCCESS } from '../../../constants/words';
-import { initialState } from '../../../reducers/dictionaries';
+import { results } from '../../../../test/testData';
+import { FETCH_BEST_RESULTS, FETCH_BEST_RESULTS_SUCCESS, FETCH_BEST_RESULTS_ERROR } from '../../../constants/home';
+import { initialState } from '../../../reducers/home';
 import { STATUS_ERROR, STATUS_OK } from '../../../constants/app';
-import { requestGetDictionaryWithWords } from '../';
+import { requestBestResults } from '../';
 
 const mockStore = configureMockStore([thunk]);
-const dictionaryId = dictionaries[0]._id;
-const url = `/dictionaries/${dictionaryId}`;
+const url = '/results';
 
-describe('fetch words action creator', () => {
+describe('fetch best results action creator', () => {
   let store;
 
   beforeEach(() => {
@@ -21,20 +20,17 @@ describe('fetch words action creator', () => {
   });
 
   it('dispatches the correct actions on successful fetch request', async () => {
-    const successResponse = { response: { status: STATUS_OK, message: '' }, data: { dictionary: dictionaries[0], words } };
+    const successResponse = { response: { status: STATUS_OK, message: '' }, data: { bestResults: results } };
     nock(config.apiPath)
       .get(url)
       .reply(200, successResponse);
 
     const expectedActions = [
-      { type: FETCH_DICTIONARY_WITH_WORDS },
-      {
-        type: FETCH_DICTIONARY_WITH_WORDS_SUCCESS,
-        payload: { dictionary: dictionaries[0], words },
-      },
+      { type: FETCH_BEST_RESULTS },
+      { type: FETCH_BEST_RESULTS_SUCCESS, payload: { bestResults: results } },
     ];
 
-    await store.dispatch(requestGetDictionaryWithWords(dictionaryId));
+    await store.dispatch(requestBestResults());
     expect(store.getActions()).toEqual(expectedActions);
   });
 
@@ -45,14 +41,11 @@ describe('fetch words action creator', () => {
       .reply(200, errorResponse);
 
     const expectedActions = [
-      { type: FETCH_DICTIONARY_WITH_WORDS },
-      {
-        type: FETCH_DICTIONARY_WITH_WORDS_ERROR,
-        payload: { message: errorResponse.response.message },
-      },
+      { type: FETCH_BEST_RESULTS },
+      { type: FETCH_BEST_RESULTS_ERROR, payload: { message: errorResponse.response.message } },
     ];
 
-    await store.dispatch(requestGetDictionaryWithWords(dictionaryId));
+    await store.dispatch(requestBestResults());
     expect(store.getActions()).toEqual(expectedActions);
   });
 
@@ -62,15 +55,15 @@ describe('fetch words action creator', () => {
     };
 
     nock(config.apiPath)
-      .get(url)
+      .get('/dictionaries')
       .replyWithError();
 
     const expectedActions = [
-      { type: FETCH_DICTIONARY_WITH_WORDS },
-      { type: FETCH_DICTIONARY_WITH_WORDS_ERROR, payload: { ...errorResponse } },
+      { type: FETCH_BEST_RESULTS },
+      { type: FETCH_BEST_RESULTS_ERROR, payload: { ...errorResponse } },
     ];
 
-    await store.dispatch(requestGetDictionaryWithWords(dictionaryId));
+    await store.dispatch(requestBestResults());
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

@@ -41,7 +41,7 @@ describe('fetch dictionaries action creator', () => {
 
     const expectedActions = [
       { type: FETCH_DICTIONARIES },
-      { type: FETCH_DICTIONARIES_ERROR, payload: { ...errorResponse.response } },
+      { type: FETCH_DICTIONARIES_ERROR, payload: { message: errorResponse.response.message } },
     ];
 
     await store.dispatch(requestGetDictionaries());

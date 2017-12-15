@@ -22,7 +22,7 @@ const requestGetDictionaryWithWords = id => async (dispatch) => {
     const response = await fetch(url);
     const json = await response.json();
     if (json.response.status === STATUS_ERROR) {
-      dispatch(errorFetchDictionaryWithWords(json.response));
+      dispatch(errorFetchDictionaryWithWords({ message: json.response.message }));
     } else {
       dispatch(successFetchDictionaryWithWords({ ...json.data }));
     }

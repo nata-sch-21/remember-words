@@ -1,3 +1,5 @@
+import { STATUS_ERROR, STATUS_OK } from '../src/constants/app';
+
 export const dictionaries = [
   {
     _id: '2VJtLNEw55quOU5z',
@@ -22,10 +24,60 @@ export const words = [
   {
     image_name: 'image2.jpg', image: 'http://localhost:8000/static/uploads/image2.jpg', translations: { en: 'pear', ru: 'груша' }, dictionary_id: '2VJtLNEw55quOU5z', _id: 'cxCMozceuNRLcCv1',
   },
+];
+
+export const answers = [
+  'яблоко',
+  'неправильное слово',
+];
+
+export const results = [
   {
-    image_name: 'image3.jpg', image: 'http://localhost:8000/static/uploads/image3.jpg', translations: { en: 'cat', ru: 'кот' }, dictionary_id: 'LefmBixVc9OQgohe', _id: 'V2rOUwxsJ2t6Pvuf',
+    countCorrectAnswers: 3, countWords: 10, dictionaryName: 'Fruits', coefficient: 0.3, _id: 'WARwzuZTgu1KCboQ',
   },
   {
-    image_name: 'image4.jpg', image: 'http://localhost:8000/static/uploads/image4.jpg', translations: { en: 'wolf', ru: 'волк' }, dictionary_id: 'LefmBixVc9OQgohe', _id: '6fINSemGZkNeTa44',
+    countCorrectAnswers: 1, countWords: 10, dictionaryName: 'Fruits', coefficient: 0.1, _id: 'u86AUbwMVRkpDm',
+  },
+  {
+    countCorrectAnswers: 5, countWords: 10, dictionaryName: 'Fruits', coefficient: 0.5, _id: 'dHRCeyMSzYOxApn4',
   },
 ];
+
+export const bestResults = [
+  {
+    _id: 1, dictionaryName: 'dictionaryName1', countCorrectAnswers: 2, countWords: 10,
+  },
+  {
+    _id: 2, dictionaryName: 'dictionaryName2', countCorrectAnswers: 2, countWords: 10,
+  },
+  {
+    _id: 3, dictionaryName: 'dictionaryName3', countCorrectAnswers: 2, countWords: 10,
+  },
+];
+
+export const languageFrom = 'en';
+export const languageTo = 'ru';
+
+export const currentResult = [
+  {
+    answer: answers[0],
+    fromWord: words[0].translations[languageFrom],
+    toWord: words[0].translations[languageTo],
+    status: STATUS_OK,
+  },
+  {
+    answer: answers[1],
+    fromWord: words[1].translations[languageFrom],
+    toWord: words[1].translations[languageTo],
+    status: STATUS_ERROR,
+  },
+];
+
+export const dictionaryName = 'dictionary name';
+
+export const answerData = {
+  countCorrectAnswers: 1,
+  countWords: words.length,
+  dictionaryName,
+  coefficient: (1 / words.length.toFixed(5)),
+};

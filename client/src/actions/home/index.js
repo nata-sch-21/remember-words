@@ -18,7 +18,7 @@ const requestBestResults = () => async (dispatch) => {
     const response = await fetch(url);
     const json = await response.json();
     if (json.response.status === STATUS_ERROR) {
-      dispatch(errorFetchBestResults(json.response));
+      dispatch(errorFetchBestResults({ message: json.response.message }));
     } else {
       dispatch(successFetchBestResults({ ...json.data }));
     }

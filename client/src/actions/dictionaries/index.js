@@ -18,7 +18,7 @@ const requestGetDictionaries = () => async (dispatch) => {
     const response = await fetch(url);
     const json = await response.json();
     if (json.response.status === STATUS_ERROR) {
-      dispatch(errorFetchDictionaries(json.response));
+      dispatch(errorFetchDictionaries({ message: json.response.message }));
     } else {
       dispatch(successFetchDictionaries({ dictionaries: json.data }));
     }
