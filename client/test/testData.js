@@ -78,7 +78,7 @@ export const dictionaryName = 'dictionary name';
 const modRound = (value, precision) => {
   const precisionNumber = Math.pow(10, precision);
   return Math.round(value * precisionNumber) / precisionNumber;
-}
+};
 
 export const answerData = {
   countCorrectAnswers: 1,

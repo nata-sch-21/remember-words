@@ -1,5 +1,11 @@
-import config from '../../../config';
-import { CALCULATE_CURRENT_RESULTS_ERROR, FETCH_SAVE_RESULTS_ERROR, FETCH_SAVE_RESULTS, CALCULATE_CURRENT_RESULTS_SUCCESS, FETCH_SAVE_RESULTS_SUCCESS } from '../../constants/results';
+import config from '../../../config/app.config';
+import {
+  CALCULATE_CURRENT_RESULTS_ERROR,
+  FETCH_SAVE_RESULTS_ERROR,
+  FETCH_SAVE_RESULTS,
+  CALCULATE_CURRENT_RESULTS_SUCCESS,
+  FETCH_SAVE_RESULTS_SUCCESS,
+} from '../../constants/results';
 import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
 
 const successCalculateCurrentResults = data => ({
@@ -55,7 +61,7 @@ const saveResult = () => async (dispatch, getState) => {
 const modRound = (value, precision) => {
   const precisionNumber = Math.pow(10, precision);
   return Math.round(value * precisionNumber) / precisionNumber;
-}
+};
 
 const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, getState) => {
   const { languageTo, languageFrom } = getState().languages;

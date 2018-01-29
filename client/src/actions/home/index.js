@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import config from '../../../config';
+import config from '../../../config/app.config';
 import { FETCH_BEST_RESULTS, FETCH_BEST_RESULTS_SUCCESS, FETCH_BEST_RESULTS_ERROR } from '../../constants/home';
 import { STATUS_ERROR } from '../../constants/app';
 

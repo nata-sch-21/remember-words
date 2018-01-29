@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import config from '../../../config';
+import config from '../../../config/app.config';
 import { FETCH_DICTIONARIES, FETCH_DICTIONARIES_ERROR, FETCH_DICTIONARIES_SUCCESS } from '../../constants/dictionaries';
 import { STATUS_ERROR } from '../../constants/app';
 
