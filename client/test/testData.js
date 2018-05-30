@@ -1,4 +1,5 @@
 import { STATUS_ERROR, STATUS_OK } from '../src/constants/app';
+import tools from '../src/services/tools';
 
 export const dictionaries = [
   {
@@ -75,14 +76,9 @@ export const currentResult = [
 
 export const dictionaryName = 'dictionary name';
 
-const modRound = (value, precision) => {
-  const precisionNumber = Math.pow(10, precision);
-  return Math.round(value * precisionNumber) / precisionNumber;
-};
-
 export const answerData = {
   countCorrectAnswers: 1,
   countWords: words.length,
   dictionaryName,
-  coefficient: modRound(1 / words.length, 5),
+  coefficient: tools.modRound(1 / words.length, 5),
 };

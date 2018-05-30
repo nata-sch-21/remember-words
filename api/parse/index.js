@@ -38,9 +38,16 @@ const parse = async () => {
         throw new Error(`ERROR during moving file to parsed dir ${e.message}`);
       }
     });
+
+    return 'Dictionaries were successfully parsed';
   } catch (e) {
-    console.log(`ERROR parsing: ${e.message}`);
+    throw new Error(`ERROR parsing: ${e.message}`);
   }
 };
 
-parse();
+try {
+  const res = parse();
+  console.log(res);
+} catch (e) {
+  console.log(e);
+}

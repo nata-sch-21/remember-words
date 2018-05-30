@@ -22,7 +22,7 @@ const CurrentWord = props => (
         />
         <span className="highlight" />
         <span className="bar" />
-        <label htmlFor="name">Translation</label>
+        <span className="label">Translation</span>
       </div>
     </div>
   </div>

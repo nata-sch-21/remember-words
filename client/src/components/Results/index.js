@@ -28,7 +28,7 @@ class Results extends React.Component {
               <div className="col head-table">Answer</div>
             </div>
           </div>
-          {this.props.result.map((item, key) => (<ResultsItem key={key} result={item} />))}
+          {this.props.result.map(item => (<ResultsItem key={item.fromWord} result={item} />))}
         </div>
       </div>
     );

@@ -134,7 +134,7 @@ a {
   padding: 0;
   vertical-align: middle;
 
-  a, span, p {
+  a, span, p, button {
     cursor: pointer;
     text-shadow: #888 1px 1px;
     padding: 20px;
@@ -150,6 +150,10 @@ a {
   }
 
   span:hover {
+    text-decoration: underline;
+  }
+
+  button:hover {
     text-decoration: underline;
   }
 }

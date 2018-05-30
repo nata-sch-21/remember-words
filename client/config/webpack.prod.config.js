@@ -77,6 +77,7 @@ const config = {
     net: 'empty',
     tls: 'empty',
   },
+  devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {

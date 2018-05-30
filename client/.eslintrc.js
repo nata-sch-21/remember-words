@@ -17,11 +17,8 @@ module.exports = {
       "specialLink": [ "hrefLeft", "hrefRight", "to" ],
       "aspects": [ "noHref", "invalidHref", "preferButton" ]
     }],
-
-    //
-    // "jsx-a11y/no-static-element-interactions": 0,
-    // "jsx-a11y/click-events-have-key-events": 0,
-    // "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
   },
   "globals": {
     "shallow": true,

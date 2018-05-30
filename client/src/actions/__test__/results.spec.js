@@ -12,15 +12,15 @@ import {
   answerData,
 } from '../../../test/testData';
 import {
-  FETCH_SAVE_RESULTS,
+  // FETCH_SAVE_RESULTS,
   CALCULATE_CURRENT_RESULTS_ERROR,
-  FETCH_SAVE_RESULTS_ERROR,
+  // FETCH_SAVE_RESULTS_ERROR,
   CALCULATE_CURRENT_RESULTS_SUCCESS,
-  FETCH_SAVE_RESULTS_SUCCESS,
+  // FETCH_SAVE_RESULTS_SUCCESS,
 } from '../../constants/results';
 import { initialState } from '../../reducers/home';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
-import { calculateCurrentResults, saveResult } from '../results';
+import { STATUS_ERROR } from '../../constants/app';
+import { calculateCurrentResults } from '../results';
 
 const mockStore = configureMockStore([thunk]);
 

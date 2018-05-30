@@ -14,15 +14,11 @@ const config = {
       words: path.resolve(__dirname, 'db/words.db'),
       results: path.resolve(__dirname, 'db/results.db'),
     },
-    migrations: {
-      dictionaries: path.resolve(__dirname, 'db/dictionaries.db'),
-      results: path.resolve(__dirname, 'db/results.db'),
-    },
   },
   uploadsPath: `${protocol}${host}:${serverPort}/static/uploads/`,
   defaultLanguage: 'en',
   countGetLastResults: 10,
-  parseDirNew: path.resolve('parse/new'),
+  parseDirNew: path.resolve(__dirname, 'parse/new'),
 };
 
 module.exports = config;

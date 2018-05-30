@@ -1,4 +1,5 @@
 import config from '../../../config/app.config';
+import tools from '../../../src/services/tools';
 import {
   CALCULATE_CURRENT_RESULTS_ERROR,
   FETCH_SAVE_RESULTS_ERROR,
@@ -58,11 +59,6 @@ const saveResult = () => async (dispatch, getState) => {
   }
 };
 
-const modRound = (value, precision) => {
-  const precisionNumber = Math.pow(10, precision);
-  return Math.round(value * precisionNumber) / precisionNumber;
-};
-
 const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, getState) => {
   const { languageTo, languageFrom } = getState().languages;
   const result = [];
@@ -105,7 +101,7 @@ const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, g
       countCorrectAnswers,
       countWords: words.length,
       dictionaryName,
-      coefficient: modRound(countCorrectAnswers / words.length, 5),
+      coefficient: tools.modRound(countCorrectAnswers / words.length, 5),
     },
   }));
 };
@@ -118,5 +114,4 @@ export {
   fetchSaveResults,
   errorSaveResults,
   successSaveResults,
-  modRound,
 };
