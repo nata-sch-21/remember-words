@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import config from '../../../config/app.config';
-import SELECT_LANGUAGES from '../../constants/languages';
+import { SELECT_LANGUAGE } from '../../constants';
 import { initialState } from '../../reducers/languages';
 import selectLanguages from '../languages';
 
@@ -21,7 +21,7 @@ describe('selectLanguage action', () => {
     };
 
     const expectedActions = [
-      { type: SELECT_LANGUAGES, payload: { ...data } },
+      { type: SELECT_LANGUAGE, payload: { ...data } },
     ];
 
     store.dispatch(selectLanguages(data));

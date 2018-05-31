@@ -1,7 +1,7 @@
 import resultsReducer, { initialState } from '../results';
 import { errorCalculateCurrentResults, successCalculateCurrentResults, errorSaveResults, fetchSaveResults, successSaveResults } from '../../actions/results';
 import { currentResult, answerData } from '../../../test/testData';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
+import { STATUS_ERROR, STATUS_OK } from '../../constants';
 
 describe('Reducer words', () => {
   // deepFreeze protect from state mutating

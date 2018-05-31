@@ -17,9 +17,9 @@ import {
   // FETCH_SAVE_RESULTS_ERROR,
   CALCULATE_CURRENT_RESULTS_SUCCESS,
   // FETCH_SAVE_RESULTS_SUCCESS,
-} from '../../constants/results';
+  STATUS_ERROR,
+} from '../../constants';
 import { initialState } from '../../reducers/home';
-import { STATUS_ERROR } from '../../constants/app';
 import { calculateCurrentResults } from '../results';
 
 const mockStore = configureMockStore([thunk]);

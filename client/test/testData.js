@@ -1,4 +1,4 @@
-import { STATUS_ERROR, STATUS_OK } from '../src/constants/app';
+import { STATUS_ERROR, STATUS_OK } from '../src/constants';
 import tools from '../src/services/tools';
 
 export const dictionaries = [

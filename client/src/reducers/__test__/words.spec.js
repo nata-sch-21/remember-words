@@ -1,7 +1,7 @@
 import wordsReducer, { initialState } from '../words';
 import { fetchDictionaryWithWords, errorFetchDictionaryWithWords, successFetchDictionaryWithWords } from '../../actions/words';
 import { dictionaries, words } from '../../../test/testData';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
+import { STATUS_ERROR, STATUS_OK } from '../../constants';
 
 const dictionary = dictionaries[0];
 

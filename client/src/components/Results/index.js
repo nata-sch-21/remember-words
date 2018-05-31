@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import Header from '../Header';
 import ResultsItem from '../ResultsItem';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
+import { STATUS_ERROR, STATUS_OK } from '../../constants';
 import { saveResult } from '../../actions/results';
 
 class Results extends React.Component {

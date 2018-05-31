@@ -3,9 +3,14 @@ import thunk from 'redux-thunk';
 import nock from 'nock';
 import config from '../../../config/app.config';
 import { dictionaries, words } from '../../../test/testData';
-import { FETCH_DICTIONARY_WITH_WORDS, FETCH_DICTIONARY_WITH_WORDS_ERROR, FETCH_DICTIONARY_WITH_WORDS_SUCCESS } from '../../constants/words';
+import {
+  FETCH_DICTIONARY_WITH_WORDS,
+  FETCH_DICTIONARY_WITH_WORDS_ERROR,
+  FETCH_DICTIONARY_WITH_WORDS_SUCCESS,
+  STATUS_ERROR,
+  STATUS_OK,
+} from '../../constants';
 import { initialState } from '../../reducers/dictionaries';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
 import { requestGetDictionaryWithWords } from '../words';
 
 const mockStore = configureMockStore([thunk]);

@@ -6,8 +6,9 @@ import {
   FETCH_SAVE_RESULTS,
   CALCULATE_CURRENT_RESULTS_SUCCESS,
   FETCH_SAVE_RESULTS_SUCCESS,
-} from '../../constants/results';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
+  STATUS_ERROR,
+  STATUS_OK,
+} from '../../constants';
 
 const successCalculateCurrentResults = data => ({
   payload: { ...data },

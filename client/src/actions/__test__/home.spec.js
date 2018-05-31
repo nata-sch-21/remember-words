@@ -3,9 +3,14 @@ import thunk from 'redux-thunk';
 import nock from 'nock';
 import config from '../../../config/app.config';
 import { results } from '../../../test/testData';
-import { FETCH_BEST_RESULTS, FETCH_BEST_RESULTS_SUCCESS, FETCH_BEST_RESULTS_ERROR } from '../../constants/home';
+import {
+  FETCH_BEST_RESULTS,
+  FETCH_BEST_RESULTS_SUCCESS,
+  FETCH_BEST_RESULTS_ERROR,
+  STATUS_ERROR,
+  STATUS_OK,
+} from '../../constants';
 import { initialState } from '../../reducers/home';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
 import { requestBestResults } from '../home';
 
 const mockStore = configureMockStore([thunk]);

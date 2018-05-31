@@ -1,5 +1,5 @@
-import { FETCH_DICTIONARIES, FETCH_DICTIONARIES_ERROR, FETCH_DICTIONARIES_SUCCESS } from '../../constants/dictionaries';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
+import { FETCH_DICTIONARIES, FETCH_DICTIONARIES_ERROR, FETCH_DICTIONARIES_SUCCESS } from '../../constants';
+import { STATUS_ERROR, STATUS_OK } from '../../constants';
 
 export const initialState = {
   dictionaries: [],

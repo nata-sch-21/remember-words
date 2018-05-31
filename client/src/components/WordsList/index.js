@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { requestGetDictionaryWithWords } from '../../actions/words';
 import { calculateCurrentResults } from '../../actions/results';
-import { STATUS_ERROR } from '../../constants/app';
+import { STATUS_ERROR } from '../../constants';
 import config from '../../../config/app.config';
 import Header from '../Header';
 import Loader from '../Loader';

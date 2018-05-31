@@ -1,5 +1,10 @@
-import { FETCH_BEST_RESULTS, FETCH_BEST_RESULTS_ERROR, FETCH_BEST_RESULTS_SUCCESS } from '../../constants/home';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
+import {
+  FETCH_BEST_RESULTS,
+  FETCH_BEST_RESULTS_ERROR,
+  FETCH_BEST_RESULTS_SUCCESS,
+  STATUS_ERROR,
+  STATUS_OK,
+} from '../../constants';
 
 export const initialState = {
   bestResults: [],

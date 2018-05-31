@@ -4,8 +4,9 @@ import {
   FETCH_SAVE_RESULTS_ERROR,
   CALCULATE_CURRENT_RESULTS_ERROR,
   FETCH_SAVE_RESULTS,
-} from '../../constants/results';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
+  STATUS_ERROR,
+  STATUS_OK,
+} from '../../constants';
 
 export const initialState = {
   result: [],

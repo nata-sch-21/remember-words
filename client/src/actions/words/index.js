@@ -1,7 +1,11 @@
 import fetch from 'isomorphic-fetch';
 import config from '../../../config/app.config';
-import { FETCH_DICTIONARY_WITH_WORDS_SUCCESS, FETCH_DICTIONARY_WITH_WORDS_ERROR, FETCH_DICTIONARY_WITH_WORDS } from '../../constants/words';
-import { STATUS_ERROR } from '../../constants/app';
+import {
+  FETCH_DICTIONARY_WITH_WORDS_SUCCESS,
+  FETCH_DICTIONARY_WITH_WORDS_ERROR,
+  FETCH_DICTIONARY_WITH_WORDS,
+  STATUS_ERROR,
+} from '../../constants';
 
 const successFetchDictionaryWithWords = data => ({
   payload: { ...data },

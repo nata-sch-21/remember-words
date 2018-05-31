@@ -1,4 +1,4 @@
-import SELECT_LANGUAGE from '../../constants/languages';
+import { SELECT_LANGUAGE } from '../../constants';
 
 export const initialState = {
   languageFrom: '',

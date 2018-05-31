@@ -1,7 +1,7 @@
 import dictionariesReducer, { initialState } from '../dictionaries';
 import { fetchDictionaries, errorFetchDictionaries, successFetchDictionaries } from '../../actions/dictionaries';
 import { dictionaries } from '../../../test/testData';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
+import * as constants from '../../constants';
 
 describe('Reducer dictionaries', () => {
   it('it should return initial state', () => {
@@ -22,7 +22,7 @@ describe('Reducer dictionaries', () => {
       ...initialState,
       dictionaries,
       response: {
-        status: STATUS_OK,
+        status: constants.STATUS_OK,
         message: '',
       },
     });
@@ -36,7 +36,7 @@ describe('Reducer dictionaries', () => {
     expect(newState).toEqual({
       ...initialState,
       response: {
-        status: STATUS_ERROR,
+        status: constants.STATUS_ERROR,
         message,
       },
     });

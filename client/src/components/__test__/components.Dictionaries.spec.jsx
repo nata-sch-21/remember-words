@@ -1,6 +1,6 @@
 import React from 'react';
 import { dictionaries } from '../../../test/testData';
-import { STATUS_ERROR, STATUS_OK } from '../../constants/app';
+import { STATUS_ERROR, STATUS_OK } from '../../constants';
 import { Dictionaries } from '../Dictionaries';
 import { initialState } from '../../reducers/dictionaries';
 import config from '../../../config/app.config';

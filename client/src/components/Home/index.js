@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { requestBestResults } from '../../actions/home';
 import Loader from '../Loader';
 import Header from '../Header';
-import { STATUS_ERROR } from '../../constants/app';
+import { STATUS_ERROR } from '../../constants';
 
 class Home extends React.Component {
   componentDidMount() {

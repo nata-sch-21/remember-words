@@ -1,5 +1,5 @@
 import languagesReducer, { initialState } from '../languages';
-import SELECT_LANGUAGE from '../../constants/languages';
+import { SELECT_LANGUAGE } from '../../constants';
 import config from '../../../config/app.config';
 
 describe('Reducer languages', () => {

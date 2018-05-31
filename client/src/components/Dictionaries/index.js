@@ -6,7 +6,7 @@ import Loader from '../Loader';
 import Header from '../Header';
 import DictionaryItem from '../DictionaryItem';
 import { requestGetDictionaries } from '../../actions/dictionaries';
-import { STATUS_ERROR } from '../../constants/app';
+import { STATUS_ERROR } from '../../constants';
 
 class Dictionaries extends React.Component {
   componentDidMount() {

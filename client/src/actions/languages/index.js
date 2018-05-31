@@ -1,5 +1,5 @@
-import SELECT_LANGUAGES from '../../constants/languages';
+import { SELECT_LANGUAGE } from '../../constants';
 
-const selectLanguages = data => ({ payload: { ...data }, type: SELECT_LANGUAGES });
+const selectLanguages = data => ({ payload: { ...data }, type: SELECT_LANGUAGE });
 
 export default selectLanguages;
