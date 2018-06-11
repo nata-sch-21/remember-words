@@ -1,4 +1,4 @@
-import config from '../../../config/app.config';
+import Api from '../../services/Api';
 import tools from '../../../src/services/tools';
 import {
   CALCULATE_CURRENT_RESULTS_ERROR,
@@ -38,18 +38,11 @@ const saveResult = () => async (dispatch, getState) => {
   const { answerData } = getState().results;
 
   dispatch(fetchSaveResults());
-  const url = `${config.apiPath}results`;
   try {
-    const response = await fetch(url, {
-      method: 'post',
-      mode: 'cors',
+    const json = await Api.postRequest('results', {
       body: JSON.stringify({ result: answerData }),
-      headers: {
-        Accept: 'application/json, application/xml, text/play, text/html, *.*',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-      },
     });
-    const json = await response.json();
+
     if (json.response.status === STATUS_ERROR) {
       dispatch(errorSaveResults({ message: json.response.message }));
     } else {

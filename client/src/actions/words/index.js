@@ -1,5 +1,4 @@
-import fetch from 'isomorphic-fetch';
-import config from '../../../config/app.config';
+import Api from '../../services/Api';
 import {
   FETCH_DICTIONARY_WITH_WORDS_SUCCESS,
   FETCH_DICTIONARY_WITH_WORDS_ERROR,
@@ -20,11 +19,9 @@ const errorFetchDictionaryWithWords = data => ({
 const fetchDictionaryWithWords = () => ({ type: FETCH_DICTIONARY_WITH_WORDS });
 
 const requestGetDictionaryWithWords = id => async (dispatch) => {
-  const url = `${config.apiPath}dictionaries/${id}`;
   dispatch(fetchDictionaryWithWords());
   try {
-    const response = await fetch(url);
-    const json = await response.json();
+    const json = await Api.getRequest(`dictionaries/${id}`);
     if (json.response.status === STATUS_ERROR) {
       dispatch(errorFetchDictionaryWithWords({ message: json.response.message }));
     } else {

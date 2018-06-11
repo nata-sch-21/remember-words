@@ -1,5 +1,5 @@
-import fetch from 'isomorphic-fetch';
-import config from '../../../config/app.config';
+import Api from '../../services/Api';
+
 import {
   FETCH_BEST_RESULTS,
   FETCH_BEST_RESULTS_SUCCESS,
@@ -16,11 +16,9 @@ const errorFetchBestResults = data => ({ payload: { ...data }, type: FETCH_BEST_
 const fetchBestResults = () => ({ type: FETCH_BEST_RESULTS });
 
 const requestBestResults = () => async (dispatch) => {
-  const url = `${config.apiPath}results`;
   dispatch(fetchBestResults());
   try {
-    const response = await fetch(url);
-    const json = await response.json();
+    const json = await Api.getRequest('results');
     if (json.response.status === STATUS_ERROR) {
       dispatch(errorFetchBestResults({ message: json.response.message }));
     } else {
