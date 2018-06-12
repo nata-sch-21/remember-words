@@ -6,8 +6,8 @@ import {
 } from '../../constants';
 
 const fetchBestResults = createAction(FETCH_BEST_RESULTS, async () => {
-  const json = await Api.getRequest('results');
-  return json;
+  const result = await Api.getRequest('results');
+  return result;
 });
 
 

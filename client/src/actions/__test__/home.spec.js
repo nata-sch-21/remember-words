@@ -1,19 +1,14 @@
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import nock from 'nock';
 import config from '../../../config/app.config';
-import { results } from '../../../test/testData';
+import { results, mockStore } from '../../../test/testData';
 import {
   FETCH_BEST_RESULTS,
-  FETCH_BEST_RESULTS_SUCCESS,
-  FETCH_BEST_RESULTS_ERROR,
   STATUS_ERROR,
   STATUS_OK,
 } from '../../constants';
 import { initialState } from '../../reducers/home';
-import { requestBestResults } from '../home';
+import fetchBestResults from '../home';
 
-const mockStore = configureMockStore([thunk]);
 const url = '/results';
 
 describe('fetch best results action creator', () => {
@@ -25,38 +20,44 @@ describe('fetch best results action creator', () => {
   });
 
   it('dispatches the correct actions on successful fetch request', async () => {
-    const successResponse = { response: { status: STATUS_OK, message: '' }, data: { bestResults: results } };
+    const successResponse = {
+      response: { status: STATUS_OK, message: '' },
+      data: { bestResults: results },
+    };
+
     nock(config.apiPath)
       .get(url)
       .reply(200, successResponse);
 
     const expectedActions = [
-      { type: FETCH_BEST_RESULTS },
-      { type: FETCH_BEST_RESULTS_SUCCESS, payload: { bestResults: results } },
+      { type: FETCH_BEST_RESULTS, payload: successResponse },
     ];
 
-    await store.dispatch(requestBestResults());
+    await store.dispatch(fetchBestResults());
     expect(store.getActions()).toEqual(expectedActions);
   });
 
   it('dispatches the correct actions on api error response', async () => {
-    const errorResponse = { response: { status: STATUS_ERROR, message: 'Error message' } };
+    const errorResponse = {
+      response: { status: STATUS_ERROR, message: 'Error message' },
+    };
+
     nock(config.apiPath)
       .get(url)
       .reply(200, errorResponse);
 
     const expectedActions = [
-      { type: FETCH_BEST_RESULTS },
-      { type: FETCH_BEST_RESULTS_ERROR, payload: { message: errorResponse.response.message } },
+      { type: FETCH_BEST_RESULTS, payload: errorResponse },
     ];
 
-    await store.dispatch(requestBestResults());
+    await store.dispatch(fetchBestResults());
     expect(store.getActions()).toEqual(expectedActions);
   });
 
   it('dispatches the correct actions on server error response', async () => {
     const errorResponse = {
       message: 'Server error. Please try again.',
+      status: STATUS_ERROR,
     };
 
     nock(config.apiPath)
@@ -64,11 +65,10 @@ describe('fetch best results action creator', () => {
       .replyWithError();
 
     const expectedActions = [
-      { type: FETCH_BEST_RESULTS },
-      { type: FETCH_BEST_RESULTS_ERROR, payload: { ...errorResponse } },
+      { type: FETCH_BEST_RESULTS, payload: { response: errorResponse } },
     ];
 
-    await store.dispatch(requestBestResults());
+    await store.dispatch(fetchBestResults());
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

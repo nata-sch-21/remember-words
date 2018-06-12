@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
 import Home from './Home';
 import fetchBestResults from '../../actions/home';
-import { getBestResults, getResponse } from '../../reducers/home';
+import { homeSelector } from '../../reducers/home';
 
 const mapStateToProps = state => ({
-  bestResults: getBestResults(state),
-  response: getResponse(state),
+  ...homeSelector(state),
 });
 
 const mapDispatchToProps = dispatch => ({
