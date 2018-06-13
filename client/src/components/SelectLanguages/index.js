@@ -8,10 +8,6 @@ import Header from '../Header';
 class SelectLanguages extends React.Component {
   constructor() {
     super();
-    this.state = {
-      languageFrom: '',
-      languageTo: '',
-    };
 
     this.handleOnChange = (e) => {
       this.setState({
@@ -26,6 +22,11 @@ class SelectLanguages extends React.Component {
       }
     };
   }
+
+  state = {
+    languageFrom: '',
+    languageTo: '',
+  };
 
   componentWillMount() {
     this.setState({

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Loader from '../Loader';
 import Header from '../Header';
+import Error from '../Error';
 import DictionaryItem from '../DictionaryItem';
 import { requestGetDictionaries } from '../../actions/dictionaries';
 import { STATUS_ERROR } from '../../constants';
@@ -12,14 +13,6 @@ class Dictionaries extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(requestGetDictionaries());
-  }
-
-  renderError() {
-    return (
-      <div className="col block red">
-        <h3>{this.props.response.message}</h3>
-      </div>
-    );
   }
 
   renderDictionaryItems() {
@@ -37,12 +30,17 @@ class Dictionaries extends React.Component {
   }
 
   renderContent() {
-    if (!this.props.response.status && this.props.isFetching === false) {
+    const {
+      status,
+      message,
+    } = this.props.response;
+
+    if (!status && this.props.isFetching === false) {
       return null;
     }
 
-    if (this.props.response.status === STATUS_ERROR) {
-      return this.renderError();
+    if (status === STATUS_ERROR) {
+      return <Error message={message} />;
     }
 
     if (this.props.isFetching === true) {

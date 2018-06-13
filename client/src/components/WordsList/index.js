@@ -9,19 +9,12 @@ import { STATUS_ERROR } from '../../constants';
 import config from '../../../config/app.config';
 import Header from '../Header';
 import Loader from '../Loader';
+import Error from '../Error';
 import CurrentWord from '../CurrentWord';
 
 class WordsList extends React.Component {
   constructor() {
     super();
-    this.state = {
-      currentWordIndex: null,
-      prevWordIndex: null,
-      nextWordIndex: null,
-      errorMessage: '',
-      currentAnswer: '',
-      answers: [],
-    };
 
     this.addAnswer = () => {
       if (!this.state.currentAnswer) {
@@ -96,6 +89,15 @@ class WordsList extends React.Component {
     };
   }
 
+  state = {
+    currentWordIndex: null,
+    prevWordIndex: null,
+    nextWordIndex: null,
+    errorMessage: '',
+    currentAnswer: '',
+    answers: [],
+  };
+
   componentDidMount() {
     const { dispatch, history } = this.props;
     const path = history.location.pathname;
@@ -137,14 +139,6 @@ class WordsList extends React.Component {
     }
 
     return <Header header={dictionary.translations[this.props.languageFrom]} />;
-  }
-
-  renderError() {
-    return (
-      <div className="col block red">
-        <h3>{this.props.response.message}</h3>
-      </div>
-    );
   }
 
   renderPreviousButton() {
@@ -199,12 +193,17 @@ class WordsList extends React.Component {
   }
 
   renderContent() {
-    if (!this.props.response.status && this.props.isFetching === false) {
+    const {
+      status,
+      message,
+    } = this.props.response;
+
+    if (!status && this.props.isFetching === false) {
       return null;
     }
 
-    if (this.props.response.status === STATUS_ERROR) {
-      return this.renderError();
+    if (status === STATUS_ERROR) {
+      return <Error message={message} />;
     }
 
     if (this.props.isFetching === true) {

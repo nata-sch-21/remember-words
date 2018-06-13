@@ -59,8 +59,9 @@ describe('rendering', () => {
       wrapper = createWrapper(props);
     });
 
-    it('should render .red > h3 with error message', () => {
-      expect(wrapper.find('.red > h3').text()).toEqual(props.response.message);
+    it('should render Error with an error message', () => {
+      expect(wrapper.find('Error')).toHaveLength(1);
+      expect(wrapper.find('Error').prop('message')).toEqual(props.response.message);
     });
   });
 

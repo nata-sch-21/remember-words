@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import Header from '../Header';
+import Error from '../Error';
 import ResultsItem from '../ResultsItem';
 import { STATUS_ERROR, STATUS_OK } from '../../constants';
 import { saveResult } from '../../actions/results';
@@ -71,21 +72,18 @@ class Results extends React.Component {
     );
   }
 
-  renderError() {
-    return (
-      <div className="col block red">
-        <h3>{this.props.response.message}</h3>
-      </div>
-    );
-  }
-
   renderContent() {
-    if (!this.props.response.status) {
+    const {
+      status,
+      message,
+    } = this.props.response;
+
+    if (!status) {
       return null;
     }
 
-    if (this.props.response.status === STATUS_ERROR) {
-      return this.renderError();
+    if (status === STATUS_ERROR) {
+      return <Error message={message} />;
     }
 
     return this.renderResultItems();
