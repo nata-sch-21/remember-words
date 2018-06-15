@@ -2,6 +2,7 @@ node_modules/
 npm-debug.log
 .idea/
 client/public/
+client/coverage/
 .nosql
 .log
 db/

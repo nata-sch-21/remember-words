@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
-import { compose, lifecycle, setPropTypes, setDisplayName } from 'recompose';
+import { compose, lifecycle, setPropTypes, setDisplayName, nest } from 'recompose';
 import { string, shape, arrayOf, object, func } from 'prop-types';
 import Home from './Home';
+import PageWrapper from '../PageWrapper';
 import fetchBestResults from '../../actions/home';
 import { homeSelector } from '../../reducers/home';
 
@@ -22,7 +23,7 @@ const propTypes = {
   fetchBestResults: func.isRequired,
 };
 
-const HomeContainer = compose(
+const HomeContainer = nest(PageWrapper, compose(
   setDisplayName('HomeContainer'),
   connect(mapStateToProps, mapDispatchToProps),
   setPropTypes(propTypes),
@@ -31,7 +32,7 @@ const HomeContainer = compose(
       this.props.fetchBestResults();
     },
   }),
-)(Home);
+)(Home));
 
 export default HomeContainer;
 

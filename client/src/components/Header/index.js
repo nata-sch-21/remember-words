@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Header = props => (
+const headers = {
+  '/': 'Let\'s remember the words',
+};
+
+const Header = ({ path }) => (
   <header className="col block margin-bottom_20">
-    <h2>{props.header}</h2>
+    <h2>{headers[path] || ''}</h2>
   </header>
 );
 
 Header.propTypes = {
-  header: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
 };
 
 export default Header;

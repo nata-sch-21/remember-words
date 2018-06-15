@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { shape, string } from 'prop-types';
 
-const Error = ({ message }) => (
+const Error = ({ response: { message } }) => (
   <div className="col block red">
     <h3>{message}</h3>
   </div>
@@ -9,7 +9,9 @@ const Error = ({ message }) => (
 
 
 Error.propTypes = {
-  message: PropTypes.string.isRequired,
+  response: shape({
+    message: string,
+  }).isRequired,
 };
 
 export default Error;

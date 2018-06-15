@@ -13,7 +13,7 @@ const createTestProps = props => ({
 
 const createWrapper = props => shallow(<Dictionaries {...props} />);
 
-describe('rendering', () => {
+describe('<Dictionaries> rendering', () => {
   let wrapper;
 
   describe('initial state', () => {
@@ -89,10 +89,10 @@ describe('rendering', () => {
   });
 });
 
-describe('lifecycle', () => {
+describe('<Dictionaries> lifecycle', () => {
   let props;
   beforeEach(() => {
-    // componentDidMount is called be default if props were put in
+    // componentDidMount is called by default if props were put in
     props = createTestProps({ ...initialState });
     createWrapper(props);
   });
