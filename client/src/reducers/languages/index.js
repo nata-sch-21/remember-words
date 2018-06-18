@@ -1,3 +1,6 @@
+import { handleActions } from 'redux-actions';
+import { createStructuredSelector } from 'reselect';
+
 import { SELECT_LANGUAGE } from '../../constants';
 
 export const initialState = {
@@ -5,11 +8,20 @@ export const initialState = {
   languageTo: '',
 };
 
-export default function languages(state = initialState, action) {
-  switch (action.type) {
-    case SELECT_LANGUAGE:
-      return { languageFrom: action.payload.languageFrom, languageTo: action.payload.languageTo };
-    default:
-      return state;
-  }
-}
+const reducer = 'languages';
+
+const getLocalState = state => state[reducer];
+
+// selectors
+export const languagesSelector = createStructuredSelector({
+  languageFrom: state => (getLocalState(state).languageFrom),
+  languageTo: state => (getLocalState(state).languageTo),
+});
+
+// reducer
+export default handleActions({
+  [SELECT_LANGUAGE]: (state, { payload }) => ({
+    ...state,
+    ...payload,
+  }),
+}, initialState);

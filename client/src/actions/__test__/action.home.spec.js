@@ -19,7 +19,7 @@ describe('fetch best results action creator', () => {
     store = mockStore({ ...initialState });
   });
 
-  it('dispatches the correct actions on successful fetch request', async () => {
+  it('best results SUCCESSFUL api response', async () => {
     const successResponse = {
       response: { status: STATUS_OK, message: '' },
       data: { bestResults: results },
@@ -37,7 +37,7 @@ describe('fetch best results action creator', () => {
     expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('dispatches the correct actions on api error response', async () => {
+  it('best results API ERROR response', async () => {
     const errorResponse = {
       response: { status: STATUS_ERROR, message: 'Error message' },
     };
@@ -54,7 +54,7 @@ describe('fetch best results action creator', () => {
     expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('dispatches the correct actions on server error response', async () => {
+  it('best results SERVER ERROR response', async () => {
     const errorResponse = {
       message: 'Server error. Please try again.',
       status: STATUS_ERROR,

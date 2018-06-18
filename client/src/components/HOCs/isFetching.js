@@ -1,6 +1,7 @@
-import { branch, renderNothing } from 'recompose';
+import { branch, renderComponent } from 'recompose';
+import Loader from '../Loader';
 
 export default branch(
   props => !props.response.status,
-  renderNothing,
+  renderComponent(Loader),
 );

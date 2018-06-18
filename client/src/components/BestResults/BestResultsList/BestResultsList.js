@@ -23,7 +23,7 @@ BestResultsList.propTypes = {
   bestResults: arrayOf(object).isRequired,
 };
 
-const EmptyBestResults = () => <div className="col block cell-table">There is no results yet</div>;
+const EmptyBestResults = () => <div><div className="col block cell-table">There is no results yet</div></div>;
 
 export default branch(
   ({ bestResults }) => bestResults.length === 0,

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const headers = {
   '/': 'Let\'s remember the words',
+  '/start': 'Select languages',
 };
 
 const Header = ({ path }) => (
