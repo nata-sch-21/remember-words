@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import config from '../../../../config/app.config';
 
 const LanguageSelector = ({
-  id, selectedLanguage,
+  id,
+  selectedLanguage,
   excludedLanguage,
   handleOnChangeLanguage,
 }) => (

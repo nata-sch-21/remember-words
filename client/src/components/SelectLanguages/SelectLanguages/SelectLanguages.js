@@ -1,79 +1,62 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+import { shape, func } from 'prop-types';
+import { compose, withStateHandlers, setDisplayName, setPropTypes } from 'recompose';
 import LanguageSelector from '../LanguageSelector';
+import LinkToDictionaries from '../LinkToDictionaries';
 
-const Aux = props => props.children;
-
-class SelectLanguages extends Component {
-  constructor() {
-    super();
-
-    this.handleOnChange = (e) => {
-      this.setState({
-        [e.target.id]: e.target.value,
-      });
-    };
-
-    this.goToDictionaries = () => {
-      if (this.state.languageTo && this.state.languageFrom) {
-        this.props.selectLanguages({ ...this.state });
-        this.props.goTo('/dictionaries');
-      }
-    };
-  }
-
-  state = {
-    languageFrom: '',
-    languageTo: '',
-  };
-
-  renderLinkToDictionaries() {
-    let classButton = 'inactive-button';
-    let textButton = 'Please select both languages';
-
-    if (this.state.languageTo && this.state.languageFrom) {
-      textButton = 'Go to dictionaries';
-      classButton = 'green';
-    }
-
-    return (
-      <div className={`col block ${classButton} button-text`} onClick={this.goToDictionaries}>
-        <span>{textButton}</span>
-      </div>
-    );
-  }
-
-  render() {
-    return (
-      <Aux>
-        <div className="col-6 block margin-bottom_20">
-          <h3>From:</h3>
-          <LanguageSelector
-            id="languageFrom"
-            selectedLanguage={this.state.languageFrom}
-            excludedLanguage={this.state.languageTo}
-            handleOnChangeLanguage={this.handleOnChange}
-          />
-        </div>
-        <div className="col-6 block margin-bottom_20">
-          <h3>To:</h3>
-          <LanguageSelector
-            id="languageTo"
-            selectedLanguage={this.state.languageTo}
-            excludedLanguage={this.state.languageFrom}
-            handleOnChangeLanguage={this.handleOnChange}
-          />
-        </div>
-        {this.renderLinkToDictionaries()}
-      </Aux>
-    );
-  }
-}
-
-SelectLanguages.propTypes = {
-  selectLanguages: PropTypes.func.isRequired,
-  goTo: PropTypes.func.isRequired,
+const propTypes = {
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
-export default SelectLanguages;
-
+export default compose(
+  setDisplayName('SelectLanguages'),
+  withStateHandlers(
+    ({ languageFrom = '', languageTo = '' }) => ({
+      languageFrom,
+      languageTo,
+    }),
+    {
+      onChangeLanguageFrom: () => e => ({
+        languageFrom: e.target.value,
+      }),
+      onChangeLanguageTo: () => e => ({
+        languageTo: e.target.value,
+      }),
+    },
+  ),
+  setPropTypes(propTypes),
+)(({
+  onChangeLanguageFrom,
+  onChangeLanguageTo,
+  languageFrom,
+  languageTo,
+  history,
+}) => (
+  <Fragment>
+    <div className="col-6 block margin-bottom_20">
+      <h3>From:</h3>
+      <LanguageSelector
+        id="languageFrom"
+        selectedLanguage={languageFrom}
+        excludedLanguage={languageTo}
+        handleOnChangeLanguage={onChangeLanguageFrom}
+      />
+    </div>
+    <div className="col-6 block margin-bottom_20">
+      <h3>To:</h3>
+      <LanguageSelector
+        id="languageTo"
+        selectedLanguage={languageTo}
+        excludedLanguage={languageFrom}
+        handleOnChangeLanguage={onChangeLanguageTo}
+      />
+    </div>
+    <LinkToDictionaries
+      enabled={languageFrom && languageTo}
+      languages={{ languageFrom, languageTo }}
+      history={history}
+    />
+  </Fragment>
+));

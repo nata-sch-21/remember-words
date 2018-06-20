@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { string, shape, arrayOf, object } from 'prop-types';
 import BestResultsList from '../BestResults/BestResultsList';
 
-const Aux = props => props.children;
-
 const Home = ({ response, bestResults }) => (
-  <Aux>
+  <Fragment>
     <div className="col block green button-text margin-bottom_20">
       <Link to="/start">Start</Link>
     </div>
@@ -14,7 +12,7 @@ const Home = ({ response, bestResults }) => (
       <h3>Best results</h3>
       <BestResultsList response={response} bestResults={bestResults} />
     </div>
-  </Aux>
+  </Fragment>
 );
 
 Home.propTypes = {
