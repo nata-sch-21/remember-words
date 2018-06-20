@@ -1,13 +1,11 @@
 import React, { Fragment } from 'react';
-import { shape, func } from 'prop-types';
+import { func } from 'prop-types';
 import { compose, withStateHandlers, setDisplayName, setPropTypes } from 'recompose';
 import LanguageSelector from '../LanguageSelector';
 import LinkToDictionaries from '../LinkToDictionaries';
 
 const propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
+  goToDictionaries: func.isRequired,
 };
 
 export default compose(
@@ -32,7 +30,7 @@ export default compose(
   onChangeLanguageTo,
   languageFrom,
   languageTo,
-  history,
+  goToDictionaries,
 }) => (
   <Fragment>
     <div className="col-6 block margin-bottom_20">
@@ -55,8 +53,7 @@ export default compose(
     </div>
     <LinkToDictionaries
       enabled={languageFrom && languageTo}
-      languages={{ languageFrom, languageTo }}
-      history={history}
+      goToDictionaries={() => goToDictionaries({ languageFrom, languageTo })}
     />
   </Fragment>
 ));

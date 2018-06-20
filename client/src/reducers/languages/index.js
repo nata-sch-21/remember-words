@@ -22,6 +22,7 @@ export const languagesSelector = createStructuredSelector({
 export default handleActions({
   [SELECT_LANGUAGE]: (state, { payload }) => ({
     ...state,
-    ...payload,
+    languageFrom: payload.languageFrom || initialState.languageFrom,
+    languageTo: payload.languageTo || initialState.languageTo,
   }),
 }, initialState);
