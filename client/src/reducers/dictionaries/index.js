@@ -1,10 +1,7 @@
-import {
-  FETCH_DICTIONARIES,
-  FETCH_DICTIONARIES_ERROR,
-  FETCH_DICTIONARIES_SUCCESS,
-  STATUS_ERROR,
-  STATUS_OK,
-} from '../../constants';
+import { handleActions } from 'redux-actions';
+import { createStructuredSelector } from 'reselect';
+
+import { FETCH_DICTIONARIES } from '../../constants';
 
 export const initialState = {
   dictionaries: [],
@@ -12,26 +9,28 @@ export const initialState = {
     status: '',
     message: '',
   },
-  isFetching: false,
 };
 
-export default function dictionaries(state = initialState, action) {
-  switch (action.type) {
-    case FETCH_DICTIONARIES:
-      return { ...initialState, isFetching: true };
-    case FETCH_DICTIONARIES_SUCCESS:
-      return {
-        dictionaries: action.payload.dictionaries,
-        response: { ...state.response, status: STATUS_OK },
-        isFetching: false,
-      };
-    case FETCH_DICTIONARIES_ERROR:
-      return {
-        ...state,
-        response: { status: STATUS_ERROR, message: action.payload.message },
-        isFetching: false,
-      };
-    default:
-      return state;
-  }
-}
+const reducer = 'dictionaries';
+
+const getLocalState = state => state[reducer];
+
+// selectors
+const getDictionaries = state => (getLocalState(state).dictionaries);
+const getResponse = state => (getLocalState(state).response);
+const getLanguage = state => (state.languages.languageFrom);
+
+export const dictionariesSelector = createStructuredSelector({
+  dictionaries: getDictionaries,
+  response: getResponse,
+  language: getLanguage,
+});
+
+// reducer
+export default handleActions({
+  [FETCH_DICTIONARIES]: (state, { payload }) => ({
+    ...state,
+    ...payload.data,
+    response: payload.response,
+  }),
+}, initialState);

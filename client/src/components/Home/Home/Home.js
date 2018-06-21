@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { string, shape, arrayOf, object } from 'prop-types';
-import BestResultsList from '../BestResults/BestResultsList';
+import BestResults from '../BestResults';
 
 const Home = ({ response, bestResults }) => (
   <Fragment>
@@ -10,7 +10,7 @@ const Home = ({ response, bestResults }) => (
     </div>
     <div className="col block">
       <h3>Best results</h3>
-      <BestResultsList response={response} bestResults={bestResults} />
+      <BestResults response={response} bestResults={bestResults} />
     </div>
   </Fragment>
 );

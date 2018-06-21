@@ -13,7 +13,7 @@ class Controller {
         tools.errorResponse(res, 'The dictionaries weren\'t found');
         return;
       }
-      tools.successResponse(res, data);
+      tools.successResponse(res, { dictionaries: data });
     } catch (e) {
       console.log(`Error get dictionaries: ${e}`);
       tools.errorResponse(res, 'Server error');

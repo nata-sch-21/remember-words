@@ -1,9 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { createStructuredSelector } from 'reselect';
 
-import {
-  FETCH_BEST_RESULTS,
-} from '../../constants';
+import { FETCH_BEST_RESULTS } from '../../constants';
 
 export const initialState = {
   bestResults: [],

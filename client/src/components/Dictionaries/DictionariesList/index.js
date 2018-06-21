@@ -1,19 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose, lifecycle, setDisplayName } from 'recompose';
+import { dictionariesSelector } from '../../../reducers/dictionaries';
+import fetchDictionaries from '../../../actions/dictionaries';
+import DictionariesList from './DictionariesList';
 
-import { requestGetDictionaries } from '../../../actions/dictionaries';
-import Dictionaries from './DictionariesList';
+import isFetching from '../../HOCs/isFetching';
+import isError from '../../HOCs/isError';
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  const currentState = state.dictionaries;
-  return {
-    dictionaries: currentState.dictionaries,
-    isFetching: currentState.isFetching,
-    response: currentState.response,
-    language: state.languages.languageFrom,
-  };
-};
+const mapStateToProps = state => ({
+  ...dictionariesSelector(state),
+});
 
-export default connect(mapStateToProps)(Dictionaries);
+const mapDispatchToProps = dispatch => ({
+  fetchDictionaries: () => dispatch(fetchDictionaries()),
+});
+
+export default compose(
+  setDisplayName('DictionariesContainer'),
+  connect(mapStateToProps, mapDispatchToProps),
+  lifecycle({
+    componentDidMount() {
+      this.props.fetchDictionaries();
+    },
+  }),
+  isFetching,
+  isError,
+)(DictionariesList);
