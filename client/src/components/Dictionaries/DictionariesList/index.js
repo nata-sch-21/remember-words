@@ -3,7 +3,6 @@ import { compose, lifecycle, setDisplayName } from 'recompose';
 import { dictionariesSelector } from '../../../reducers/dictionaries';
 import fetchDictionaries from '../../../actions/dictionaries';
 import DictionariesList from './DictionariesList';
-
 import isFetching from '../../HOCs/isFetching';
 import isError from '../../HOCs/isError';
 

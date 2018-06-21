@@ -14,11 +14,15 @@ const headers = {
     header: 'Dictionaries',
     route: '/dictionaries',
   },
+  '/dictionaries/:id': {
+    header: 'Remembering words',
+    route: '/dictionaries/:id',
+  },
 };
 
 const Header = ({ path }) => (
   <header className="col block margin-bottom_20">
-    <h2>{headers[path].header || ''}</h2>
+    <h2>{headers[path] ? headers[path].header : ''}</h2>
   </header>
 );
 

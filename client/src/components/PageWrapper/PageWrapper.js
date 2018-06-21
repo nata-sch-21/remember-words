@@ -3,17 +3,17 @@ import { string, element, shape } from 'prop-types';
 
 import Header from '../Header';
 
-const PageWrapper = ({ location, children }) => (
+const PageWrapper = ({ match, children }) => (
   <div className="grid-1">
-    <Header path={location.pathname} />
+    <Header path={match.path} />
     {children}
   </div>
 );
 
 PageWrapper.propTypes = {
   children: element.isRequired,
-  location: shape({
-    pathname: string,
+  match: shape({
+    path: string,
   }).isRequired,
 };
 

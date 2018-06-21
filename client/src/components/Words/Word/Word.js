@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CurrentWord = props => (
+const Word = props => (
   <div className="grid-1 block">
     <h4 className="col">
       {props.title}
@@ -29,7 +29,7 @@ const CurrentWord = props => (
 );
 
 
-CurrentWord.propTypes = {
+Word.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   onChangeAnswer: PropTypes.func.isRequired,
@@ -37,4 +37,4 @@ CurrentWord.propTypes = {
   currentAnswer: PropTypes.string.isRequired,
 };
 
-export default CurrentWord;
+export default Word;

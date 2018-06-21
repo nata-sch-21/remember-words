@@ -1,18 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { requestGetDictionaryWithWords } from '../../actions/words';
-import { calculateCurrentResults } from '../../actions/results';
-import { STATUS_ERROR } from '../../constants';
-import config from '../../../config/app.config';
-import Header from '../Header';
-import Loader from '../Loader';
-import Error from '../Error';
-import CurrentWord from '../CurrentWord';
+import { requestGetDictionaryWithWords } from '../../../actions/words';
+import { calculateCurrentResults } from '../../../actions/results';
+import config from '../../../../config/app.config';
+import Word from '../Word';
 
-class WordsList extends React.Component {
+class WordsSpace extends React.Component {
   constructor() {
     super();
 
@@ -120,9 +115,9 @@ class WordsList extends React.Component {
     }
 
     const { words, languageFrom } = this.props;
-
+return <div>word</div>
     return (
-      <CurrentWord
+      <Word
         title={words[this.state.currentWordIndex].translations[languageFrom]}
         image={words[this.state.currentWordIndex].image}
         onChangeAnswer={this.onChangeAnswer}
@@ -130,15 +125,6 @@ class WordsList extends React.Component {
         toggleErrorMessage={this.toggleErrorMessage}
       />
     );
-  }
-
-  renderHeader() {
-    const { dictionary } = this.props;
-    if (!dictionary.translations) {
-      return null;
-    }
-
-    return <Header header={dictionary.translations[this.props.languageFrom]} />;
   }
 
   renderPreviousButton() {
@@ -192,23 +178,16 @@ class WordsList extends React.Component {
     );
   }
 
-  renderContent() {
-    const {
-      status,
-      message,
-    } = this.props.response;
+  render() {
+    if (!this.props.languageFrom) {
+      return <Redirect to="/start" push />;
+    }
 
-    if (!status && this.props.isFetching === false) {
+
+    if (!this.props.response.status && this.props.isFetching === false) {
       return null;
     }
 
-    if (status === STATUS_ERROR) {
-      return <Error message={message} />;
-    }
-
-    if (this.props.isFetching === true) {
-      return <Loader />;
-    }
 
     return (
       <div className="col block">
@@ -226,42 +205,13 @@ class WordsList extends React.Component {
       </div>
     );
   }
-
-  render() {
-    if (!this.props.languageFrom) {
-      return <Redirect to="/start" push />;
-    }
-
-    return (
-      <div className="grid-1">
-        {this.renderHeader()}
-        {this.renderContent()}
-      </div>
-    );
-  }
 }
 
-const mapStateToProps = (state) => {
-  const currentState = state.words;
-  return {
-    words: currentState.words,
-    isFetching: currentState.isFetching,
-    response: currentState.response,
-    dictionary: currentState.dictionary,
-    languageFrom: state.languages.languageFrom,
-  };
-};
-
-WordsList.propTypes = {
+WordsSpace.propTypes = {
   words: PropTypes.arrayOf(PropTypes.object).isRequired,
   dictionary: PropTypes.shape({
     _id: PropTypes.string,
     translations: PropTypes.objectOf(PropTypes.string),
-  }).isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  response: PropTypes.shape({
-    status: PropTypes.string,
-    message: PropTypes.string,
   }).isRequired,
   languageFrom: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -270,5 +220,6 @@ WordsList.propTypes = {
   }).isRequired,
 };
 
-export { WordsList };
-export default connect(mapStateToProps)(WordsList);
+export default WordsSpace;
+
+// dictionary.translations[this.props.languageFrom]
