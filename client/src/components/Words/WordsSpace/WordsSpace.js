@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
-import { requestGetDictionaryWithWords } from '../../../actions/words';
-import { calculateCurrentResults } from '../../../actions/results';
+import { compose, withStateHandlers, setDisplayName } from 'recompose';
 import config from '../../../../config/app.config';
 import Word from '../Word';
+import NavigateButton from '../NavigateButton';
+import ErrorPopup from '../ErrorPopup';
 
-class WordsSpace extends React.Component {
+class WordsSpace extends Component {
   constructor() {
     super();
 
     this.addAnswer = () => {
       if (!this.state.currentAnswer) {
-        this.toggleErrorMessage('Please put answer');
+        this.props.toggleErrorMessage('Please put answer');
         return false;
       }
 
@@ -63,144 +63,67 @@ class WordsSpace extends React.Component {
         return;
       }
 
-      const { words, dispatch } = this.props;
+      const { words } = this.props;
 
       if (words.length !== this.state.answers.length) {
-        this.toggleErrorMessage('Please put all answers');
+        this.props.toggleErrorMessage('Please put all answers');
         return;
       }
-      dispatch(calculateCurrentResults(
+
+      this.props.goToResults(
         words,
         this.state.answers,
         this.props.dictionary.translations[config.defaultLanguage],
-      ));
-      this.props.history.push('/results');
-    };
-
-    this.toggleErrorMessage = (message) => {
-      this.setState({
-        errorMessage: message,
-      });
+      );
     };
   }
 
   state = {
-    currentWordIndex: null,
+    currentWordIndex: 0,
     prevWordIndex: null,
-    nextWordIndex: null,
-    errorMessage: '',
+    nextWordIndex: 1,
     currentAnswer: '',
     answers: [],
   };
 
-  componentDidMount() {
-    const { dispatch, history } = this.props;
-    const path = history.location.pathname;
-    const paths = path.split('/');
-    dispatch(requestGetDictionaryWithWords(paths[2]));
-  }
-
-  componentWillReceiveProps() {
-    if (this.state.currentWordIndex === null && this.state.nextWordIndex === null) {
-      this.setState({
-        currentWordIndex: 0,
-        nextWordIndex: 1,
-      });
-    }
-  }
-
-  renderCurrentWord() {
-    if (this.state.currentWordIndex === null) {
-      return null;
-    }
-
-    const { words, languageFrom } = this.props;
-return <div>word</div>
-    return (
-      <Word
-        title={words[this.state.currentWordIndex].translations[languageFrom]}
-        image={words[this.state.currentWordIndex].image}
-        onChangeAnswer={this.onChangeAnswer}
-        currentAnswer={this.state.currentAnswer}
-        toggleErrorMessage={this.toggleErrorMessage}
-      />
-    );
-  }
-
-  renderPreviousButton() {
-    let classButton = 'inactive-button';
-    const { words } = this.props;
-    if (words[this.state.prevWordIndex]) {
-      classButton = 'yellow';
-    }
-
-    return (
-      <div className="col">
-        <div className={`block button-text ${classButton}`}>
-          <span onClick={this.prev}>Previous</span>
-        </div>
-      </div>
-    );
-  }
-
-  renderNextButton() {
-    let textButton = 'Next';
-    let onClick = this.next;
-
-    if (this.state.nextWordIndex === this.props.words.length) {
-      textButton = 'Check results';
-      onClick = this.goToFinishTest;
-    }
-
-    return (
-      <div className="col">
-        <div className="block button-text green">
-          <span onClick={onClick}>{textButton}</span>
-        </div>
-      </div>
-    );
-  }
-
-  renderErrorPopup() {
-    const { errorMessage } = this.state;
-
-    if (!errorMessage) {
-      return null;
-    }
-
-    return (
-      <div className="red block button-text">
-        <p>
-          <i className="icon-close" onClick={() => this.toggleErrorMessage('')}>x</i>
-          {errorMessage}
-        </p>
-      </div>
-    );
-  }
-
   render() {
-    if (!this.props.languageFrom) {
-      return <Redirect to="/start" push />;
-    }
+    const { words, languageFrom } = this.props;
+    const { nextWordIndex, prevWordIndex } = this.state;
 
-
-    if (!this.props.response.status && this.props.isFetching === false) {
-      return null;
-    }
-
+    const word = words[this.state.currentWordIndex];
 
     return (
       <div className="col block">
-        {this.renderErrorPopup()}
+        <ErrorPopup
+          errorMessage={this.props.errorMessage}
+          toggleErrorMessage={() => this.props.toggleErrorMessage('')}
+        />
         <div className="pure-block">
           <div className="red quit button-text">
             <Link to="/">Quit</Link>
           </div>
-          {this.renderCurrentWord()}
+          <Word
+            currentWordIndex={this.state.currentWordIndex}
+            title={word ? word.translations[languageFrom] : ''}
+            image={word ? word.image : ''}
+            onChangeAnswer={this.onChangeAnswer}
+            currentAnswer={this.state.currentAnswer}
+            toggleErrorMessage={() => this.props.toggleErrorMessage('')}
+          />
         </div>
         <div className="grid-2">
-          {this.renderPreviousButton()}
-          {this.renderNextButton()}
+          <NavigateButton
+            classButton={words[prevWordIndex] ? 'yellow' : 'inactive-button'}
+            onClick={() => this.prev()}
+            textButton="Previous"
+          />
+
+          <NavigateButton
+            textButton={nextWordIndex === words.length ? 'Check results' : 'Next'}
+            onClick={nextWordIndex === words.length
+              ? () => this.goToFinishTest()
+              : () => this.next()}
+          />
         </div>
       </div>
     );
@@ -214,12 +137,19 @@ WordsSpace.propTypes = {
     translations: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
   languageFrom: PropTypes.string.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
+  goToResults: PropTypes.func.isRequired,
 };
 
-export default WordsSpace;
-
-// dictionary.translations[this.props.languageFrom]
+export default compose(
+  setDisplayName('EnhancedWordsSpace'),
+  withStateHandlers(
+    ({ errorMessage = '' }) => ({
+      errorMessage,
+    }),
+    {
+      toggleErrorMessage: () => message => ({
+        errorMessage: message,
+      }),
+    },
+  ),
+)(WordsSpace);

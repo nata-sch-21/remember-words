@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Word = props => (
+import '../input.scss';
+
+const Word = ({
+  title, image, toggleErrorMessage, onChangeAnswer, currentAnswer,
+}) => (
   <div className="grid-1 block">
     <h4 className="col">
-      {props.title}
+      {title}
       {/* <i className="ion-android-volume-up audio-icon" /> */}
     </h4>
     <div className="col img-container">
-      <img src={props.image} alt="" />
+      <img src={image} alt="" />
     </div>
     <div className="col container">
       <div className="group">
@@ -16,9 +20,9 @@ const Word = props => (
           type="text"
           required
           name="name"
-          onFocus={() => props.toggleErrorMessage()}
-          onChange={props.onChangeAnswer}
-          value={props.currentAnswer}
+          onFocus={toggleErrorMessage}
+          onChange={onChangeAnswer}
+          value={currentAnswer}
         />
         <span className="highlight" />
         <span className="bar" />

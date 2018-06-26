@@ -1,36 +1,19 @@
 import React, { Fragment } from 'react';
-import { func } from 'prop-types';
-import { compose, withStateHandlers, setDisplayName, setPropTypes } from 'recompose';
+import { func, string } from 'prop-types';
+import { compose, withStateHandlers, setDisplayName } from 'recompose';
 import LanguageSelector from '../LanguageSelector';
 import LinkToDictionaries from '../LinkToDictionaries';
 
 const propTypes = {
   goToDictionaries: func.isRequired,
+  onChangeLanguageFrom: func.isRequired,
+  onChangeLanguageTo: func.isRequired,
+  languageFrom: string.isRequired,
+  languageTo: string.isRequired,
 };
 
-export default compose(
-  setDisplayName('SelectLanguages'),
-  withStateHandlers(
-    ({ languageFrom = '', languageTo = '' }) => ({
-      languageFrom,
-      languageTo,
-    }),
-    {
-      onChangeLanguageFrom: () => e => ({
-        languageFrom: e.target.value,
-      }),
-      onChangeLanguageTo: () => e => ({
-        languageTo: e.target.value,
-      }),
-    },
-  ),
-  setPropTypes(propTypes),
-)(({
-  onChangeLanguageFrom,
-  onChangeLanguageTo,
-  languageFrom,
-  languageTo,
-  goToDictionaries,
+const SelectLanguages = ({
+  onChangeLanguageFrom, onChangeLanguageTo, languageFrom, languageTo, goToDictionaries,
 }) => (
   <Fragment>
     <div className="col-6 block margin-bottom_20">
@@ -56,4 +39,24 @@ export default compose(
       goToDictionaries={() => goToDictionaries({ languageFrom, languageTo })}
     />
   </Fragment>
-));
+);
+
+SelectLanguages.propTypes = propTypes;
+
+export default compose(
+  setDisplayName('EnhancedSelectLanguages'),
+  withStateHandlers(
+    ({ languageFrom = '', languageTo = '' }) => ({
+      languageFrom,
+      languageTo,
+    }),
+    {
+      onChangeLanguageFrom: () => e => ({
+        languageFrom: e.target.value,
+      }),
+      onChangeLanguageTo: () => e => ({
+        languageTo: e.target.value,
+      }),
+    },
+  ),
+)(SelectLanguages);

@@ -31,6 +31,6 @@ export default handleActions({
   [FETCH_DICTIONARIES]: (state, { payload }) => ({
     ...state,
     ...payload.data,
-    response: payload.response,
+    response: { ...payload.response },
   }),
 }, initialState);

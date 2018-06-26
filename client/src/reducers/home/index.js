@@ -16,8 +16,8 @@ const reducer = 'home';
 const getLocalState = state => state[reducer];
 
 // selectors
-export const getBestResults = state => (getLocalState(state).bestResults);
-export const getResponse = state => (getLocalState(state).response);
+const getBestResults = state => (getLocalState(state).bestResults);
+const getResponse = state => (getLocalState(state).response);
 
 export const homeSelector = createStructuredSelector({
   bestResults: getBestResults,
@@ -29,6 +29,6 @@ export default handleActions({
   [FETCH_BEST_RESULTS]: (state, { payload }) => ({
     ...state,
     ...payload.data,
-    response: payload.response,
+    response: { ...payload.response },
   }),
 }, initialState);

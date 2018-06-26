@@ -1,35 +1,44 @@
 import React from 'react';
-import { compose, lifecycle, setDisplayName } from 'recompose';
+import { compose, lifecycle, setDisplayName, branch, renderComponent } from 'recompose';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { requestGetDictionaryWithWords } from '../../../actions/words';
+import fetchDictionaryWithWords from '../../../actions/words';
+import selectLanguages from '../../../actions/languages';
 import { calculateCurrentResults } from '../../../actions/results';
-import config from '../../../../config/app.config';
+import { wordsSelector } from '../../../reducers/words';
+
 import WordsSpace from './WordsSpace';
 import isFetching from '../../HOCs/isFetching';
 import isError from '../../HOCs/isError';
 
-const mapStateToProps = (state) => {
-  const currentState = state.words;
-  return {
-    words: currentState.words,
-    isFetching: currentState.isFetching,
-    response: currentState.response,
-    dictionary: currentState.dictionary,
-    languageFrom: state.languages.languageFrom,
-  };
-};
+const mapStateToProps = state => ({
+  ...wordsSelector(state),
+});
 
-const mapDispatchToProps = dispatch => ({
-  // fetchDictionary: () => dispatch(fetchDictionaries()),
-  dispatch
+const mapDispatchToProps = (dispatch, props) => ({
+  fetchDictionaryWithWords: () => dispatch(fetchDictionaryWithWords(props.match.params.id)),
+  goToResults: (words, answers, dictionaryName) => {
+    dispatch(calculateCurrentResults(words, answers, dictionaryName));
+    props.history.push('/results');
+    dispatch(selectLanguages({}));
+  },
+  resetLanguages: () => {
+    dispatch(selectLanguages({}));
+  },
 });
 
 export default compose(
   setDisplayName('WordsSpaceContainer'),
   connect(mapStateToProps, mapDispatchToProps),
+  lifecycle({
+    componentDidMount() {
+      this.props.fetchDictionaryWithWords();
+    },
+  }),
+  isFetching,
+  isError,
+  branch(
+    ({ languageFrom }) => !languageFrom,
+    renderComponent(() => <Redirect to="/start" push />),
+  ),
 )((WordsSpace));
-
-
-
-// dictionary.translations[this.props.languageFrom]

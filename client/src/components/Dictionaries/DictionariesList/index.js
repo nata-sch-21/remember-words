@@ -6,9 +6,7 @@ import DictionariesList from './DictionariesList';
 import isFetching from '../../HOCs/isFetching';
 import isError from '../../HOCs/isError';
 
-const mapStateToProps = state => ({
-  ...dictionariesSelector(state),
-});
+const mapStateToProps = state => dictionariesSelector(state);
 
 const mapDispatchToProps = dispatch => ({
   fetchDictionaries: () => dispatch(fetchDictionaries()),

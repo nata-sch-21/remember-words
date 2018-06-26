@@ -4,9 +4,7 @@ import Home from './Home';
 import fetchBestResults from '../../../actions/home';
 import { homeSelector } from '../../../reducers/home';
 
-const mapStateToProps = state => ({
-  ...homeSelector(state),
-});
+const mapStateToProps = state => homeSelector(state);
 
 const mapDispatchToProps = dispatch => ({
   fetchBestResults: () => dispatch(fetchBestResults()),
