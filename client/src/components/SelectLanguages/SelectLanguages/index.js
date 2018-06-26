@@ -15,7 +15,6 @@ const mapDispatchToProps = (dispatch, props) => ({
   },
 });
 
-// export default connect(mapStateToProps, mapDispatchToProps)(SelectLanguages);
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
