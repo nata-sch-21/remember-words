@@ -1,11 +1,9 @@
+import { handleActions } from 'redux-actions';
+import { createStructuredSelector } from 'reselect';
+
 import {
-  FETCH_SAVE_RESULTS_SUCCESS,
-  CALCULATE_CURRENT_RESULTS_SUCCESS,
-  FETCH_SAVE_RESULTS_ERROR,
-  CALCULATE_CURRENT_RESULTS_ERROR,
-  FETCH_SAVE_RESULTS,
-  STATUS_ERROR,
-  STATUS_OK,
+  UPLOAD_RESULT,
+  CALCULATE_CURRENT_RESULTS,
 } from '../../constants';
 
 export const initialState = {
@@ -15,51 +13,44 @@ export const initialState = {
     message: '',
   },
   answerData: null,
-  saving: {
-    response: {
-      status: '',
-      message: '',
-    },
-    isFetching: false,
+  uploadResultResponse: {
+    status: '',
+    message: '',
   },
 };
 
-export default function results(state = initialState, action) {
-  switch (action.type) {
-    case CALCULATE_CURRENT_RESULTS_SUCCESS:
-      return {
-        ...initialState,
-        result: action.payload.result,
-        answerData: action.payload.answerData,
-        response: { ...initialState.response, status: STATUS_OK },
-      };
-    case CALCULATE_CURRENT_RESULTS_ERROR:
-      return {
-        ...initialState,
-        response: { status: STATUS_ERROR, message: action.payload.message },
-      };
-    case FETCH_SAVE_RESULTS:
-      return {
-        ...state,
-        saving: { ...initialState.saving, isFetching: true },
-      };
-    case FETCH_SAVE_RESULTS_SUCCESS:
-      return {
-        ...state,
-        saving: {
-          response: { status: STATUS_OK, message: action.payload.message },
-          isFetching: false,
-        },
-      };
-    case FETCH_SAVE_RESULTS_ERROR:
-      return {
-        ...state,
-        saving: {
-          response: { status: STATUS_ERROR, message: action.payload.message },
-          isFetching: false,
-        },
-      };
-    default:
-      return state;
-  }
-}
+const reducer = 'results';
+
+const getLocalState = state => state[reducer];
+
+// selectors
+const answerData = state => (getLocalState(state).answerData);
+const response = state => (getLocalState(state).response);
+const uploadResultResponse = state => (getLocalState(state).uploadResultResponse);
+const result = state => (getLocalState(state).result);
+const languageFrom = state => (state.languages.languageFrom);
+const languageTo = state => (state.languages.languageTo);
+
+export const resultSelector = createStructuredSelector({
+  response,
+  result,
+  languageTo,
+  languageFrom,
+});
+
+export const uploadResultSelector = createStructuredSelector({
+  answerData,
+  uploadResultResponse,
+});
+
+// reducer
+export default handleActions({
+  [CALCULATE_CURRENT_RESULTS]: (state, { payload }) => ({
+    ...state,
+    ...payload,
+  }),
+  [UPLOAD_RESULT]: (state, { payload }) => ({
+    ...state,
+    uploadResultResponse: { ...initialState.uploadResultResponse, ...payload },
+  }),
+}, initialState);

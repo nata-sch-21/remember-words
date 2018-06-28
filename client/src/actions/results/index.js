@@ -1,66 +1,35 @@
+import { createAction } from 'redux-actions';
+
 import Api from '../../services/Api';
 import tools from '../../../src/services/tools';
 import {
-  CALCULATE_CURRENT_RESULTS_ERROR,
-  FETCH_SAVE_RESULTS_ERROR,
-  FETCH_SAVE_RESULTS,
-  CALCULATE_CURRENT_RESULTS_SUCCESS,
-  FETCH_SAVE_RESULTS_SUCCESS,
+  UPLOAD_RESULT,
   STATUS_ERROR,
   STATUS_OK,
+  CALCULATE_CURRENT_RESULTS,
 } from '../../constants';
 
-const successCalculateCurrentResults = data => ({
-  payload: { ...data },
-  type: CALCULATE_CURRENT_RESULTS_SUCCESS,
+const uploadResult = createAction(UPLOAD_RESULT, async (answerData) => {
+  const result = await Api.postRequest('results', {
+    body: JSON.stringify({ result: answerData }),
+  });
+
+  return result;
 });
 
-const errorCalculateCurrentResults = data => ({
-  payload: { ...data },
-  type: CALCULATE_CURRENT_RESULTS_ERROR,
-});
 
-const fetchSaveResults = () => ({
-  type: FETCH_SAVE_RESULTS,
-});
+const calculateCurrentResults = createAction(CALCULATE_CURRENT_RESULTS, (data) => {
+  const {
+    words, answers, dictionaryName, languages: { languageTo, languageFrom },
+  } = data;
 
-const errorSaveResults = data => ({
-  payload: { ...data },
-  type: FETCH_SAVE_RESULTS_ERROR,
-});
-
-const successSaveResults = data => ({
-  payload: { ...data },
-  type: FETCH_SAVE_RESULTS_SUCCESS,
-});
-
-const saveResult = () => async (dispatch, getState) => {
-  const { answerData } = getState().results;
-
-  dispatch(fetchSaveResults());
-  try {
-    const json = await Api.postRequest('results', {
-      body: JSON.stringify({ result: answerData }),
-    });
-
-    if (json.response.status === STATUS_ERROR) {
-      dispatch(errorSaveResults({ message: json.response.message }));
-    } else {
-      dispatch(successSaveResults(json.response));
-    }
-  } catch (error) {
-    dispatch(errorSaveResults({ message: 'Your result wasn\'t saved on server. Try again.' }));
-  }
-};
-
-const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, getState) => {
-  const { languageTo, languageFrom } = getState().languages;
   const result = [];
   let countCorrectAnswers = 0;
 
   if (answers.length !== words.length) {
-    dispatch(errorCalculateCurrentResults({ message: 'Internal error. Not enough answers' }));
-    return;
+    return {
+      response: { status: STATUS_ERROR, message: 'Internal error. Incorrect number of answers' },
+    };
   }
 
   answers.forEach((answer, key) => {
@@ -85,11 +54,12 @@ const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, g
   });
 
   if (result.length !== words.length) {
-    dispatch(errorCalculateCurrentResults({ message: 'Internal error. Some translations weren\'t found' }));
-    return;
+    return {
+      response: { status: STATUS_ERROR, message: 'Internal error. Some translations weren\'t found' },
+    };
   }
 
-  dispatch(successCalculateCurrentResults({
+  return {
     result,
     answerData: {
       countCorrectAnswers,
@@ -97,15 +67,11 @@ const calculateCurrentResults = (words, answers, dictionaryName) => (dispatch, g
       dictionaryName,
       coefficient: tools.modRound(countCorrectAnswers / words.length, 5),
     },
-  }));
-};
+    response: { status: STATUS_OK, message: '' },
+  };
+});
 
 export {
   calculateCurrentResults,
-  successCalculateCurrentResults,
-  errorCalculateCurrentResults,
-  saveResult,
-  fetchSaveResults,
-  errorSaveResults,
-  successSaveResults,
+  uploadResult,
 };

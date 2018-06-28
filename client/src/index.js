@@ -29,7 +29,7 @@ const render = (NextRouter) => {
 
 if (module.hot) {
   module.hot.accept('./routes', () => {
-    System.import('./routes').then(({ default: NextRouter }) => render(NextRouter));
+    System.import('./routes').then(({ default: NextRouter }) => render(NextRouter)); // eslint-disable-line
   });
 }
 

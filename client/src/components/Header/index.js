@@ -18,6 +18,10 @@ const headers = {
     header: 'Remembering words',
     route: '/dictionaries/:id',
   },
+  '/results': {
+    header: 'Results',
+    route: '/results',
+  },
 };
 
 const Header = ({ path }) => (

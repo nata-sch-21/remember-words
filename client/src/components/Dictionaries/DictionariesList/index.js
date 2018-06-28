@@ -1,5 +1,8 @@
+import React from 'react';
 import { connect } from 'react-redux';
-import { compose, lifecycle, setDisplayName } from 'recompose';
+import { compose, lifecycle, setDisplayName, branch, renderComponent } from 'recompose';
+import { Redirect } from 'react-router';
+
 import { dictionariesSelector } from '../../../reducers/dictionaries';
 import fetchDictionaries from '../../../actions/dictionaries';
 import DictionariesList from './DictionariesList';
@@ -20,6 +23,10 @@ export default compose(
       this.props.fetchDictionaries();
     },
   }),
+  branch(
+    ({ languageFrom }) => !languageFrom,
+    renderComponent(() => <Redirect to="/start" push />),
+  ),
   isFetching,
   isError,
 )(DictionariesList);

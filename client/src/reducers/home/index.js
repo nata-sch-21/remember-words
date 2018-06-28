@@ -16,12 +16,12 @@ const reducer = 'home';
 const getLocalState = state => state[reducer];
 
 // selectors
-const getBestResults = state => (getLocalState(state).bestResults);
-const getResponse = state => (getLocalState(state).response);
+const bestResults = state => (getLocalState(state).bestResults);
+const response = state => (getLocalState(state).response);
 
 export const homeSelector = createStructuredSelector({
-  bestResults: getBestResults,
-  response: getResponse,
+  bestResults,
+  response,
 });
 
 // reducer

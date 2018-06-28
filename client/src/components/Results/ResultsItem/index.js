@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ResultsItem = props => (
+const ResultsItem = ({ result }) => (
   <div className="col">
     <div className="grid-3">
-      <div className="col cell-table"> {props.result.fromWord}</div>
-      <div className="col cell-table">{props.result.toWord}</div>
-      <div className={`col cell-table text-type-${props.result.status}`}>{props.result.answer}</div>
+      <div className="col cell-table"> {result.fromWord}</div>
+      <div className="col cell-table">{result.toWord}</div>
+      <div className={`col cell-table text-type-${result.status}`}>{result.answer}</div>
     </div>
   </div>
 );

@@ -9,7 +9,7 @@ import ErrorPopup from '../ErrorPopup';
 
 const WordsSpace = ({
   words,
-  languageFrom,
+  languages,
   nextWordIndex,
   prevWordIndex,
   currentWordIndex,
@@ -34,7 +34,7 @@ const WordsSpace = ({
       </div>
       <Word
         currentWordIndex={currentWordIndex}
-        title={words[currentWordIndex] ? words[currentWordIndex].translations[languageFrom] : ''}
+        title={words[currentWordIndex] ? words[currentWordIndex].translations[languages.languageFrom] : ''}
         image={words[currentWordIndex] ? words[currentWordIndex].image : ''}
         onChangeAnswer={e => onChangeAnswer(e)}
         currentAnswer={currentAnswer}
@@ -57,6 +57,7 @@ const WordsSpace = ({
                   words,
                   answers,
                   dictionary.translations[config.defaultLanguage],
+                  languages,
                 );
               }
           }
@@ -68,9 +69,12 @@ const WordsSpace = ({
 
 WordsSpace.propTypes = {
   words: PropTypes.arrayOf(PropTypes.object).isRequired,
-  languageFrom: PropTypes.string.isRequired,
+  languages: PropTypes.shape({
+    languageFrom: PropTypes.string.isRequired,
+    languageTo: PropTypes.string.isRequired,
+  }).isRequired,
   nextWordIndex: PropTypes.number.isRequired,
-  prevWordIndex: PropTypes.number.isRequired,
+  prevWordIndex: PropTypes.number,
   currentWordIndex: PropTypes.number.isRequired,
   errorMessage: PropTypes.string.isRequired,
   toggleErrorMessage: PropTypes.func.isRequired,
@@ -79,10 +83,14 @@ WordsSpace.propTypes = {
   prev: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
   goToResults: PropTypes.func.isRequired,
-  answers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  answers: PropTypes.arrayOf(PropTypes.string).isRequired,
   dictionary: PropTypes.shape({
     _id: PropTypes.string.isRequired,
   }).isRequired,
+};
+
+WordsSpace.defaultProps = {
+  prevWordIndex: null,
 };
 
 const putAnswerError = { errorMessage: 'Please put answer' };

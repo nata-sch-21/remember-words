@@ -1,17 +1,15 @@
 import React from 'react';
-import { branch, renderComponent } from 'recompose';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
 import DictionaryItem from '../DictionariesItem';
 
-const DictionariesList = ({ language, dictionaries }) => (
+const DictionariesList = ({ languageFrom, dictionaries }) => (
   <div className="col block">
     <div className="grid-4">
       {
         dictionaries.map(item => (<DictionaryItem
           key={item._id}
           dictionary={item}
-          language={language}
+          languageFrom={languageFrom}
         />))
       }
     </div>
@@ -20,11 +18,8 @@ const DictionariesList = ({ language, dictionaries }) => (
 
 DictionariesList.propTypes = {
   dictionaries: PropTypes.arrayOf(PropTypes.object).isRequired,
-  language: PropTypes.string.isRequired,
+  languageFrom: PropTypes.string.isRequired,
 };
 
 
-export default branch(
-  ({ language }) => !language,
-  renderComponent(() => <Redirect to="/start" push />),
-)(DictionariesList);
+export default DictionariesList;

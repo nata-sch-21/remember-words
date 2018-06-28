@@ -16,14 +16,14 @@ const reducer = 'dictionaries';
 const getLocalState = state => state[reducer];
 
 // selectors
-const getDictionaries = state => (getLocalState(state).dictionaries);
-const getResponse = state => (getLocalState(state).response);
-const getLanguage = state => (state.languages.languageFrom);
+const dictionaries = state => (getLocalState(state).dictionaries);
+const response = state => (getLocalState(state).response);
+const languageFrom = state => (state.languages.languageFrom);
 
 export const dictionariesSelector = createStructuredSelector({
-  dictionaries: getDictionaries,
-  response: getResponse,
-  language: getLanguage,
+  dictionaries,
+  response,
+  languageFrom,
 });
 
 // reducer
