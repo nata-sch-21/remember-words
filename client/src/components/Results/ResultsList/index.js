@@ -4,7 +4,6 @@ import { compose, setDisplayName, branch, renderComponent } from 'recompose';
 import { Redirect } from 'react-router';
 
 import ResultsList from './ResultsList';
-
 import { resultSelector } from '../../../reducers/results';
 import isError from '../../HOCs/isError';
 
@@ -15,9 +14,9 @@ const mapDispatchToProps = () => ({});
 export default compose(
   setDisplayName('ResultsListContainer'),
   connect(mapStateToProps, mapDispatchToProps),
-  isError,
   branch(
-    ({ answerData }) => !answerData,
+    ({ answerData, response }) => !answerData && !response.status,
     renderComponent(() => <Redirect to="/start" push />),
   ),
+  isError,
 )(ResultsList);
