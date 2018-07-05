@@ -11,7 +11,7 @@ import fetchBestResults from '../home';
 
 const url = '/results';
 
-describe('fetch best results action creator', () => {
+describe('fetchBestResults() action creator', () => {
   let store;
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('fetch best results action creator', () => {
     store = mockStore({ ...initialState });
   });
 
-  it('best results SUCCESSFUL api response', async () => {
+  it('should return correct action and data on fetch best results SUCCESSFUL api response', async () => {
     const successResponse = {
       response: { status: STATUS_OK, message: '' },
       data: { bestResults: results },
@@ -37,7 +37,7 @@ describe('fetch best results action creator', () => {
     expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('best results API ERROR response', async () => {
+  it('should return correct action and data on fetch best results API ERROR response', async () => {
     const errorResponse = {
       response: { status: STATUS_ERROR, message: 'Error message' },
     };
@@ -54,14 +54,14 @@ describe('fetch best results action creator', () => {
     expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('best results SERVER ERROR response', async () => {
+  it('should return correct action and data on fetch best results SERVER ERROR response', async () => {
     const errorResponse = {
       message: 'Server error. Please try again.',
       status: STATUS_ERROR,
     };
 
     nock(config.apiPath)
-      .get('/dictionaries')
+      .get(url)
       .replyWithError();
 
     const expectedActions = [

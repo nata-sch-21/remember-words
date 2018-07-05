@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+
 import Api from '../../services/Api';
 
 import { FETCH_BEST_RESULTS } from '../../constants';

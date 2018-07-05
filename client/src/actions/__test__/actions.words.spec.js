@@ -1,23 +1,18 @@
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import nock from 'nock';
 import config from '../../../config/app.config';
-import { dictionaries, words } from '../../../test/testData';
+import { dictionaries, words, mockStore } from '../../../test/testData';
 import {
   FETCH_DICTIONARY_WITH_WORDS,
-  FETCH_DICTIONARY_WITH_WORDS_ERROR,
-  FETCH_DICTIONARY_WITH_WORDS_SUCCESS,
   STATUS_ERROR,
   STATUS_OK,
 } from '../../constants';
 import { initialState } from '../../reducers/dictionaries';
-import { requestGetDictionaryWithWords } from '../words';
+import fetchDictionaryWithWords from '../words';
 
-const mockStore = configureMockStore([thunk]);
 const dictionaryId = dictionaries[0]._id;
 const url = `/dictionaries/${dictionaryId}`;
 
-describe('fetch words action creator', () => {
+describe('fetchDictionaryWithWords() action creator', () => {
   let store;
 
   beforeEach(() => {
@@ -25,45 +20,44 @@ describe('fetch words action creator', () => {
     store = mockStore({ ...initialState });
   });
 
-  it('dispatches the correct actions on successful fetch request', async () => {
+  it('should return correct action and data on fetch words SUCCESSFUL api response', async () => {
     const successResponse = { response: { status: STATUS_OK, message: '' }, data: { dictionary: dictionaries[0], words } };
     nock(config.apiPath)
       .get(url)
       .reply(200, successResponse);
 
     const expectedActions = [
-      { type: FETCH_DICTIONARY_WITH_WORDS },
       {
-        type: FETCH_DICTIONARY_WITH_WORDS_SUCCESS,
-        payload: { dictionary: dictionaries[0], words },
+        type: FETCH_DICTIONARY_WITH_WORDS,
+        payload: successResponse,
       },
     ];
 
-    await store.dispatch(requestGetDictionaryWithWords(dictionaryId));
+    await store.dispatch(fetchDictionaryWithWords(dictionaryId));
     expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('dispatches the correct actions on api error response', async () => {
+  it('should return correct action and data on fetch words API ERROR response', async () => {
     const errorResponse = { response: { status: STATUS_ERROR, message: 'Error message' } };
     nock(config.apiPath)
       .get(url)
       .reply(200, errorResponse);
 
     const expectedActions = [
-      { type: FETCH_DICTIONARY_WITH_WORDS },
       {
-        type: FETCH_DICTIONARY_WITH_WORDS_ERROR,
-        payload: { message: errorResponse.response.message },
+        type: FETCH_DICTIONARY_WITH_WORDS,
+        payload: errorResponse,
       },
     ];
 
-    await store.dispatch(requestGetDictionaryWithWords(dictionaryId));
+    await store.dispatch(fetchDictionaryWithWords(dictionaryId));
     expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('dispatches the correct actions on server error response', async () => {
+  it('should return correct action and data on fetch words SERVER ERROR response', async () => {
     const errorResponse = {
       message: 'Server error. Please try again.',
+      status: STATUS_ERROR,
     };
 
     nock(config.apiPath)
@@ -71,11 +65,10 @@ describe('fetch words action creator', () => {
       .replyWithError();
 
     const expectedActions = [
-      { type: FETCH_DICTIONARY_WITH_WORDS },
-      { type: FETCH_DICTIONARY_WITH_WORDS_ERROR, payload: { ...errorResponse } },
+      { type: FETCH_DICTIONARY_WITH_WORDS, payload: { response: errorResponse } },
     ];
 
-    await store.dispatch(requestGetDictionaryWithWords(dictionaryId));
+    await store.dispatch(fetchDictionaryWithWords(dictionaryId));
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

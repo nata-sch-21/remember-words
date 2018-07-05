@@ -4,14 +4,14 @@ import { SELECT_LANGUAGE } from '../../constants';
 import { initialState } from '../../reducers/languages';
 import selectLanguages from '../languages';
 
-describe('selectLanguage action', () => {
+describe('selectLanguages() action creator', () => {
   let store;
 
   beforeEach(() => {
     store = mockStore({ ...initialState });
   });
 
-  it('should dispatch correct action and pass on the data we pass in', () => {
+  it('should return correct action and data on dispatch selectLanguages', () => {
     const data = {
       languageFrom: config.availableLanguages[0],
       languageTo: config.availableLanguages[1],
