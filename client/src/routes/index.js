@@ -1,23 +1,21 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 
-import Home from '../components/Home';
-import SelectLanguages from '../components/SelectLanguages';
-import Dictionaries from '../components/Dictionaries';
-import Words from '../components/Words';
-import Results from '../components/Results';
-import NotFound from '../components/NotFound';
+import routes from './routes';
 
 export const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/start" component={SelectLanguages} />
-      <Route exact path="/dictionaries" component={Dictionaries} />
-      <Route exact path="/dictionaries/:id" component={Words} />
-      <Route exact path="/results" component={Results} />
-      <Route exact path="/404" component={NotFound} />
-
+      {
+        Object.keys(routes).map(key => (
+          <Route
+            key={routes[key].path}
+            exact
+            path={routes[key].path}
+            component={routes[key].component}
+          />
+        ))
+      }
       <Redirect to="/404" />
     </Switch>
   </BrowserRouter>

@@ -6,7 +6,7 @@ import {
 } from '../../../constants';
 
 const SaveButton = ({ response, uploadResult, answerData }) => {
-  let saveSpan = (<span onClick={uploadResult}>Save result</span>);
+  let saveSpan = (<span onClick={() => uploadResult(answerData)}>Save result</span>);
   let buttonState = 'yellow';
 
   if (response.status === STATUS_OK) {

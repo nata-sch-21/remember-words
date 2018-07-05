@@ -1,32 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const headers = {
-  '/': {
-    header: 'Let\'s remember the words',
-    route: '/',
-  },
-  '/start': {
-    header: 'Select languages',
-    route: '/start',
-  },
-  '/dictionaries': {
-    header: 'Dictionaries',
-    route: '/dictionaries',
-  },
-  '/dictionaries/:id': {
-    header: 'Remembering words',
-    route: '/dictionaries/:id',
-  },
-  '/results': {
-    header: 'Results',
-    route: '/results',
-  },
-};
+import routes from '../../routes/routes';
 
 const Header = ({ path }) => (
   <header className="col block margin-bottom_20">
-    <h2>{headers[path] ? headers[path].header : ''}</h2>
+    <h2>{routes[path] ? routes[path].header : ''}</h2>
   </header>
 );
 

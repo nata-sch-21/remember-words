@@ -2,15 +2,15 @@ import homeReducer, { initialState } from '../home';
 import { bestResults } from '../../../test/testData';
 import { STATUS_ERROR, STATUS_OK, FETCH_BEST_RESULTS } from '../../constants';
 
-describe('Reducer home', () => {
+describe('home reducer', () => {
   // deepFreeze protect from state mutating
 
-  it('it should return initial state', () => {
+  it('should return initial state', () => {
     const newState = homeReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
 
-  it('should react to an action with the type FETCH_BEST_RESULTS_SUCCESS and pass on the data we pass in', () => {
+  it('should react to an action with the type FETCH_BEST_RESULTS and pass on the data we pass in', () => {
     const successResponse = {
       response: { status: STATUS_OK, message: '' },
       data: { bestResults },
@@ -33,7 +33,7 @@ describe('Reducer home', () => {
     });
   });
 
-  it('should react to an action with the type FETCH_BEST_RESULTS_ERROR and pass on the error message we pass in', () => {
+  it('should react to an action with the type FETCH_BEST_RESULTS and pass on the error message we pass in', () => {
     const errorResponse = {
       response: { status: STATUS_ERROR, message: 'Error message' },
     };
