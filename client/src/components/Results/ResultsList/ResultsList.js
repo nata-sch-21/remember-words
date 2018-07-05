@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ResultsItem from '../ResultsItem';
+import SaveButton from '../SaveButton';
 
 const ResultsList = ({ result }) => (
   <Fragment>
@@ -25,7 +26,7 @@ const ResultsList = ({ result }) => (
           </div>
         </div>
         <div className="col">
-          {/*{saveSpan}*/}
+          <SaveButton />
         </div>
       </div>
     </div>

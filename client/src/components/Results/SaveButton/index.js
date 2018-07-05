@@ -1,17 +1,14 @@
 import { connect } from 'react-redux';
-import { compose } from 'recompose';
 import SaveButton from './SaveButton';
 import { uploadResult } from '../../../actions/results';
-import { resultsSelector } from '../../../reducers/results';
+import { uploadResultSelector } from '../../../reducers/results';
 
-const mapStateToProps = state => resultsSelector(state).uploadResult;
+const mapStateToProps = state => uploadResultSelector(state);
 
-const mapDispatchToProps = (dispatch, props) => ({
-  uploadResult: () => {
-    dispatch(uploadResult(props.answerData));
+const mapDispatchToProps = dispatch => ({
+  uploadResult: (answerData) => {
+    dispatch(uploadResult(answerData));
   },
 });
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-)(SaveButton);
+export default connect(mapStateToProps, mapDispatchToProps)(SaveButton);

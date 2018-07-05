@@ -5,15 +5,19 @@ import {
   STATUS_OK,
 } from '../../../constants';
 
-const SaveButton = ({ response }) => {
-  let saveSpan = (<span onClick={this.props.saveResult}>Save result</span>);
+const SaveButton = ({ response, uploadResult, answerData }) => {
+  let saveSpan = (<span onClick={uploadResult}>Save result</span>);
   let buttonState = 'yellow';
 
   if (response.status === STATUS_OK) {
     saveSpan = (<span>{response.message}</span>);
     buttonState = 'inactive-button';
   } else if (response.status === STATUS_ERROR) {
-    saveSpan = (<span onClick={this.props.saveResult}>{response.message}</span>);
+    saveSpan = (
+      <span onClick={() => uploadResult(answerData)}>
+        Error: {response.message}. Save again
+      </span>
+    );
   }
 
   return (
@@ -27,6 +31,13 @@ SaveButton.propTypes = {
   response: PropTypes.shape({
     status: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
+  }).isRequired,
+  uploadResult: PropTypes.func.isRequired,
+  answerData: PropTypes.shape({
+    countCorrectAnswers: PropTypes.number.isRequired,
+    countWords: PropTypes.number.isRequired,
+    dictionaryName: PropTypes.string.isRequired,
+    coefficient: PropTypes.number.isRequired,
   }).isRequired,
 };
 

@@ -40,7 +40,7 @@ export const resultSelector = createStructuredSelector({
 
 export const uploadResultSelector = createStructuredSelector({
   answerData,
-  uploadResultResponse,
+  response: uploadResultResponse,
 });
 
 // reducer
@@ -51,6 +51,6 @@ export default handleActions({
   }),
   [UPLOAD_RESULT]: (state, { payload }) => ({
     ...state,
-    uploadResultResponse: { ...initialState.uploadResultResponse, ...payload },
+    uploadResultResponse: { ...initialState.uploadResultResponse, ...payload.response },
   }),
 }, initialState);

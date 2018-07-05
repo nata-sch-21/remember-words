@@ -15,7 +15,7 @@ export default compose(
   setDisplayName('ResultsListContainer'),
   connect(mapStateToProps, mapDispatchToProps),
   branch(
-    ({ answerData, response }) => !answerData && !response.status,
+    ({ result, response }) => result.length === 0 && !response.status,
     renderComponent(() => <Redirect to="/start" push />),
   ),
   isError,
