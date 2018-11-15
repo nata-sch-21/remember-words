@@ -102,7 +102,7 @@ describe('tuploadResult() action creator', async () => {
   // it('dispatches the correct actions on successful fetch request',
   // async () => {
   // const successResponse = {
-  // response: { status: STATUS_OK, message: 'Your result successfully saved' }, data: null};
+  // response: { status: STATUS_OK, message: 'Your result is successfully saved' }, data: null};
   // nock(config.apiPath, {
   //   reqheaders: {
   //     Accept: 'application/json, application/xml, text/play, text/html, *.*',

@@ -1,12 +1,11 @@
 import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import reduxPromise from 'redux-promise';
 
 import { STATUS_ERROR, STATUS_OK } from '../src/constants';
 import tools from '../src/services/tools';
 
 
-export const mockStore = configureMockStore([thunk, reduxPromise]);
+export const mockStore = configureMockStore([reduxPromise]);
 
 export const dictionaries = [
   {

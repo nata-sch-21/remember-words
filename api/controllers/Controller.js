@@ -93,7 +93,7 @@ class Controller {
 
       await Result.post(req.body.result);
 
-      tools.successResponse(res, null, 'Your result successfully saved');
+      tools.successResponse(res, null, 'Your result is successfully saved');
     } catch (e) {
       console.log(`Error save result: ${e}`);
       tools.errorResponse(res, 'Server error');
