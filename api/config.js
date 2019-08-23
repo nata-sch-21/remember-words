@@ -1,7 +1,7 @@
 const path = require('path');
 
 const host = 'localhost';
-const serverPort = '8000';
+const serverPort = '8001';
 const protocol = 'http://';
 
 const config = {

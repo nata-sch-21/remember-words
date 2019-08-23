@@ -1,23 +1,11 @@
-const DB = require('../database/DB').words;
 const tools = require('../utils/tools.js');
+const { Word } = require('./models');
 
-class Word {
+class WordModel {
   static async getWordsByDictionaryId(id) {
     try {
-      await DB.loadDatabase();
-      const data = await DB.cfind({ dictionary_id: id }).exec();
+      const data = await Word.find({ dictionary: id });
       return this.addImagePath(data);
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
-
-  static async createMultiple(dictionaryId, words) {
-    try {
-      await DB.loadDatabase();
-      const wordsWithDictionaryIds = this.processWords(dictionaryId, words);
-      const newWords = await DB.insert(wordsWithDictionaryIds);
-      return Object.keys(newWords).length;
     } catch (e) {
       throw new Error(e);
     }
@@ -50,4 +38,4 @@ class Word {
   }
 }
 
-module.exports = Word;
+module.exports = WordModel;

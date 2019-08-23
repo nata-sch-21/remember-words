@@ -21,11 +21,15 @@ React-redux application
  2) REST
  
  
- **How to parse dictionaries into DB?**
- 1. Create folder `api/parse/new` and copy json files from `dictionaries` into it
- 2. Go to `api` and run `npm run db:parse`
+ * 1.2.0
+ 
+**api**
 
-**Run app**
+Added mongoDB + mongoose
+ 
+ 
+
+### Run app
  
 ```
 cd ./api

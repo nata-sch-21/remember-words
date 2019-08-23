@@ -1,13 +1,13 @@
-const Dictionary = require('../models/DictionaryModel');
-const Word = require('../models/WordModel');
-const Result = require('../models/ResultModel');
+const DictionaryModel = require('../mongoDB/DictionaryModel');
+const WordModel = require('../mongoDB/WordModel');
+const ResultModel = require('../mongoDB/ResultModel');
 const tools = require('../utils/tools');
 const config = require('../config');
 
 class Controller {
   static async allDictionaries(req, res) {
     try {
-      const data = await Dictionary.get();
+      const data = await DictionaryModel.get();
 
       if (!data || data.length === 0) {
         tools.errorResponse(res, 'The dictionaries weren\'t found');
@@ -27,13 +27,13 @@ class Controller {
         return;
       }
 
-      const dictionary = await Dictionary.getById(req.params.id);
+      const dictionary = await DictionaryModel.getById(req.params.id);
       if (!dictionary) {
         tools.errorResponse(res, 'The dictionary wasn\'t found');
         return;
       }
 
-      const data = await Word.getWordsByDictionaryId(req.params.id);
+      const data = await WordModel.getWordsByDictionaryId(req.params.id);
 
       if (!data || data.length === 0) {
         tools.errorResponse(res, 'The words weren\'t found');
@@ -48,7 +48,7 @@ class Controller {
 
   static async bestResults(req, res) {
     try {
-      const lastResults = await Result.get();
+      const lastResults = await ResultModel.get();
       if (!lastResults) {
         tools.successResponse(res, 'There are no results yet');
         return;
@@ -91,7 +91,7 @@ class Controller {
         return;
       }
 
-      await Result.post(req.body.result);
+      await ResultModel.create(req.body.result);
 
       tools.successResponse(res, null, 'Your result is successfully saved');
     } catch (e) {
