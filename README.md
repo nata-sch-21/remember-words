@@ -25,9 +25,7 @@ React-redux application
  
 **api**
 
-Added mongoDB + mongoose
- 
- 
+Added mongoDB + mongooses
 
 ### Run app
  
